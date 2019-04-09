@@ -1,0 +1,2221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE input-forms SYSTEM "input-forms.dtd">
+
+
+<input-forms>
+
+ <!-- The form-map maps collection handles to forms. DSpace does not       -->
+ <!-- require that a collection's name be unique, even within a community .-->
+ <!-- DSpace does however insure that each collection's handle is unique.  -->
+ <!-- Form-map provides the means to associate a unique collection name    -->
+ <!-- with a form. The form-map also provides the special handle "default" -->
+ <!-- (which is never a collection), here mapped to "traditional". Any     -->
+ <!-- collection which does not appear in this map will be associated with -->
+ <!-- the mapping for handle "default".                                    -->
+
+ <form-map>
+   <name-map collection-handle="default" form-name="traditional" />
+ <!-- 
+ 	we provide examples of form tailored for articles, books, 
+   	conference_materials, dataset and a catch all others form-name 
+   <name-map collection-handle="123456789/2" form-name="articles" />
+   <name-map collection-handle="123456789/3" form-name="conference_materials" />
+   <name-map collection-handle="123456789/4" form-name="books" />
+   <name-map collection-handle="123456789/5" form-name="datasets" />
+   <name-map collection-handle="123456789/6" form-name="others" />
+ -->
+ </form-map>
+
+
+ <!-- The form-definitions map lays out the detailed definition of all the -->
+ <!-- submission forms.Each separate form set has a unique name as an      -->
+ <!-- attribute. This name matches one of the names in the form-map. One   -->
+ <!-- named form set has the name "traditional"; as this name suggests,    -->
+ <!-- it is the old style and is also the default, which gets used when    -->
+ <!-- the specified collection has no correspondingly named form set.      -->
+ <!--                                                                      -->
+ <!-- Each form set contains an ordered set of pages; each page defines    -->
+ <!-- one submission metadata entry screen. Each page has an ordered list  -->
+ <!-- of field definitions, Each field definition corresponds to one       -->
+ <!-- metatdata entry (a so-called row), which has a DC element name, a    -->
+ <!-- displayed label, a text string prompt which is called a hint , and   -->
+ <!-- an input-type. Each field also may hold optional elements: DC        -->
+ <!-- qualifier name, a repeatable flag, and a text string whose presence  -->
+ <!-- serves as a 'this field is required' flag.                           -->
+
+ <form-definitions>
+
+   <form name="traditional">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Authors</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the names of the authors of this item in the form Surname, Firstname [i.e. Smith, Josh or Smith, J].</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Title</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the main title of the item.</hint>
+         <required>You must enter a main title for this item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier>alternative</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Other Titles</label>
+         <input-type>onebox</input-type>
+         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>publisher</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Publisher</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>citation</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Citation</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the standard citation for the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartofseries</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Series/Report No.</label>
+         <input-type>series</input-type>
+         <hint>Enter the series and number assigned to this item by your community.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Identifiers</label>
+         <input-type value-pairs-name="common_identifiers">qualdrop_value</input-type>
+         <hint>If the item has any identification numbers or codes associated with
+it, please enter the types and the actual numbers or codes.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>issn</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>ISSN</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the ISSN.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>data</dc-element>
+         <dc-qualifier>url</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Primary research data</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the URL.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Type</label>
+         <input-type value-pairs-name="common_types">dropdown</input-type>
+         <hint> Select the type(s) of content of the item. To select more than one value in the list, you may have to hold down the "CTRL" or "Shift" key.</hint>
+         <required>You must select atleast one of the types for the item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>language</dc-element>
+         <dc-qualifier>iso</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Language</label>
+         <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
+         <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
+         <required></required>
+       </field>
+       
+   
+   	   <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>gruparezultata</dc-element>
+         <dc-qualifier></dc-qualifier> 
+         <repeatable>false</repeatable>
+         <label>Grupa rezultata</label>
+         <input-type value-pairs-name="grupa_rezultata">dropdown</input-type>
+         <hint>Izabrati grupu rezultata, vrstu rezultata i oblast nauke.</hint>
+         <required></required>
+       </field> 
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>vrstarezultata</dc-element>
+         <dc-qualifier></dc-qualifier> 
+         <repeatable>false</repeatable>
+         <label>Vrsta rezultata</label>
+         <input-type value-pairs-name="vrsta_rezultata">dropdown</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>oblastnauke</dc-element>
+         <dc-qualifier></dc-qualifier> 
+         <repeatable>false</repeatable>
+         <label>Oblast nauke</label>
+         <input-type value-pairs-name="oblasti_nauke">dropdown</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>vrednostrezultata</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Vrednost rezultata</label>
+         <input-type>onebox</input-type>
+         <hint></hint>
+         <required></required>
+       </field>
+       
+     </page>
+
+     <page number="2">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Subject Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>Enter appropriate subject keywords or phrases. </hint>
+         <required></required>
+         <vocabulary>srsc</vocabulary>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>abstract</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Abstract</label>
+         <input-type>textarea</input-type>
+         <hint>Enter the abstract of the item. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>sponsorship</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sponsors</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of any sponsors. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
+         <label>Project</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of project, if any, that has produced this publication. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartof</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Journal</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of the journal where the item has been published, if any.</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>conference</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Conference</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of the conference where the item has been presented, if any.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>volume</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Volume</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the volume.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>issue</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Issue</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the issue.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>firstpage</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>First page</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the first page.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>lastpage</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Last page</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the last page.</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description</label>
+         <input-type>textarea</input-type>
+         <hint> Enter any other description or comments in this box. </hint>
+         <required></required>
+       </field>
+     </page>
+<!--      <page number="3">
+       <field>
+		 <dc-schema>ec</dc-schema>
+         <dc-element>sale</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sale availability</label>
+		 <input-type value-pairs-name="sale_info">dropdown</input-type>
+         <hint>Enter the appropriate group to sale the item or empty to open access. </hint>
+         <required></required>
+       </field>
+       <field>
+		 <dc-schema>ec</dc-schema>
+         <dc-element>product</dc-element>
+         <dc-qualifier>price</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Product price</label>
+		 <input-type >onebox</input-type>
+         <hint>Enter the price of the product. </hint>
+         <required></required>
+         <validation>^[1-9]\d*(\.\d+)?$</validation>
+       </field>
+     </page>
+      -->
+   </form>
+
+   <form name="articles">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Authors</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the names of the authors of this item in the form Surname, Firstname [i.e. Smith, Josh or Smith, J].</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Title</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the main title of the item.</hint>
+         <required>You must enter a main title for this item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier>alternative</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Other Titles</label>
+         <input-type>onebox</input-type>
+         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>publisher</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Publisher</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>citation</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Citation</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the standard citation for the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartofseries</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Series/Report No.</label>
+         <input-type>series</input-type>
+         <hint>Enter the series and number assigned to this item by your community.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Identifiers</label>
+         <input-type value-pairs-name="common_article_identifiers">qualdrop_value</input-type>
+         <hint>If the item has any identification numbers or codes associated with
+it, please enter the types and the actual numbers or codes.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Type</label>
+         <input-type value-pairs-name="article_types">dropdown</input-type>
+         <hint>Nothing to do here. Note for administrators, this metadata could be completely hide using template item</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>language</dc-element>
+         <dc-qualifier>iso</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Language</label>
+         <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
+         <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
+         <required></required>
+       </field>
+     </page>
+
+     <page number="2">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Subject Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>Enter appropriate subject keywords or phrases. </hint>
+         <required></required>
+         <vocabulary>srsc</vocabulary>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>abstract</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Abstract</label>
+         <input-type>textarea</input-type>
+         <hint>Enter the abstract of the item. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>sponsorship</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sponsors</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of any sponsors. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
+         <label>Project</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of project, if any, that has produced this publication. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartof</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Journal</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the journal where the item has been published, if any.</hint>
+         <required>You need to insert the journal name as you are submitting a Journal Article</required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>conference</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Conference</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of the conference where the item has been presented, if any.</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>dataset</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Dataset</label>
+         <input-type>onebox</input-type>
+         <hint>Link the item to one or more existent dataset in the repository used or described by the publication or, put here the dataset citation</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description</label>
+         <input-type>textarea</input-type>
+         <hint> Enter any other description or comments in this box. </hint>
+         <required></required>
+       </field>
+     </page>
+   </form>
+
+   <form name="conference_materials">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Authors</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the names of the authors of this item in the form Surname, Firstname [i.e. Smith, Josh or Smith, J].</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Title</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the main title of the item.</hint>
+         <required>You must enter a main title for this item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier>alternative</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Other Titles</label>
+         <input-type>onebox</input-type>
+         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>publisher</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Publisher</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>citation</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Citation</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the standard citation for the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartofseries</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Series/Report No.</label>
+         <input-type>series</input-type>
+         <hint>Enter the series and number assigned to this item by your community.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Identifiers</label>
+         <input-type value-pairs-name="common_conference_material_identifiers">qualdrop_value</input-type>
+         <hint>If the item has any identification numbers or codes associated with
+it, please enter the types and the actual numbers or codes.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Type</label>
+         <input-type value-pairs-name="conference_material_types">dropdown</input-type>
+         <hint> Select the type(s) of content of the item. To select more than one value in the list, you may have to hold down the "CTRL" or "Shift" key.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>language</dc-element>
+         <dc-qualifier>iso</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Language</label>
+         <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
+         <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
+         <required></required>
+       </field>
+     </page>
+
+     <page number="2">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Subject Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>Enter appropriate subject keywords or phrases. </hint>
+         <required></required>
+         <vocabulary>srsc</vocabulary>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>abstract</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Abstract</label>
+         <input-type>textarea</input-type>
+         <hint>Enter the abstract of the item. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>sponsorship</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sponsors</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of any sponsors. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
+         <label>Project</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of project, if any, that has produced this publication. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartof</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Journal</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the journal where the item has been published, if any.</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>conference</dc-qualifier>
+         <repeatable></repeatable>
+         <label>Conference</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of the conference where the item has been presented, if any.</hint>
+         <required>You need to insert the conference name as you are submitting a Conference Material</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>dataset</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Dataset</label>
+         <input-type>onebox</input-type>
+         <hint>Link the item to one or more existent dataset in the repository used or described by the publication or, put here the dataset citation</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description</label>
+         <input-type>textarea</input-type>
+         <hint> Enter any other description or comments in this box. </hint>
+         <required></required>
+       </field>
+     </page>
+   </form>
+
+   <form name="books">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Authors</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the names of the authors of this item in the form Surname, Firstname [i.e. Smith, Josh or Smith, J].</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Title</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the main title of the item.</hint>
+         <required>You must enter a main title for this item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier>alternative</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Other Titles</label>
+         <input-type>onebox</input-type>
+         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>publisher</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Publisher</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>citation</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Citation</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the standard citation for the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartofseries</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Series/Report No.</label>
+         <input-type>series</input-type>
+         <hint>Enter the series and number assigned to this item by your community.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Identifiers</label>
+         <input-type value-pairs-name="common_book_identifiers">qualdrop_value</input-type>
+         <hint>If the item has any identification numbers or codes associated with
+it, please enter the types and the actual numbers or codes.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Type</label>
+         <input-type value-pairs-name="book_types">dropdown</input-type>
+         <hint>Nothing to do here. Note for administrators, this metadata could be completely hide using template item</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>language</dc-element>
+         <dc-qualifier>iso</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Language</label>
+         <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
+         <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
+         <required></required>
+       </field>
+     </page>
+
+     <page number="2">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Subject Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>Enter appropriate subject keywords or phrases. </hint>
+         <required></required>
+         <vocabulary>srsc</vocabulary>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>abstract</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Abstract</label>
+         <input-type>textarea</input-type>
+         <hint>Enter the abstract of the item. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>sponsorship</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sponsors</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of any sponsors. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
+         <label>Project</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of project, if any, that has produced this publication. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>conference</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Conference</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of the conference where the item has been presented, if any.</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>dataset</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Dataset</label>
+         <input-type>onebox</input-type>
+         <hint>Link the item to one or more existent dataset in the repository used or described by the publication or, put here the dataset citation</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description</label>
+         <input-type>textarea</input-type>
+         <hint> Enter any other description or comments in this box. </hint>
+         <required></required>
+       </field>
+     </page>
+   </form>
+
+   <form name="datasets">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Authors</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the names of the authors of this item in the form Surname, Firstname [i.e. Smith, Josh or Smith, J].</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Title</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the main title of the item.</hint>
+         <required>You must enter a main title for this item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier>alternative</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Other Titles</label>
+         <input-type>onebox</input-type>
+         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartofseries</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Series/Report No.</label>
+         <input-type>series</input-type>
+         <hint>Enter the series and number assigned to this item by your community.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Identifiers</label>
+         <input-type value-pairs-name="common_dataset_identifiers">qualdrop_value</input-type>
+         <hint>If the item has any identification numbers or codes associated with
+it, please enter the types and the actual numbers or codes.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Type</label>
+         <input-type value-pairs-name="dataset_types">dropdown</input-type>
+         <hint>Nothing to do here. Note for administrators, this metadata could be completely hide using template item</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>language</dc-element>
+         <dc-qualifier>iso</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Language</label>
+         <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
+         <hint>Select, if applicable, the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
+         <required></required>
+       </field>
+     </page>
+
+     <page number="2">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Subject Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>Enter appropriate subject keywords or phrases. </hint>
+         <required></required>
+         <vocabulary>srsc</vocabulary>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>abstract</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Abstract</label>
+         <input-type>textarea</input-type>
+         <hint>Enter the abstract of the item. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>sponsorship</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sponsors</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of any sponsors. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
+         <label>Project</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of project, if any, that has produced this publication. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>publication</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Publication</label>
+         <input-type>onebox</input-type>
+         <hint>Link the dataset to one or more existent publications in the repository that make use of it or, put here the publication citation</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description</label>
+         <input-type>textarea</input-type>
+         <hint> Enter any other description or comments in this box. </hint>
+         <required></required>
+       </field>
+     </page>
+   </form>
+
+   <form name="others">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Authors</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the names of the authors of this item in the form Surname, Firstname [i.e. Smith, Josh or Smith, J].</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Title</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the main title of the item.</hint>
+         <required>You must enter a main title for this item.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>title</dc-element>
+         <dc-qualifier>alternative</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Other Titles</label>
+         <input-type>onebox</input-type>
+         <hint>If the item has any alternative titles, please enter them here.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>date</dc-element>
+         <dc-qualifier>issued</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Date of Issue</label>
+         <input-type>date</input-type>
+         <hint>Please give the date of previous publication or public distribution.
+                        You can leave out the day and/or month if they aren't
+                        applicable.</hint>
+         <required>You must enter at least the year.</required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>publisher</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Publisher</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the publisher of the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>citation</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Citation</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the standard citation for the previously issued instance of this item.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartofseries</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Series/Report No.</label>
+         <input-type>series</input-type>
+         <hint>Enter the series and number assigned to this item by your community.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of qualdrop_value MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Identifiers</label>
+         <input-type value-pairs-name="common_identifiers">qualdrop_value</input-type>
+         <hint>If the item has any identification numbers or codes associated with
+it, please enter the types and the actual numbers or codes.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>type</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Type</label>
+         <input-type value-pairs-name="common_types">dropdown</input-type>
+         <hint> Select the type(s) of content of the item. To select more than one value in the list, you may have to hold down the "CTRL" or "Shift" key.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>language</dc-element>
+         <dc-qualifier>iso</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Language</label>
+         <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
+         <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
+         <required></required>
+       </field>
+     </page>
+
+     <page number="2">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>subject</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <!-- An input-type of twobox MUST be marked as repeatable -->
+         <repeatable>true</repeatable>
+         <label>Subject Keywords</label>
+         <input-type>onebox</input-type>
+         <hint>Enter appropriate subject keywords or phrases. </hint>
+         <required></required>
+         <vocabulary>srsc</vocabulary>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>abstract</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Abstract</label>
+         <input-type>textarea</input-type>
+         <hint>Enter the abstract of the item. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>sponsorship</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Sponsors</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of any sponsors. </hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <repeatable>true</repeatable>
+         <label>Project</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of project, if any, that has produced this publication. </hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>ispartof</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Journal</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the name of the journal where the item has been published, if any.</hint>
+         <required>You need to insert the journal name as you are submitting a Journal Article</required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>conference</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Conference</label>
+         <input-type>onebox</input-type>
+         <hint> Enter the name of the conference where the item has been presented, if any.</hint>
+         <required></required>
+       </field>
+
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>relation</dc-element>
+         <dc-qualifier>dataset</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>Dataset</label>
+         <input-type>onebox</input-type>
+         <hint>Link the item to one or more existent dataset in the repository used or described by the publication or, put here the dataset citation</hint>
+         <required></required>
+       </field>
+       
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier></dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Description</label>
+         <input-type>textarea</input-type>
+         <hint> Enter any other description or comments in this box. </hint>
+         <required></required>
+       </field>
+     </page>
+   </form>
+
+   <form name="one">
+     <page number="1">
+       <field>
+		 <dc-schema>dc</dc-schema>
+         <dc-element>contributor</dc-element>
+         <dc-qualifier>author</dc-qualifier>
+         <repeatable>true</repeatable>
+         <label>One: Authors</label>
+         <input-type>name</input-type>
+         <hint>Enter the names of the authors of this item.</hint>
+         <required></required>
+       </field>
+      </page>
+    </form>
+ </form-definitions>
+
+
+ <!-- form-value-pairs populate dropdown and qualdrop-value lists.          -->
+ <!-- The form-value-pairs element holds child elements named 'value-pairs' -->
+ <!-- A 'value-pairs' element has a value-pairs-name and a dc-term          -->
+ <!-- attribute. The dc-term attribute specifies which to which Dublin Core -->
+ <!-- Term this set of value-pairs applies.                                 -->
+ <!--     Current dc-terms are: identifier-pairs, type-pairs, and           -->
+ <!--     language_iso-pairs. The name attribute matches a name             -->
+ <!--     in the form-map, above.                                           -->
+ <!-- A value-pair contains one 'pair' for each value displayed in the list -->
+ <!-- Each pair contains a 'displayed-value' element and a 'stored-value'   -->
+ <!-- element. A UI list displays the displayed-values, but the program     -->
+ <!-- stores the associated stored-values in the database.                  -->
+
+ <form-value-pairs>
+<value-pairs value-pairs-name="sale_info" dc-term="sale">
+ 	<pair>
+ 		<displayed-value>Not for sale</displayed-value>
+       <stored-value></stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Anyone can buy</displayed-value>
+       <stored-value>Anonymous</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>First Membership</displayed-value>
+       <stored-value>First Membership</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Second Membership</displayed-value>
+       <stored-value>Second Membership</stored-value>
+     </pair>
+     
+   	</value-pairs>
+   <value-pairs value-pairs-name="common_identifiers" dc-term="identifier">
+     <pair>
+       <displayed-value>DOI</displayed-value>
+       <stored-value>doi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Scopus ID</displayed-value>
+       <stored-value>scopus</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>WOS ID</displayed-value>
+       <stored-value>isi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Pubmed ID</displayed-value>
+       <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>arXiv ID</displayed-value>
+       <stored-value>arxiv</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>ISSN</displayed-value>
+       <stored-value>issn</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Other</displayed-value>
+       <stored-value>other</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>ISMN</displayed-value>
+       <stored-value>ismn</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Gov't Doc #</displayed-value>
+       <stored-value>govdoc</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>URI</displayed-value>
+       <stored-value>uri</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>ISBN</displayed-value>
+       <stored-value>isbn</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Citation</displayed-value>
+       <stored-value>citation</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>SICI</displayed-value>
+       <stored-value>sici</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>URL</displayed-value>
+       <stored-value>url</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>ARK</displayed-value>
+       <stored-value>ark</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Bibcode</displayed-value>
+       <stored-value>bibcode</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Slug</displayed-value>
+       <stored-value>slug</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>External</displayed-value>
+       <stored-value>external</stored-value>
+     </pair>
+   </value-pairs>
+    
+   <value-pairs value-pairs-name="grupa_rezultata" dc-term="gruparezultata">
+   	 <pair>
+       <displayed-value> </displayed-value>
+       <stored-value></stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M10 - Monografije, monografske studije, tematski zbornici, leksikografske i kartografske publikacije međunarodnog značaja</displayed-value>
+       <stored-value>m10</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M20 - Radovi objavljeni u naučnim časopisima međunarodnog značaja; naučna kritika; uređivanje časopisa</displayed-value>
+       <stored-value>m20</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M30 - Zbornici međunarodnih naučnih skupova</displayed-value>
+       <stored-value>m30</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M40 - Monografije nacionalnog značaja</displayed-value>
+       <stored-value>m40</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M50 - Radovi u časopisima nacionalnog značaja</displayed-value>
+       <stored-value>m50</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M60 - Predavanja po pozivu na skupovima nacionalnog značaja</displayed-value>
+       <stored-value>m60</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M70 - Odbranjena doktorska disertacija</displayed-value>
+       <stored-value>m70</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M80 - Tehnička rešenja</displayed-value>
+       <stored-value>m80</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M90 - Patenti</displayed-value>
+       <stored-value>m90</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M100 - Izvedena dela, nagrade, studije, izložbe, žiriranja i kustoski rad od međunarodnog značaja</displayed-value>
+       <stored-value>m100a</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M100 - Izvedena dela, nagrade, studije, izložbe od nacionalnog značaja</displayed-value>
+       <stored-value>m100b</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M120 - Dokumenti pripremljeni u vezi sa kreiranjem i analizom javnih politika</displayed-value>
+       <stored-value>m120</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="vrsta_rezultata" dc-term="vrstarezultata">
+    <pair>
+       <displayed-value>M11 - Istaknuta monografija međunarodnog značaja</displayed-value>
+       <stored-value>m11</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M12 - Monografija međunarodnog značaja</displayed-value>
+       <stored-value>m12</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodećeg međunarodnog značaja</displayed-value>
+       <stored-value>m13</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku međunarodnog značaja</displayed-value>
+       <stored-value>m14</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M15 - Leksikografska jedinica ili karta u naučnoj publikaciji vodećeg međunarodnog značaja</displayed-value>
+       <stored-value>m15</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M16 - Leksikografska jedinica ili karta u publikaciji međunarodnog značaja</displayed-value>
+       <stored-value>m16</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M17 - Uređivanje tematskog zbornika leksikografske ili kartografske publikacije vodećeg međunarodnog značaja</displayed-value>
+       <stored-value>m17</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M18 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije međunarodnog značaja</displayed-value>
+       <stored-value>m18</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M21a - Rad u vrhunskom međunarodnom časopisu</displayed-value>
+       <stored-value>m21a</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M21 - Rad u vrhunskom međunarodnom časopisu</displayed-value>
+       <stored-value>m21</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M22 - Rad u istaknutom međunarodnom časopisu</displayed-value>
+       <stored-value>m22</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M23 - Rad u međunarodnom časopisu</displayed-value>
+       <stored-value>m23</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M24 - Rad u časopisu međunarodnog značaja verifikovanog posebnom odlukom</displayed-value>
+       <stored-value>m24</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M25 - Naučna kritika i polemika u istaknutom međunarodnom časopisu</displayed-value>
+       <stored-value>m25</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M26 - Naučna kritika i polemika u međunarodnom časopisu</displayed-value>
+       <stored-value>m26</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M27 - Naučna kritika i polemika u časopisa ranga M24</displayed-value>
+       <stored-value>m27</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M28a - a) Glavni odgovorni urednik istaknutog međunarodnog naučnog časopisa ili publikacije sa monografskim delima kategorije M13</displayed-value>
+       <stored-value>m28a</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M28b - b) Uređivanje istaknutog međunarodnog naučnog časopisa (gost urednik) ili publikacije sa monografskim delima kategorije M14</displayed-value>
+       <stored-value>m28b</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M29a - a) Uređivanje međunarodnog naučnog časopisa; Uređivanje tematskih monografija</displayed-value>
+       <stored-value>m29a</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M29b - b) Glavni i odgovorni urednik nacionalnog časopisa</displayed-value>
+       <stored-value>m29b</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M29v - v) Uređivanje nacionalnog naučnog časopisa; Uređivanje tematskih monografija</displayed-value>
+       <stored-value>m29v</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M31 - Predavanje po pozivu sa međunarodnog skupa štampano u celini (neophodno pozivno pismo)</displayed-value>
+       <stored-value>m31</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M32 - Predavanje po pozivu sa međunarodnog skupa štampano u izvodu</displayed-value>
+       <stored-value>m32</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M33 - Saopštenje sa međunarodnog skupa štampano u celini</displayed-value>
+       <stored-value>m33</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M34 - Saopštenje sa međunarodnog skupa štampano u izvodu</displayed-value>
+       <stored-value>m34</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M35 - Autorizovana diskusija sa međunarodnog skupa</displayed-value>
+       <stored-value>m35</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M36 - Uređivanje zbornika saopštenja međunarodnog naučnog skupa</displayed-value>
+       <stored-value>m36</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M41 - Istaknuta monografija nacionalnog značaja</displayed-value>
+       <stored-value>m41</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M42 - Monografija nacionalnog značaja</displayed-value>
+       <stored-value>m42</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M43 - Monografska bibliografska publikacija ili monografska studija</displayed-value>
+       <stored-value>m43</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M44 - Poglavlje u knjizi M41 ili rad u istaknutom tematskom zborniku vodećeg nacionalnog značaja</displayed-value>
+       <stored-value>m44</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M45 - Poglavlje u knjizi M42 ili rad u tematskom zborniku nacionalnog značaja</displayed-value>
+       <stored-value>m45</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M46 - Leksikografska jedinica u naučnoj publikaciji vodećeg nacionalnog značaja, karta u naučnoj publikaciji nacionalnog značaja, kritičko izdanje građe u naučnoj publikaciji</displayed-value>
+       <stored-value>m46</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M47 - Leksikografska jedinica u naučnoj publikaciji nacionalnog značaja</displayed-value>
+       <stored-value>m47</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M48 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije vodećeg nacionalnog značaja</displayed-value>
+       <stored-value>m48</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M49 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije nacionalnog značaja</displayed-value>
+       <stored-value>m49</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M51 - Rad u vodećem časopisu nacionalnog značaja</displayed-value>
+       <stored-value>m51</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M52 - Rad u časopisu nacionalnog značaja</displayed-value>
+       <stored-value>m52</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M53 - Rad u naučnom časopisu</displayed-value>
+       <stored-value>m53</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M54 - Uređivanje vodećeg naučnog časopisa nacionalnog značaja (na godišnjem nivou)</displayed-value>
+       <stored-value>m54</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M55 - Uređivanje naučnog časopisa nacionalnog značaja (na godišnjem nivou)</displayed-value>
+       <stored-value>m55</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M56 - Naučna kritika u časopisu ranga M51</displayed-value>
+       <stored-value>m56</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M57 - Naučna kritika u časopisu ranga M52</displayed-value>
+       <stored-value>m57</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M61 - Predavanje po pozivu sa skupa nacionalnog značaja štampano u celini</displayed-value>
+       <stored-value>m61</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M62 - Predavanje po pozivu sa skupa nacionalnog značaja štampano u izvodu</displayed-value>
+       <stored-value>m62</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M63 - Saopštenje sa skupa nacionalnog značaja štampano u celini</displayed-value>
+       <stored-value>m63</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M64 - Saopštenje sa skupa nacionalnog značaja štampano u izvodu</displayed-value>
+       <stored-value>m64</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M65 - Autorizovana diskusija sa nacionalnog skupa</displayed-value>
+       <stored-value>m65</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M66 - Uređivanje zbornika saopštenja skupa nacionalnog značaja</displayed-value>
+       <stored-value>m66</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M67 - Monografsko izdanje građe, prevod izvornog teksta u obliku monografije (samo za stare jezike)</displayed-value>
+       <stored-value>m67</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M68 - Prevod izvornog teksta u obliku studije, poglavlja ili članka, prevod ili stručna redakcija prevoda naučne monografske knjige (samo za stare jezike)</displayed-value>
+       <stored-value>m68</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M69 - Kritičko izdanje dela/autora</displayed-value>
+       <stored-value>m69</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M81 - Novo tehničko rešenje primenjeno na međunarodnom nivou</displayed-value>
+       <stored-value>m81</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M82 - Novo tehničko rešenje (metoda) primenjeno na nacionalnom nivou</displayed-value>
+       <stored-value>m82</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M83 - Bitno poboljšano tehničko rešenje na međunarodnom nivou</displayed-value>
+       <stored-value>m83</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M84 - Bitno poboljšano tehničko rešenje na nacionalnom nivou</displayed-value>
+       <stored-value>m84</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M85 - Novo tehničko rešenje (nije komercijalizovano)</displayed-value>
+       <stored-value>m85</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M86 - Prijava međunarodnog patenta</displayed-value>
+       <stored-value>m86</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M87 - Prijava domaćeg patenta</displayed-value>
+       <stored-value>m87</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M91 - Registrovan patent na međunarodnom nivou</displayed-value>
+       <stored-value>m91</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M92 - Registrovan patent na nacionalnom nivou</displayed-value>
+       <stored-value>m92</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M93 - Objavljen patent na međunarodnom nivou</displayed-value>
+       <stored-value>m93</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M94 - Objavljen patent na nacionalnom nivou</displayed-value>
+       <stored-value>m94</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M95 - Realizovana, sorta, rasa ili soj na međunarodnom nivou</displayed-value>
+       <stored-value>m95</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M96 - Realizovana, sorta, rasa ili soj na nacionalnom nivou</displayed-value>
+       <stored-value>m96</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M97 - Priznata sorta, rasa ili soj na međunarodnom nivou</displayed-value>
+       <stored-value>m97</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M98 - Priznata sorta, rasa ili soj na nacionalnom nivou</displayed-value>
+       <stored-value>m98</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M99 - Autorska izložba sa katalogom uz naučnu recenziju</displayed-value>
+       <stored-value>m99</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M101 - Izvedeno (autorsko) delo</displayed-value>
+       <stored-value>m101</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M102 - Nagrada na konkursu</displayed-value>
+       <stored-value>m102</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M103 - Studija, ekspertiza</displayed-value>
+       <stored-value>m103</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M104 - Nagrada na izložbi</displayed-value>
+       <stored-value>m104</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M105 - Učešće na izložbi</displayed-value>
+       <stored-value>m105</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M106 - Žiriranje</displayed-value>
+       <stored-value>m106</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M107 - Kustoski rad</displayed-value>
+       <stored-value>m107</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M108 - Izvedeno (autorsko) delo sa publikacijom u nacionalnom časopisu</displayed-value>
+       <stored-value>m108</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M109 - Nagrada na konkursu u Republici</displayed-value>
+       <stored-value>m109</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M110 - Studija ekspertiza, u Republici, regionima,...</displayed-value>
+       <stored-value>m110</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M111 - Nagrada na nacionalnoj izložbi</displayed-value>
+       <stored-value>m111</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M112 - Učešće na nacionalnoj izložbi</displayed-value>
+       <stored-value>m112</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M121 - Strateški dokument nacionalnog ili supra-nacionalnog nivoa naručen od odgovarajućeg organa javne vlasti koji je prihvaćen na odgovarajućem naučnom/nastavno-naučnom veću</displayed-value>
+       <stored-value>m121</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M122 - Strateški dokument regionalnog nivoa naručen od odgovarajućeg organa javne vlasti ili organa teritorijalne autonomije koji je prihvaćen na odgovarajućem naučnom/nastavno-naučnom veću</displayed-value>
+       <stored-value>m122</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M123 - Studija i analiza javne politike koja je prihvaćena na odgovarajućem naučnom/nastavno-naučnom veću</displayed-value>
+       <stored-value>m123</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>M124 - Analiza uticaja efekata, prihvaćena na naučnom/nastavnonaučnom veću</displayed-value>
+       <stored-value>m124</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="oblasti_nauke" dc-term="oblastnauke">
+     <pair>
+       <displayed-value>1 - prirodno-matematičke i medicinske</displayed-value>
+       <stored-value>1</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>2 - tehničko-tehnološke i biotehničke</displayed-value>
+       <stored-value>2</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>3 - društvene</displayed-value>
+       <stored-value>3</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>4 - humanističke</displayed-value>
+       <stored-value>4</stored-value>
+     </pair>
+   </value-pairs>
+   
+   <value-pairs value-pairs-name="common_article_identifiers" dc-term="identifier">
+     <pair>
+       <displayed-value>DOI</displayed-value>
+       <stored-value>doi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Scopus ID</displayed-value>
+       <stored-value>scopus</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>WOS ID</displayed-value>
+       <stored-value>isi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Pubmed ID</displayed-value>
+       <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>arXiv ID</displayed-value>
+       <stored-value>arxiv</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Gov't Doc #</displayed-value>
+       <stored-value>govdoc</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>URI</displayed-value>
+       <stored-value>uri</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="common_book_identifiers" dc-term="identifier">
+     <pair>
+       <displayed-value>ISBN</displayed-value>
+       <stored-value>isbn</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>DOI</displayed-value>
+       <stored-value>doi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Scopus ID</displayed-value>
+       <stored-value>scopus</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>WOS ID</displayed-value>
+       <stored-value>isi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Pubmed ID</displayed-value>
+       <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>arXiv ID</displayed-value>
+       <stored-value>arxiv</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Gov't Doc #</displayed-value>
+       <stored-value>govdoc</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>URI</displayed-value>
+       <stored-value>uri</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="common_conference_material_identifiers" dc-term="identifier">
+     <pair>
+       <displayed-value>ISBN</displayed-value>
+       <stored-value>isbn</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>DOI</displayed-value>
+       <stored-value>doi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Scopus ID</displayed-value>
+       <stored-value>scopus</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>WOS ID</displayed-value>
+       <stored-value>isi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Pubmed ID</displayed-value>
+       <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>arXiv ID</displayed-value>
+       <stored-value>arxiv</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Gov't Doc #</displayed-value>
+       <stored-value>govdoc</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>URI</displayed-value>
+       <stored-value>uri</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="common_dataset_identifiers" dc-term="identifier">
+     <pair>
+       <displayed-value>DOI</displayed-value>
+       <stored-value>doi</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>ARK</displayed-value>
+       <stored-value>ark</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Pubmed ID</displayed-value>
+       <stored-value>pmid</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>arXiv ID</displayed-value>
+       <stored-value>arxiv</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Gov't Doc #</displayed-value>
+       <stored-value>govdoc</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>URI</displayed-value>
+       <stored-value>uri</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="common_types" dc-term="type">
+     <pair>
+       <displayed-value>Animation</displayed-value>
+       <stored-value>Animation</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Article</displayed-value>
+       <stored-value>Article</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Book</displayed-value>
+       <stored-value>Book</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Book chapter</displayed-value>
+       <stored-value>Book chapter</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Dataset</displayed-value>
+       <stored-value>Dataset</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Learning Object</displayed-value>
+       <stored-value>Learning Object</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Image</displayed-value>
+       <stored-value>Image</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Image, 3-D</displayed-value>
+       <stored-value>Image, 3-D</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Map</displayed-value>
+       <stored-value>Map</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Musical Score</displayed-value>
+       <stored-value>Musical Score</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Plan or blueprint</displayed-value>
+       <stored-value>Plan or blueprint</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Preprint</displayed-value>
+       <stored-value>Preprint</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Presentation</displayed-value>
+       <stored-value>Presentation</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Recording, acoustical</displayed-value>
+       <stored-value>Recording, acoustical</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Recording, musical</displayed-value>
+       <stored-value>Recording, musical</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Recording, oral</displayed-value>
+       <stored-value>Recording, oral</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Software</displayed-value>
+       <stored-value>Software</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Technical Report</displayed-value>
+       <stored-value>Technical Report</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Thesis</displayed-value>
+       <stored-value>Thesis</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Video</displayed-value>
+       <stored-value>Video</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Working Paper</displayed-value>
+       <stored-value>Working Paper</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Other</displayed-value>
+       <stored-value>Other</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="article_types" dc-term="type">
+     <pair>
+       <displayed-value>Article</displayed-value>
+       <stored-value>Article</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="book_types" dc-term="type">
+     <pair>
+       <displayed-value>Book</displayed-value>
+       <stored-value>Book</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="conference_material_types" dc-term="type">
+     <pair>
+       <displayed-value>Conference Proceeding</displayed-value>
+       <stored-value>Conference Proceeding</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Conference Paper</displayed-value>
+       <stored-value>Conference Paper</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Presentation</displayed-value>
+       <stored-value>Presentation</stored-value>
+     </pair>
+     <pair>
+     	<displayed-value>Poster</displayed-value>
+     	<stored-value>Poster</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="dataset_types" dc-term="type">
+     <pair>
+       <displayed-value>Dataset</displayed-value>
+       <stored-value>Dataset</stored-value>
+     </pair>
+   </value-pairs>
+
+   <!-- default language order: (from dspace 1.2.1)
+        "en_US", "en", "es", "de", "fr", "it", "ja", "zh", "other", ""
+     -->
+   <value-pairs value-pairs-name="common_iso_languages" dc-term="language_iso">
+     <pair>
+       <displayed-value>N/A</displayed-value>
+       <stored-value></stored-value>
+     </pair>
+     <pair>
+       <displayed-value>English (United States)</displayed-value>
+       <stored-value>en_US</stored-value>
+      </pair>
+     <pair>
+       <displayed-value>English</displayed-value>
+       <stored-value>en</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Spanish</displayed-value>
+       <stored-value>es</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>German</displayed-value>
+       <stored-value>de</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>French</displayed-value>
+       <stored-value>fr</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Italian</displayed-value>
+       <stored-value>it</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Japanese</displayed-value>
+       <stored-value>ja</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Chinese</displayed-value>
+       <stored-value>zh</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Turkish</displayed-value>
+       <stored-value>tr</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>(Other)</displayed-value>
+       <stored-value>other</stored-value>
+     </pair>
+   </value-pairs>
+
+ </form-value-pairs>
+
+</input-forms>

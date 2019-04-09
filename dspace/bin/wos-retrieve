@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Get the DSPACE/bin directory
+BINDIR=`dirname $0`
+
+$BINDIR/dspace dsrun org.dspace.app.cris.metrics.wos.script.ScriptRetrieveCitation -t 604800 -x 10000
+$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s RPStatsAggregatorWOSIndicatorsPlugin
+#$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s PercentileWOSIndicatorsPlugin
+#$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s PercentileWOSAggregateIndicatorsPlugin
+#$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s PercentileWOSCountIndicatorsPlugin

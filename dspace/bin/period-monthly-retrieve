@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Get the DSPACE/bin directory
+BINDIR=`dirname $0`
+
+$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s ItemStatsPeriodMonthPUBMEDIndicatorsPlugin
+$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s ItemStatsPeriodMonthSCOPUSIndicatorsPlugin
+$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s ItemStatsPeriodMonthWOSIndicatorsPlugin
+$BINDIR/dspace dsrun org.dspace.app.cris.batch.ScriptStatsMetrics -s ViewStatsPeriodMonthIndicatorsPlugin

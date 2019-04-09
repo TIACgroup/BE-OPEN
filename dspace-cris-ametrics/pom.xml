@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <groupId>org.dspace</groupId>
+    <artifactId>dspace-cris-ametrics</artifactId>
+    <name>Article Metrics :: Modules</name>
+
+    <parent>
+        <artifactId>dspace-parent</artifactId>
+		<groupId>org.dspace</groupId>
+		<version>CRIS-5.10.0-SNAPSHOT</version>
+    </parent>
+    
+    <modules>
+        <module>metrics</module>        
+    </modules>
+
+   <!--Force UTF-8 encoding during build on all platforms-->
+   <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <root.basedir>${basedir}/..</root.basedir>
+   </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <configuration>
+                    <!--Exclude license check -->
+                    <excludes>
+                        <exclude>**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+	<developers>
+		<developer>
+			<name>Andrea Bollini</name>
+			<email>andrea.bollini@4science.it</email>
+			<timezone>GMT +1</timezone>
+		</developer>
+		<developer>
+			<name>Luigi Andrea Pascarelli</name>
+			<email>luigiandrea.pascarelli@4science.it</email>
+			<timezone>GMT +1</timezone>
+		</developer>
+		<developer>
+			<name>Riccardo Fazio</name>
+			<email>riccardo.fazio@4science.it</email>
+			<timezone>GMT +1</timezone>
+		</developer>
+	</developers>
+    
+</project>

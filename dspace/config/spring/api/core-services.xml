@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    The contents of this file are subject to the license and copyright
+    detailed in the LICENSE and NOTICE files at the root of the source
+    tree and available online at
+
+    http://www.dspace.org/license/
+
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-lazy-init="true">
+
+	<bean class="org.dspace.core.NewsServiceImpl"
+			id="org.dspace.core.service.NewsService">
+		<property name="acceptableFilenames">
+			<list>
+				<value>news-top.html</value>
+				<value>news-top_sr_LAT.html</value>
+				<value>news-top_sr_CYR.html</value>
+				<value>news-side.html</value>
+				<value>news-footer.html</value>
+			</list>
+		</property>	
+	</bean>
+
+	<bean class="org.dspace.app.webui.cris.util.MultiformRegexConfigurator"
+		name="org.dspace.app.webui.cris.util.MultiformRegexConfigurator">
+		<property name="defaultDecorator" value="link"/>
+		<property name="regex2Decorator4Value">
+			<list>
+				<bean
+					class="org.dspace.app.webui.cris.util.MultiformRegexConfigurator.RegexMultiform">
+					<property name="regex"><value>^10.\d{4,9}\/[-._;()/:a-zA-Z0-9]+$</value></property>
+					<property name="decorator"><value>doi</value></property>
+				</bean>
+				<bean
+					class="org.dspace.app.webui.cris.util.MultiformRegexConfigurator.RegexMultiform">
+					<property name="regex"><value>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$</value></property>
+					<property name="decorator"><value>mailto</value></property>
+				</bean>				
+			</list>
+		</property>
+		<property name="regex2Decorator4Authority">
+			<list>
+				<bean
+					class="org.dspace.app.webui.cris.util.MultiformRegexConfigurator.RegexMultiform">
+					<property name="regex"><value>^[a-zA-Z]+[0-9]+$</value></property>
+					<property name="decorator"><value>crisref</value></property>
+				</bean>
+				<bean
+					class="org.dspace.app.webui.cris.util.MultiformRegexConfigurator.RegexMultiform">
+					<property name="regex"><value>^[0-9]+\/[0-9]+$</value></property>
+					<property name="decorator"><value>itemref</value></property>
+				</bean>				
+			</list>
+		</property>		
+	</bean>
+	
+</beans>

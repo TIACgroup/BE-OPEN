@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-autowire-candidates="*Service,*DAO,javax.sql.DataSource">
+
+	<bean id="identifierExtraIndexer" class="org.dspace.statistics.IdentifierStatsIndexPlugin"/>
+	
+	<bean id="dspaceObjectExtraIndexer" class="org.dspace.statistics.DSpaceObjectStatsIndexPlugin"/>
+	
+	<bean id="sectionStatsExtraIndexer" 
+    	class="org.dspace.app.cris.statistics.SectionStatsIndexPlugin">
+    </bean>     
+    
+    <bean id="org.dspace.app.cris.statistics.YearsAdditionalStatisticsData" 
+    	class="org.dspace.app.cris.statistics.YearsAdditionalStatisticsData">
+    </bean>              
+
+    <bean id="org.dspace.app.cris.statistics.GeoRefAdditionalStatisticsData" 
+    	class="org.dspace.app.cris.statistics.GeoRefAdditionalStatisticsData">
+    </bean>
+
+    <bean id="org.dspace.app.cris.statistics.BundleNameAdditionalStatisticsData" 
+    	class="org.dspace.app.cris.statistics.BundleNameAdditionalStatisticsData">
+    </bean>
+
+    <bean id="org.dspace.app.statistics.StoreParentsAdditionalStatisticsData" 
+    	class="org.dspace.app.statistics.StoreParentsAdditionalStatisticsData">
+    </bean>
+        
+	<!-- Components for Cris Object -->	
+	<bean id="rpStatsComponent" class="org.dspace.app.cris.integration.statistics.CrisStatComponentsService">
+
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showSelectedObject" value="true"/>
+		<property name="showExtraTab" value="true"/>
+		<property name="topRelation" value="20"/>
+				
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+		
+		<property name="crisComponentsService" ref="rpComponentsService"/>
+		<property name="selectedObject" ref="rpSelectedObject"/>
+	</bean>
+
+	<bean id="ouStatsComponent" class="org.dspace.app.cris.integration.statistics.CrisStatComponentsService">
+
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showSelectedObject" value="true"/>
+		<property name="showExtraTab" value="false"/>
+		<property name="topRelation" value="20"/>
+				
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+		
+		<property name="crisComponentsService" ref="ouComponentsService"/>
+		<property name="selectedObject" ref="ouSelectedObject"/>
+	</bean>
+
+	<bean id="pjStatsComponent" class="org.dspace.app.cris.integration.statistics.CrisStatComponentsService">
+
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showSelectedObject" value="true"/>
+		<property name="showExtraTab" value="false"/>
+		<property name="topRelation" value="20"/>
+				
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+		
+		<property name="crisComponentsService" ref="projectComponentsService"/>
+		<property name="selectedObject" ref="pjSelectedObject"/>
+	</bean>
+
+	<bean id="doStatsComponent" class="org.dspace.app.cris.integration.statistics.CrisStatComponentsService">
+
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showSelectedObject" value="true"/>
+		<property name="showExtraTab" value="false"/>
+		<property name="topRelation" value="20"/>
+				
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+		
+		<property name="crisComponentsService" ref="doComponentsService"/>
+		<property name="selectedObject" ref="doSelectedObject"/>
+	</bean>
+
+	
+	<bean id="rpSelectedObject"
+		class="org.dspace.app.webui.cris.components.statistics.CrisRPStatsDualSelectedComponent">	
+		<property name="applicationService" ref="applicationService" />
+	</bean>
+
+	<bean id="pjSelectedObject"
+		class="org.dspace.app.webui.cris.components.statistics.CrisPJStatsDualSelectedComponent">	
+		<property name="applicationService" ref="applicationService" />
+	</bean>
+
+	<bean id="ouSelectedObject"
+		class="org.dspace.app.webui.cris.components.statistics.CrisOUStatsDualSelectedComponent">	
+		<property name="applicationService" ref="applicationService" />
+	</bean>
+
+	<bean id="doSelectedObject"
+		class="org.dspace.app.webui.cris.components.statistics.CrisDOStatsDualSelectedComponent">	
+		<property name="applicationService" ref="applicationService" />
+	</bean>
+	<!-- Components for ITEM -->
+	
+	<bean id="itemStatsComponent" class="org.dspace.app.cris.integration.statistics.StatComponentsService">
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showExtraTab" value="false"/>
+		<property name="showSelectedObject" value="true"/>
+		<property name="topRelation" value="20"/>
+		<property name="components">
+			<map>
+				<entry key="selectedObject" value-ref="statsitem" />				
+				<entry key="bitstream" value-ref="statsbitstreamforitem" />
+			</map>
+		</property>
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+	</bean>
+
+
+	<bean id="statsitem"
+		class="org.dspace.app.webui.cris.components.statistics.StatSelectedObjectComponent">		
+		<property name="relationObjectType" value="2" />		
+	</bean>
+	
+	<bean id="statsbitstreamforitem"
+		class="org.dspace.app.webui.cris.components.statistics.StatBitstreamTopObjectComponent">
+		<property name="relationObjectType" value="0" />	
+		<property name="bean" ref="commonItemBean" />
+		<property name="crisSearchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+
+	<bean id="commonItemBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+		<property name="componentIdentifier" value="item" />
+		<property name="query"><value>search.resourceid:{0}</value></property>					
+	</bean>
+
+	
+	<!-- Components for COLLECTION -->
+	
+	<bean id="collectionStatsComponent" class="org.dspace.app.cris.integration.statistics.StatComponentsService">
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showExtraTab" value="false"/>
+		<property name="showSelectedObject" value="true"/>
+		<property name="topRelation" value="20"/>
+		<property name="components">
+			<map>
+				<entry key="selectedObject" value-ref="statscollection" />
+				<entry key="item" value-ref="statsitemforcollection" />				
+				<entry key="bitstream" value-ref="statsbitstreamforcollection" />
+				<entry key="upload" value-ref="statsubmitteditemforcollection" />
+			</map>
+		</property>
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+	</bean>
+
+
+	<bean id="statscollection"
+		class="org.dspace.app.webui.cris.components.statistics.StatSelectedObjectComponent">				
+		<property name="relationObjectType" value="3" />	
+	</bean>
+	
+	<bean id="statsitemforcollection"
+		class="org.dspace.app.webui.cris.components.statistics.StatItemTopObjectComponent">
+		<property name="relationObjectType" value="2" />		
+		<property name="bean" ref="commonCollectionBean" />
+	</bean>
+	
+	<bean id="statsbitstreamforcollection"
+		class="org.dspace.app.webui.cris.components.statistics.StatBitstreamTopObjectComponent">
+		<property name="relationObjectType" value="0" />			
+		<property name="bean" ref="commonCollectionBean" />
+		<property name="crisSearchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+		
+	<bean id="statsubmitteditemforcollection"
+		class="org.dspace.app.webui.cris.components.statistics.StatUploadObjectComponent">					
+		<property name="relationObjectType" value="3" />			
+		<property name="bean" ref="commonCollectionSubmittedItemBean" />		
+		<property name="searchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+	<bean id="commonCollectionSubmittedItemBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+		<property name="filters">
+			<list>
+				<value>search.resourcetype:2</value>
+				<value>-withdrawn:true</value>
+			</list>
+		</property>
+		<property name="componentIdentifier" value="collectionsubmitted" />
+		<property name="query"><value>location.coll:{0}</value></property>
+	</bean>
+	
+	<bean id="commonCollectionBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+
+		<property name="componentIdentifier" value="collection" />
+		<property name="query"><value>location.coll:{0}</value></property>
+					
+	</bean>
+	
+	<!-- Components for COMMUNITY -->
+	
+	<bean id="communityStatsComponent" class="org.dspace.app.cris.integration.statistics.StatComponentsService">
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showExtraTab" value="false"/>
+		<property name="showSelectedObject" value="true"/>
+		<property name="topRelation" value="20"/>
+		<property name="components">
+			<map>
+				<entry key="selectedObject" value-ref="statscommunity" />
+				<entry key="community" value-ref="statssubcommunity" />
+				<entry key="collection" value-ref="statscollectionforcommunity" />
+				<entry key="item" value-ref="statsitemforcommunity" />				
+				<entry key="bitstream" value-ref="statsbitstreamforcommunity" />
+				<entry key="upload" value-ref="statsubmitteditemforcommunity" />
+			</map>
+		</property>
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+	</bean>
+
+	<bean id="statscommunity"
+		class="org.dspace.app.webui.cris.components.statistics.StatSelectedObjectComponent">
+			
+		<property name="relationObjectType" value="4" />
+	</bean>
+
+	<bean id="statssubcommunity"
+		class="org.dspace.app.webui.cris.components.statistics.StatTopObjectComponent">	
+		<property name="relationObjectType" value="4" />			
+		<property name="bean" ref="commonCommunityBean" />
+		<property name="fromField" value="search.uniqueid" />
+	</bean>
+	
+	
+	<bean id="statscollectionforcommunity"
+		class="org.dspace.app.webui.cris.components.statistics.StatTopObjectComponent">
+		<property name="relationObjectType" value="3" />			
+		<property name="bean" ref="commonCommunityBean" />
+		<property name="fromField" value="search.uniqueid" />
+	</bean>
+	
+	<bean id="statsitemforcommunity"
+		class="org.dspace.app.webui.cris.components.statistics.StatItemTopObjectComponent">
+		<property name="relationObjectType" value="2" />			
+		<property name="bean" ref="commonCommunityBean" />		
+	</bean>
+	
+	<bean id="statsbitstreamforcommunity"
+		class="org.dspace.app.webui.cris.components.statistics.StatBitstreamTopObjectComponent">					
+		<property name="relationObjectType" value="0" />			
+		<property name="bean" ref="commonCommunityBean" />		
+		<property name="crisSearchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+	
+	<bean id="statsubmitteditemforcommunity"
+		class="org.dspace.app.webui.cris.components.statistics.StatUploadObjectComponent">					
+		<property name="relationObjectType" value="4" />			
+		<property name="bean" ref="commonCommunitySubmittedItemBean" />		
+		<property name="searchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+	<bean id="commonCommunitySubmittedItemBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+		<property name="filters">
+			<list>
+				<value>search.resourcetype:2</value>
+				<value>-withdrawn:true</value>
+			</list>
+		</property>
+		<property name="componentIdentifier" value="communitysubmitted" />
+		<property name="query"><value>location.comm:{0}</value></property>
+	</bean>
+	<bean id="commonCommunityBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+
+		<property name="componentIdentifier" value="community" />
+		<property name="query"><value>location.comm:{0}</value></property>
+					
+	</bean>
+	
+
+	<!-- Components for SITE -->
+	
+	<bean id="siteStatsComponent" class="org.dspace.app.cris.integration.statistics.StatComponentsService">
+		<property name="excludeBot" value="true"/> <!-- <value>-isBot:true</value>  -->
+		<property name="showSelectedObject" value="true"/>
+		<property name="showExtraTab" value="true"/>
+		<property name="topRelation" value="20"/>
+		<property name="components">
+			<map>			
+				<entry key="item" value-ref="statsitemforsite" />
+<!-- 				<entry key="community" value-ref="statscommunityforsite" />
+				<entry key="collection" value-ref="statscollectionforsite" /> -->
+				<entry key="bitstream" value-ref="statsbitstreamforsite" />				
+				<entry key="upload" value-ref="statssubmitteditemforsite" />
+			</map>
+		</property>
+		<property name="topCountryLength" value="10" />
+		<property name="topContinentLength" value="-1" />
+		<property name="topCityLength" value="10" />		
+		<property name="showMoreLength" value="20" />
+		<property name="yearsQuery" value="5" />
+	</bean>
+
+	<bean id="statsitemforsite"
+		class="org.dspace.app.webui.cris.components.statistics.StatItemTopObjectComponent">
+		<property name="relationObjectType" value="2" />			
+		<property name="bean" ref="commonSiteBean" />		
+	</bean>
+	
+	<bean id="statsbitstreamforsite"
+		class="org.dspace.app.webui.cris.components.statistics.StatBitstreamTopObjectComponent">					
+		<property name="relationObjectType" value="0" />			
+		<property name="bean" ref="commonSiteBean" />		
+		<property name="crisSearchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+	
+<!-- 	<bean id="statscommunityforsite"
+		class="org.dspace.app.webui.cris.components.statistics.StatTopObjectComponent">	
+		<property name="relationObjectType" value="4" />			
+		<property name="bean" ref="commonSiteBean" />
+	</bean>
+	
+	<bean id="statscollectionforsite"
+		class="org.dspace.app.webui.cris.components.statistics.StatTopObjectComponent">
+		<property name="relationObjectType" value="3" />			
+		<property name="bean" ref="commonSiteBean" />
+	</bean> -->
+	
+	<bean id="statssubmitteditemforsite"
+		class="org.dspace.app.webui.cris.components.statistics.StatUploadObjectComponent">					
+		<property name="relationObjectType" value="2" />			
+		<property name="bean" ref="commonSiteSubmittedItemBean" />		
+		<property name="searchService" ref="org.dspace.discovery.SearchService" />
+	</bean>
+	<bean id="commonSiteSubmittedItemBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+		<property name="filters">
+			<list>
+				<value>search.resourcetype:2</value>
+				<value>-withdrawn:true</value>
+			</list>
+		</property>
+		<property name="componentIdentifier" value="sitesubmitted" />
+		<property name="query"><value>*:*</value></property>
+	</bean>
+		
+	<bean id="commonSiteBean"
+		class="org.dspace.app.webui.cris.components.BeanComponent">
+		<property name="componentIdentifier" value="site" />
+		<property name="subQueries">
+		<map>
+			<entry key="Article"><value>dc.type:"Article"</value></entry>
+			<entry key="Dataset"><value>dc.type:"Dataset"</value></entry>
+			<entry key="Book"><value>dc.type:"Book"</value></entry>
+			<entry key="BookChapter"><value>dc.type:"Book chapter"</value></entry>
+			<entry key="Presentation"><value>dc.type:"Presentation"</value></entry>
+			<entry key="Thesis"><value>dc.type:"Thesis"</value></entry>
+			<entry key="Others"><value>-dc.type:"Article" -dc.type:"Dataset" -dc.type:"Book" -dc.type:"Thesis" -dc.type:"Presentation" -dc.type:"Book chapter"</value></entry>
+		</map>
+		</property>		
+	</bean>
+		
+</beans>

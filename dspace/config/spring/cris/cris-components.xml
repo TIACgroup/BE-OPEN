@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The contents of this file are subject to the license and copyright detailed 
+	in the LICENSE and NOTICE files at the root of the source tree and available 
+	online at http://www.dspace.org/license/ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+	default-autowire-candidates="*Service,*DAO,javax.sql.DataSource">
+
+	<context:annotation-config /> <!-- allows us to use spring annotations in beans -->
+
+
+	<!-- Components -->
+	<bean id="rpStatComponentsService" class="org.dspace.app.cris.integration.CrisComponentsService">
+		<property name="components">
+			<map>
+				<entry key="dspaceitems" value-ref="publicationlist" />			
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="rpComponentsService" class="org.dspace.app.cris.integration.CrisComponentsService">
+		<property name="components">
+			<map>
+				<entry key="dspaceitems" value-ref="publicationlist" />
+				<entry key="projects" value-ref="projectlist" />
+			</map>
+		</property>
+	</bean>
+		
+	<!-- Publication component for RP -->
+	<bean id="publicationlist"
+		class="org.dspace.app.webui.cris.components.ItemsConfigurerComponent">
+		<property name="relationConfiguration" ref="relationRPVSItemConfiguration" />
+		<property name="commonFilter"><util:constant static-field="org.dspace.app.webui.cris.util.RelationPreferenceUtil.HIDDEN_FILTER" /></property>				
+		<property name="target" value="org.dspace.app.cris.model.ResearcherPage" />
+		<property name="facets" ref="facetsItemConfiguration" />
+		<property name="types">
+			<map>
+				<entry key="selected" value-ref="selectedComponent" />
+				<entry key="journal" value-ref="journalComponent" />
+				<entry key="conference" value-ref="conferenceComponent" />
+				<entry key="book" value-ref="bookComponent" />
+				<entry key="patent" value-ref="patentComponent" />
+				<entry key="dataset" value-ref="datasetComponent" />
+				<entry key="other" value-ref="otherComponent" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="selectedComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="selected" />
+		<property name="facetQuery"><value>relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>		
+		<!-- selected component should be sorted by score (-1) -->
+	    <property name="sortby"><value>-1</value></property>		
+	</bean>
+	
+	<bean id="journalComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="journal" />
+		<property name="facetQuery"><value>dc.type:Article -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>	
+	</bean>
+	
+	<bean id="conferenceComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="conference" />
+		<property name="facetQuery"><value>resourcetype_authority:conferencematerials -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>			
+	</bean>
+	
+	<bean id="bookComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="book" />
+		<property name="facetQuery"><value>dc.type:Book -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<bean id="datasetComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="dataset" />
+		<property name="facetQuery"><value>dc.type:Dataset -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<bean id="patentComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="patent" />		
+		<property name="facetQuery"><value>dc.type:Patent -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>
+	</bean>
+	
+	<bean id="otherComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="other" />
+		<property name="facetQuery"><value>-dc.type:Article -dc.type:Book -(dc.type:Conference_Paper OR dc.type:Presentation) -dc.type:Patent -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>
+	</bean>
+	
+	<!-- Project list for RP entity -->
+	<bean id="projectlist"
+		class="org.dspace.app.webui.cris.components.CRISPJConfigurerComponent">
+		<property name="relationConfiguration" ref="relationRPVSPJConfiguration" />		
+		<property name="target" value="org.dspace.app.cris.model.ResearcherPage" />
+		<property name="facets" ref="facetsPJConfiguration" />
+		<property name="types">
+			<map>
+				<entry key="selectedproject" value-ref="selectedProjectComponent" />
+				<entry key="investigatored" value-ref="investigatoredComponent" />
+				<entry key="coinvestigatored" value-ref="coinvestigatoredComponent" />				
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="selectedProjectComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="selectedproject" />
+		<property name="facetQuery"><value>relationpreferences.crisproject.projects.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>5</value></property>		
+		<!-- selected component should be sorted by score (-1) -->
+	    <property name="sortby"><value>-1</value></property>				
+	</bean>
+	
+	<bean id="investigatoredComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="investigatored" />
+		<property name="facetQuery"><value>crisproject.principalinvestigator_authority:{0} -relationpreferences.crisproject.projects.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>5</value></property>		
+	</bean>
+	
+	<bean id="coinvestigatoredComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="coinvestigatored" />
+		<property name="facetQuery"><value>crisproject.coinvestigators_authority:{0} -relationpreferences.crisproject.projects.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>5</value></property>		
+	</bean>
+	
+	<!--  OU Components -->
+	<bean id="ouComponentsService" class="org.dspace.app.cris.integration.CrisComponentsService">
+		<property name="components">
+			<map>				
+				<entry key="publication" value-ref="publicationlistforou" />				
+				<entry key="rppublication" value-ref="publicationlistforouviarp" />				
+				<entry key="projects" value-ref="projectlistforou" />				
+				<entry key="rpprojects" value-ref="projectlistinvestigatorforou" />
+				<entry key="rp" value-ref="personslist" />				
+				<entry key="organizations" value-ref="organizationslist" />				
+			</map>
+		</property>
+	</bean>
+	
+	<!-- Publication list for OU entity -->
+	<bean id="publicationlistforou"
+		class="org.dspace.app.webui.cris.components.ItemsConfigurerComponent">		
+		<property name="relationConfiguration" ref="relationOUVSItemConfiguration" />
+		<property name="commonFilter"><util:constant static-field="org.dspace.app.webui.cris.util.RelationPreferenceUtil.HIDDEN_FILTER" /></property>
+		<property name="target" value="org.dspace.app.cris.model.OrganizationUnit" />
+		<property name="types">
+			<map>
+				<entry key="selected" value-ref="selectedPublicationForOUComponent" />
+				<entry key="journal" value-ref="journalForOUComponent" />
+				<entry key="conference" value-ref="conferenceForOUComponent" />
+				<entry key="book" value-ref="bookForOUComponent" />
+				<entry key="patent" value-ref="patentForOUComponent" />
+				<entry key="other" value-ref="otherForOUComponent" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean id="selectedPublicationForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="selected" />
+		<property name="facetQuery"><value>relationpreferences.crisou.publications.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>6</value></property>		
+	</bean>
+		
+	
+	<bean id="journalForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="journal" />
+		<property name="facetQuery"><value>dc.type:Article -relationpreferences.crisou.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>	
+	</bean>
+	
+	<bean id="conferenceForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="conference" />
+		<property name="facetQuery"><value>dc.type:Conference_Paper -relationpreferences.crisou.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>	
+	</bean>
+	
+	<bean id="bookForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="book" />
+		<property name="facetQuery"><value>dc.type:Book -relationpreferences.crisou.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<bean id="patentForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="patent" />
+		<property name="facetQuery"><value>dc.type:Patent -relationpreferences.crisou.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<bean id="otherForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="other" />
+		<property name="facetQuery"><value>-dc.type:Article -(dc.type:Book OR dc.type:Book_Chapter) -(dc.type:Conference_Paper OR dc.type:Presentation) -dc.type:Patent -(dc.type:PG_Thesis OR dc.type:UG_Thesis) -relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>desc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<!-- Publication list for OU entity via RP -->
+	<bean id="publicationlistforouviarp"
+		class="org.dspace.app.webui.cris.components.ItemsConfigurerComponent">
+		<property name="relationConfiguration" ref="relationOUVSITEMViaRPConfiguration" />		
+		<property name="commonFilter"><util:constant static-field="org.dspace.app.webui.cris.util.RelationPreferenceUtil.HIDDEN_FILTER" /></property>
+		<property name="target" value="org.dspace.app.cris.model.OrganizationUnit" />
+		<property name="facets" ref="facetsItemConfiguration" />
+		<property name="types">
+			<map>
+				<entry key="nestedrp" value-ref="nestedrpPublicationForOUComponent" />				
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean id="nestedrpPublicationForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="nestedrp" />
+		<property name="facetQuery"><value>*:*</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<!-- Person list for OU entity -->
+	<bean id="personslist"
+		class="org.dspace.app.webui.cris.components.CRISRPConfigurerComponent">
+		<property name="relationConfiguration" ref="relationOUVSRPConfiguration" />		
+		<property name="target" value="org.dspace.app.cris.model.OrganizationUnit" />
+		<property name="facets" ref="facetsRPforComponentConfiguration" />
+		<property name="types">
+			<map>
+				<entry key="persons" value-ref="personsForOUComponent" />								
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean id="personsForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="persons" />			
+		<property name="facetQuery"><value>*:*</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>5</value></property>
+		<property name="sortby"><value>4</value></property>			
+	</bean>
+		
+		
+	<!-- Project list for OU entity -->
+	<bean id="projectlistforou"
+		class="org.dspace.app.webui.cris.components.CRISOUConfigurerComponent">
+		<property name="relationConfiguration" ref="relationOUVSPJConfiguration" />		
+		<property name="target" value="org.dspace.app.cris.model.OrganizationUnit" /> 
+		<property name="types">
+			<map>
+				<entry key="selectedproject" value-ref="selectedProjectForOUComponent" />				
+				<entry key="agencies" value-ref="agenciesComponent" />				
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="selectedProjectForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="selectedproject" />
+		<property name="facetQuery"><value>relationpreferences.crisou.projects.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>5</value></property>		
+	</bean>
+	
+	<bean id="agenciesComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="agencies" />
+		<property name="facetQuery"><value>-relationpreferences.crisou.projects.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>5</value></property>		
+	</bean>
+		
+	<!-- Principal Project list for OU entity -->	
+	<bean id="projectlistinvestigatorforou"
+		class="org.dspace.app.webui.cris.components.CRISPJConfigurerComponent">
+		<property name="relationConfiguration" ref="relationOUVSPJviaInvestigatorConfiguration" />		
+		<property name="target" value="org.dspace.app.cris.model.OrganizationUnit" />
+		<property name="types">
+			<map>
+				<entry key="deptproject" value-ref="deptProjectForOUComponent" />								
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="deptProjectForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="deptproject" />
+		<property name="facetQuery"><value>*:*</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>6</value></property>		
+	</bean>
+	
+	<!-- Workgroup list for OU entity -->
+	<bean id="organizationslist"
+		class="org.dspace.app.webui.cris.components.CRISOUConfigurerComponent">
+		<property name="relationConfiguration" ref="relationOUVSOUConfiguration" />
+		<property name="target" value="org.dspace.app.cris.model.OrganizationUnit" />
+		<property name="facets" ref="facetsOUConfiguration"/>
+		<property name="types">
+			<map>
+				<entry key="organizations" value-ref="organizationsForOUComponent" />				
+			</map>
+		</property>
+	</bean>
+		
+	<bean id="organizationsForOUComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="organizations" />
+		<property name="facetQuery"><value>*:*</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>6</value></property>			
+	</bean>
+	
+	<!-- Project Components -->
+	<bean id="projectComponentsService" class="org.dspace.app.cris.integration.CrisComponentsService">
+		<property name="components">
+			<map>
+				<entry key="dspaceitems" value-ref="publicationlistforproject" />				
+			</map>
+		</property>
+	</bean>
+	
+	
+	<!-- Publication list for Project entity -->
+	<bean id="publicationlistforproject"
+		class="org.dspace.app.webui.cris.components.ItemsConfigurerComponent">
+		<property name="relationConfiguration" ref="relationPJVSItemConfiguration" />
+		<property name="commonFilter"><util:constant static-field="org.dspace.app.webui.cris.util.RelationPreferenceUtil.HIDDEN_FILTER" /></property>		
+		<property name="target" value="org.dspace.app.cris.model.Project" />
+		<property name="facets" ref="facetsItemConfiguration"/>
+		<property name="types">
+			<map>
+				<entry key="selected" value-ref="selectedPublicationForProjectComponent" />				
+				<entry key="all" value-ref="allPublicationForProjectComponent" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean id="selectedPublicationForProjectComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="selected" />
+		<property name="facetQuery"><value>relationpreferences.crisproject.publications.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>		
+	</bean>
+	
+	<bean id="allPublicationForProjectComponent"
+		class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="all" />
+		<property name="facetQuery"><value>*:*</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>					
+	</bean>
+	
+	<!-- Dynamic object component -->
+	<bean id="doComponentsService" class="org.dspace.app.cris.integration.CrisComponentsService">
+		<property name="components">
+			<map>
+				<entry key="journalspublications" value-ref="publicationlistforjournals" />				
+			</map>
+		</property>
+	</bean>
+
+	<!-- Publication list for Journal dynamic entity -->
+	<bean id="publicationlistforjournals"
+		class="org.dspace.app.webui.cris.components.ItemsConfigurerComponent">
+		<property name="relationConfiguration" ref="relationJOURNALVSItemConfiguration" />
+		<property name="commonFilter"><util:constant static-field="org.dspace.app.webui.cris.util.RelationPreferenceUtil.HIDDEN_FILTER" /></property>		
+		<property name="target" value="org.dspace.app.cris.model.ResearchObject" />
+		<property name="facets" ref="facetsItemConfiguration"/>		
+		<property name="types">
+			<map>
+				<entry key="selected" value-ref="selectedPublicationForJournalComponent" />				
+				<entry key="all" value-ref="allPublicationForJournalComponent" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="selectedPublicationForJournalComponent" class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="selected" />
+		<property name="facetQuery">
+			<value>relationpreferences.crisjournals.publications.selected:{1}
+			</value>
+		</property>
+		<property name="order">
+			<value>asc</value>
+		</property>
+		<property name="rpp">
+			<value>20</value>
+		</property>
+		<property name="sortby">
+			<value>1</value>
+		</property>
+	</bean>
+
+	<bean id="allPublicationForJournalComponent" class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="all" />
+		<property name="facetQuery">
+			<value>*:*</value>
+		</property>
+		<property name="order">
+			<value>asc</value>
+		</property>
+		<property name="rpp">
+			<value>20</value>
+		</property>
+		<property name="sortby">
+			<value>1</value>
+		</property>
+	</bean>
+</beans>
