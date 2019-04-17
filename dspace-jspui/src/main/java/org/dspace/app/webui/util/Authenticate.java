@@ -314,7 +314,22 @@ public class Authenticate
         {
             request.setAttribute("is.admin", Boolean.valueOf(isAdmin));
         }
+        
+        boolean isLibrarian = false;
 
+        try
+        {
+            isLibrarian = AuthorizeManager.isLibrarian(context);
+        }
+        catch (SQLException se)
+        {
+            log.warn("Unable to use AuthorizeManager " + se);
+        }
+        finally 
+        {
+            request.setAttribute("is.librarian", Boolean.valueOf(isLibrarian));
+        }
+        
         // We store the current user in the request as an EPerson object...
         request.setAttribute("dspace.current.user", eperson);
 

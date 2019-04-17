@@ -52,6 +52,9 @@ public class Group extends DSpaceObject
     /** ID of Administrator Group */
     public static final int ADMIN_ID = 1;
 
+    /** ID of Librarian Group */
+    public static final int LIBRARIAN_ID = 2;
+
     /** The row in the table representing this object */
     private final TableRow myRow;
 
@@ -1551,6 +1554,15 @@ public class Group extends DSpaceObject
         }
         adminGroup.setName("Administrator");
         adminGroup.update();
+
+        // Check for Librarian group. If not found, create it
+        Group librarianGroup = Group.find(context, LIBRARIAN_ID);
+        if(librarianGroup==null)
+        {
+            librarianGroup = Group.create(context);
+        }
+        librarianGroup.setName("Librarian");
+        librarianGroup.update();
     }
     
     public boolean isNotRelevant() {

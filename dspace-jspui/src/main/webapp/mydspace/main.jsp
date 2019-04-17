@@ -58,6 +58,10 @@
 	Boolean admin = (Boolean)request.getAttribute("is.admin");
 	boolean isAdmin = (admin == null ? false : admin.booleanValue());
 	
+	// Is the logged in user an librarian
+	Boolean librarian = (Boolean)request.getAttribute("is.librarian");
+	boolean isLibrarian = (librarian == null ? false : librarian.booleanValue());
+	
     WorkspaceItem[] workspaceItems =
         (WorkspaceItem[]) request.getAttribute("workspace.items");
 
@@ -203,8 +207,11 @@
 
 		<div class="panel-body">
 		<%
+
     if (crisEnabled)
     {
+
+        if(!isLibrarian){
         %>
         
         <h2 id="h2-cris-rp-status" class="cris-rp-status">
@@ -242,11 +249,18 @@
            	<button id="helpButton" class="btn btn-info">
            		<fmt:message key="cris.rs.status.instructions.label"/>
            	</button>
-        </h2>
+        </h2> 
+
+        <%
+        } 
+        %> 
 
 <div id="cris-rp-choice" class="panel-group" style="display:none;">
     <div class="panel panel-default">
 
+        <%
+        if(!isLibrarian){ 
+        %>
 	  <div class="panel-heading">
         <h4 class="panel-title">
           <a data-toggle="collapse" href="#collapseMatchRP"><fmt:message key="jsp.mydspace.cris.suggested-rps.button"/></a>
@@ -304,11 +318,18 @@
        	<span class="fa fa-edit"></span></a>
 		</div>
     </div>
+
+    <%
+    } 
+    %>
+
   </div>
  </div>
 <br/>	
 <%
-} 
+}
+
+            if(!isLibrarian){ 
 %>        		
         	 
 		    <form action="<%= request.getContextPath() %>/mydspace" method="post">
@@ -316,7 +337,10 @@
                 <input class="btn btn-success" type="submit" name="submit_new" value="<fmt:message key="jsp.mydspace.main.start.button"/>" />
                 <input class="btn btn-info" type="submit" name="submit_own" value="<fmt:message key="jsp.mydspace.main.view.button"/>" />
 		    </form>
-		
+    
+            <%
+            } 
+            %>
 		
 <%-- Task list:  Only display if the user has any tasks --%>
 <%

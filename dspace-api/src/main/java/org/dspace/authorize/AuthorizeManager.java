@@ -481,6 +481,25 @@ public class AuthorizeManager
             return Group.isMember(c, 1);
         }
     }
+    
+    public static boolean isLibrarian(Context c) throws SQLException
+    {
+        // if we're ignoring authorization, user is member of librarian
+        if (c.ignoreAuthorization())
+        {
+            return true;
+        }
+
+        EPerson e = c.getCurrentUser();
+
+        if (e == null)
+        {
+            return false; // anonymous users can't be librarians....
+        } else
+        {
+            return Group.isMember(c, 2);
+        }
+    }
 
     ///////////////////////////////////////////////
     // policy manipulation methods
