@@ -66,41 +66,93 @@
 		<p class="help-block"><fmt:message key="jsp.submit.creative-commons.info1"/></p>
 
 	<div class="row">
-		<label class="col-md-2"><fmt:message key="jsp.submit.creative-commons.license"/></label>
-		<span class="col-md-8">
-			<select name="licenseclass_chooser" id="licenseclass_chooser" class="form-control">
-					<option
-						value="webui.Submission.submit.CCLicenseStep.select_change"><fmt:message key="jsp.submit.creative-commons.select_change"/></option>
-					<% if(cclicenses!=null) { 
-							for(CCLicense cclicense : cclicenses) { %>
-								<option
-									value="<%= cclicense.getLicenseId()%>"><%= cclicense.getLicenseName()%></option>						
-					<% 		}
-						}%>
-					<option
-						value="webui.Submission.submit.CCLicenseStep.no_license"><fmt:message key="jsp.submit.creative-commons.no_license"/></option>
-			 </select>
-		</span>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"><fmt:message key="jsp.creative-commons.heading.title"/></th>
+                <th scope="col"><fmt:message key="jsp.creative-commons.heading.description"/></th>
+                <th scope="col"><fmt:message key="jsp.creative-commons.heading.selection"/></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img src="image/creative-commons-zero.png" alt=""></td>
+                <td><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank"><fmt:message key="jsp.creative-commons.license.zero"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.zero"/></td>
+                <td><input type="radio" name="license-radio" value="zero"></td>
+              </tr>
+              <tr>
+                <td><img src="image/creative-commons-by.png" alt=""></td>
+                <td><a href="https://creativecommons.org/licenses/by/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.by"/></td>
+                <td><input type="radio" name="license-radio" value="by"></td>
+              </tr>
+              <tr>
+                <td><img src="image/creative-commons-by-sa.png" alt=""></td>
+                <td><a href="https://creativecommons.org/licenses/by-sa/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-sa"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.by-sa"/></td>
+                <td><input type="radio" name="license-radio" value="by-sa"></td>
+              </tr>
+              <tr>
+                <td><img src="image/creative-commons-by-nd.png" alt=""></td>
+                <td><a href="https://creativecommons.org/licenses/by-nd/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nd"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.by-nd"/></td>
+                <td><input type="radio" name="license-radio" value="by-nd"></td>
+              </tr>
+              <tr>
+                <td><img src="image/creative-commons-by-nc.png" alt=""></td>
+                <td><a href="https://creativecommons.org/licenses/by-nc/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nc"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.by-nc"/></td>
+                <td><input type="radio" name="license-radio" value="by-nc"></td>
+              </tr>
+              <tr>
+                <td><img src="image/creative-commons-by-nc-sa.png" alt=""></td>
+                <td><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nc-sa"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.by-nc-sa"/></td>
+                <td><input type="radio" name="license-radio" value="by-nc-sa"></td>
+              </tr>
+              <tr>
+                <td><img src="image/creative-commons-by-nc-nd.png" alt=""></td>
+                <td><a href="https://creativecommons.org/licenses/by-nc-nd/3.0/rs/deed.sr_LATN" target="_blank"><fmt:message key="jsp.creative-commons.license.by-nc-nd"/></a></td>
+                <td><fmt:message key="jsp.creative-commons.description.by-nc-nd"/></td>
+                <td ><input type="radio" name="license-radio" value="by-nc-nd"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pull-right">
+              <label class="form-check-label" for="license-radio"><fmt:message key="jsp.creative-commons.license.none"/></label>
+            <input class="form-check-input" type="radio" name="license-radio" value="none" checked>
+          </div>
 	</div>
 	<% if(licenseExists) { %>
-	<div class="row" id="current_creativecommons">		
+	<div class="row" id="current_creativecommons">
 		<label class="col-md-2"><fmt:message key="jsp.submit.creative-commons.license.current"/></label>
 		<span class="col-md-8">
 			<a href="<%=licenseURL %>"><%=licenseURL %></a>
-		</span>		
+		</span>
 	</div>
 	<% } %>
-	<div style="display:none;" id="creativecommons_response">		
+        <%--
+	<div style="display:none;" id="creativecommons_response">
 	</div>
+        --%>
 	<br/>
+        
+        <%-- Hidden inputs used for custom CC license step --%>
+        <input type="hidden" name="licenseclass_chooser" id="licenseclass_chooser"/>
+        <input type="hidden" name="commercial_chooser" id="commercial_chooser"/>
+        <input type="hidden" name="derivatives_chooser" id="derivatives_chooser"/>
+        
 		<%-- Hidden fields needed for SubmissionController servlet to know which step is next--%>
     <%= SubmissionController.getSubmissionParameters(context, request) %>
 
 	<input type="hidden" name="cc_license_url" value="<%=licenseURL %>" />
-    <input type="submit" id="submit_grant" name="submit_grant" value="submit_grant" style="display: none;" />	
+    <input type="submit" id="submit_grant" name="submit_grant" value="submit_grant" style="display: none;" />
 	<%
 		int numButton = 2 + (!SubmissionController.isFirstStep(request, subInfo)?1:0) + (licenseExists?1:0);
-	
+
 	%>
     <div class="row col-md-<%= 2*numButton %> pull-right btn-group">
                 <%  //if not first step, show "Previous" button
@@ -112,41 +164,56 @@
             <input class="btn btn-default col-md-<%= 12 / numButton %>" type="submit" name="<%=AbstractProcessingStep.CANCEL_BUTTON%>" value="<fmt:message key="jsp.submit.general.cancel-or-save.button"/>"/>
 			<input class="btn btn-primary col-md-<%= 12 / numButton %>" type="submit" name="<%=AbstractProcessingStep.NEXT_BUTTON%>" value="<fmt:message key="jsp.submit.general.next"/>" />
     </div>
-    
+
     <input type="hidden" name="pageCallerID" value="<%= request.getAttribute("pageCallerID")%>"/>
     </form>
     <script type="text/javascript">
-<!--
-jQuery("#licenseclass_chooser").change(function() {
-    var make_id = jQuery(this).find(":selected").val();
-    var request = jQuery.ajax({
-        type: 'GET',
-        url: '<%=request.getContextPath()%>/json/creativecommons?license=' + make_id
-    });
-    request.done(function(data){
-    	jQuery("#creativecommons_response").empty();
-    	var result = data.result;
-        for (var i = 0; i < result.length; i++) {
-            var id = result[i].id;            
-            var label = result[i].label;
-            var description = result[i].description;
-            var htmlCC = " <div class='form-group'><span class='help-block' title='"+description+"'>"+label+"&nbsp;<i class='glyphicon glyphicon-info-sign'></i></span>"
-            var typefield = result[i].type;
-            if(typefield=="enum") {            	
-            	jQuery.each(result[i].fieldEnum, function(key, value) {
-            		htmlCC += "<label class='radio-inline' for='"+id+"-"+key+"'>";
-            		htmlCC += "<input placeholder='"+value+"' type='radio' id='"+id+"-"+key+"' name='"+id+"_chooser' value='"+key+"' required/>"+value+ "</label>";
-            	});
-            }
-            htmlCC += "</div>";
-            jQuery("#creativecommons_response").append(htmlCC);                
-        }
-        
-        jQuery("#current_creativecommons").hide();
-        jQuery("#creativecommons_response").show();
-    });
+
+jQuery('input[type=radio][name=license-radio]').change(function() {
+  switch(this.value) {
+    case 'zero':
+        jQuery('#licenseclass_chooser').val('publicdomain');
+        jQuery('#commercial_chooser').val('');
+        jQuery('#derivatives_chooser').val('');
+        break;
+    case 'by':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('y');
+        jQuery('#derivatives_chooser').val('y');
+        break;
+    case 'by-sa':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('y');
+        jQuery('#derivatives_chooser').val('sa');
+        break;
+    case 'by-nd':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('y');
+        jQuery('#derivatives_chooser').val('n');
+        break;
+    case 'by-nc':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('n');
+        jQuery('#derivatives_chooser').val('y');
+        break;
+    case 'by-nc-sa':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('n');
+        jQuery('#derivatives_chooser').val('sa');
+        break;
+    case 'by-nc-nd':
+        jQuery('#licenseclass_chooser').val('standard');
+        jQuery('#commercial_chooser').val('n');
+        jQuery('#derivatives_chooser').val('n');
+        break;
+    case 'none':
+        jQuery('#licenseclass_chooser').val('webui.Submission.submit.CCLicenseStep.no_license');
+        jQuery('#commercial_chooser').val('');
+        jQuery('#derivatives_chooser').val('');
+        break;
+  }
 });
 
-//-->
+
 </script>
 </dspace:layout>

@@ -325,6 +325,18 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
         return new ItemIterator(context, rows);
     }
 
+    public static boolean existsByScopusIdentifier(Context context, String scopusId) throws SQLException{
+
+        String query = "SELECT i.* from item i " +
+                "LEFT JOIN metadatavalue m ON i.item_id=m.resource_id " +
+                "WHERE m.metadata_field_id=77 AND m.resource_type_id=2 " +
+                "AND m.text_value='" + scopusId + "'";
+
+        TableRowIterator rows = DatabaseManager.queryTable(context, "item", query);
+
+        return rows.hasNext();
+    }
+
     public static ItemIterator findByMetadataFieldAuthority(Context context, String mdString, String authority) throws SQLException, AuthorizeException, IOException {
         String[] elements = getElementsFilled(mdString);
         String schema = elements[0], element = elements[1], qualifier = elements[2];
@@ -1884,6 +1896,42 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
         if (getOwningCollection().canEditBoolean(false))
         {
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * return TRUE if current user one of item's authors
+     *
+     * @return boolean true = current user is one of authors
+     */
+    public boolean isCurrentUserAuthor() {
+        if (ourContext.getCurrentUser() == null) {
+            return false;
+        }
+
+        Metadatum[] authors = this.getMetadataByMetadataString("dc.contributor.author");
+
+        int epersonId = ourContext.getCurrentUser().getID();
+
+        String query = "SELECT crisid FROM cris_rpage WHERE epersonid =" + epersonId;
+
+        try {
+            TableRow rpResult = DatabaseManager.querySingle(ourContext, query);
+
+            if (rpResult != null) {
+                String crisid = rpResult.getStringColumn("crisid");
+
+                for (Metadatum md : authors) {
+                    if (md.authority != null && md.authority.equals(crisid)) {
+                        return true;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            return false;
         }
 
         return false;

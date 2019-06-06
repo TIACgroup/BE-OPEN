@@ -10,6 +10,7 @@ package org.dspace.disseminate;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import java.util.Set;
 
 import de.undercouch.citeproc.CSL;
 import de.undercouch.citeproc.csl.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -26,6 +28,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.dspace.authorize.AuthorizeException;
 import org.dspace.authorize.AuthorizeManager;
 import org.dspace.content.Bitstream;
@@ -86,6 +89,11 @@ public class CitationDocument {
     private static String citationEnabledCommunities = null;
 
     /**
+     * Location of logo image file.
+     */
+    private static String coverPageLogo = null;
+
+    /**
      * List of all enabled collections, inherited/determined for those under communities.
      */
     private static ArrayList<String> citationEnabledCollectionsList;
@@ -118,6 +126,8 @@ public class CitationDocument {
         //Populate VALID_TYPES
         VALID_TYPES.addAll(PDF_MIMES);
 
+        //Load cover page logo location
+        coverPageLogo = ConfigurationManager.getProperty("disseminate-citation", "cover_page_logo");
 
         //Load enabled collections
         citationEnabledCollections = ConfigurationManager.getProperty("disseminate-citation", "enabled_collections");
@@ -338,7 +348,7 @@ public class CitationDocument {
     
     private void generateCoverPage(PDDocument document, PDPage coverPage, Item item) throws IOException {
         try (PDPageContentStream contentStream = new PDPageContentStream(document, coverPage)) {
-            int ypos = 760;
+            int ypos = 720;
             int xpos = 30;
             int xwidth = 550;
             int ygap = 20;
@@ -347,6 +357,15 @@ public class CitationDocument {
             PDFont fontHelveticaBold = PDType0Font.load(document, CitationDocument.class.getResourceAsStream("/fonts/FreeSansBold.ttf"));
             PDFont fontHelveticaOblique = PDType0Font.load(document, CitationDocument.class.getResourceAsStream("/fonts/FreeSansOblique.ttf"));
             contentStream.setNonStrokingColor(Color.BLACK);
+
+            if (coverPageLogo != null) {
+                PDImageXObject pdImage = null;
+                try (InputStream stream = CitationDocument.class.getResourceAsStream("/images/" + coverPageLogo)) {
+                    pdImage = PDImageXObject.createFromByteArray(document, IOUtils.toByteArray(stream), coverPageLogo);
+                }
+                float scale = 0.5f;
+                contentStream.drawImage(pdImage, 200, 720, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
+            }
 
             String[][] content = {header1};
             drawTable(coverPage, contentStream, ypos, xpos, content, fontHelveticaBold, 11, false);
@@ -360,9 +379,9 @@ public class CitationDocument {
             contentStream.fill();
             contentStream.closeAndStroke();
 
-            String[][] content3 = {{getOwningCommunity(item), getOwningCollection(item)}};
-            drawTable(coverPage, contentStream, ypos, xpos, content3, fontHelvetica, 9, false);
-            ypos -=ygap;
+//            String[][] content3 = {{getOwningCommunity(item), getOwningCollection(item)}};
+//            drawTable(coverPage, contentStream, ypos, xpos, content3, fontHelvetica, 9, false);
+//            ypos -=ygap;
 
             contentStream.addRect(xpos, ypos, xwidth, 1);
             contentStream.fill();

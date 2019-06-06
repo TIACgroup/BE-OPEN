@@ -57,7 +57,9 @@
     Item item = (Item) request.getAttribute("item");
     Collection[] collections = (Collection[]) request.getAttribute("collections");
     Boolean admin_b = (Boolean)request.getAttribute("admin_button");
+    Boolean isAuthor_b = (Boolean)request.getAttribute("isAuthor_button");
     boolean admin_button = (admin_b == null ? false : admin_b.booleanValue());
+    boolean isAuthor_button = (isAuthor_b == null ? false : isAuthor_b.booleanValue());
     
     // get the workspace id if one has been passed
     Integer workspace_id = (Integer) request.getAttribute("workspace_id");
@@ -635,6 +637,23 @@ if (dedupEnabled && admin_button) { %>
             </div>
             </div>
     <% } %>
+
+	<% if(isAuthor_button) { %>
+
+		<div class="col-sm-5 col-md-4 col-lg-3">
+			<div class="panel panel-warning">
+				<div class="panel-heading"><fmt:message key="jsp.tools.edit-item-form.title"/></div>
+				<div class="panel-body">
+					<form method="get" action="<%= request.getContextPath() %>/submit">
+						<input type="hidden" name="edit_item" value="<%= item.getID() %>" />
+						<input type="hidden" name="pageCallerID" value="0" />
+						<input class="btn btn-default col-md-12" type="submit" name="submit" value="<fmt:message key="jsp.general.editsubmission.button"/>" />
+					</form>
+				</div>
+			</div>
+		</div>
+
+	<% } %>
     
 </div>
 </div>

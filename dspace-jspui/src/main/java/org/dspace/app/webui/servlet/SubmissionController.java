@@ -1931,6 +1931,10 @@ public class SubmissionController extends DSpaceServlet
             exitPath = "/handle/"
                     + subInfo.getSubmissionItem().getItem().getHandle();
             break;
+        case -1:
+            exitPath = "/handle/"
+                    + subInfo.getSubmissionItem().getItem().getHandle();
+            break;
         default:
             break;
         }

@@ -438,7 +438,7 @@ public class EditItemServlet extends DSpaceServlet
     private void checkEditAuthorization(Context c, Item item)
             throws AuthorizeException, java.sql.SQLException
     {
-        if (!item.canEdit())
+        if (!item.canEdit() && !item.isCurrentUserAuthor())
         {
             int userID = 0;
 

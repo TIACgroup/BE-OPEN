@@ -173,6 +173,17 @@ it, please enter the types and the actual numbers or codes.</hint>
        </field>
 
        <field>
+         <dc-schema>dc</dc-schema>
+         <dc-element>description</dc-element>
+         <dc-qualifier>version</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>Status</label>
+         <input-type value-pairs-name="publication_status">dropdown</input-type>
+         <hint> Select the publication's status.</hint>
+         <required>You must select the status of publication.</required>
+       </field>
+
+       <field>
 		 <dc-schema>dc</dc-schema>
          <dc-element>language</dc-element>
          <dc-qualifier>iso</dc-qualifier>
@@ -180,51 +191,6 @@ it, please enter the types and the actual numbers or codes.</hint>
          <label>Language</label>
          <input-type value-pairs-name="common_iso_languages">dropdown</input-type>
          <hint>Select the language of the main content of the item.  If the language does not appear in the list, please select 'Other'.  If the content does not really have a language (for example, if it is a dataset or an image) please select 'N/A'.</hint>
-         <required></required>
-       </field>
-       
-   
-   	   <field>
-		 <dc-schema>dc</dc-schema>
-         <dc-element>gruparezultata</dc-element>
-         <dc-qualifier></dc-qualifier> 
-         <repeatable>false</repeatable>
-         <label>Grupa rezultata</label>
-         <input-type value-pairs-name="grupa_rezultata">dropdown</input-type>
-         <hint>Izabrati grupu rezultata, vrstu rezultata i oblast nauke.</hint>
-         <required></required>
-       </field> 
-       
-       <field>
-		 <dc-schema>dc</dc-schema>
-         <dc-element>vrstarezultata</dc-element>
-         <dc-qualifier></dc-qualifier> 
-         <repeatable>false</repeatable>
-         <label>Vrsta rezultata</label>
-         <input-type value-pairs-name="vrsta_rezultata">dropdown</input-type>
-         <hint></hint>
-         <required></required>
-       </field>
-       
-       <field>
-		 <dc-schema>dc</dc-schema>
-         <dc-element>oblastnauke</dc-element>
-         <dc-qualifier></dc-qualifier> 
-         <repeatable>false</repeatable>
-         <label>Oblast nauke</label>
-         <input-type value-pairs-name="oblasti_nauke">dropdown</input-type>
-         <hint></hint>
-         <required></required>
-       </field>
-       
-       <field>
-		 <dc-schema>dc</dc-schema>
-         <dc-element>vrednostrezultata</dc-element>
-         <dc-qualifier></dc-qualifier>
-         <repeatable>false</repeatable>
-         <label>Vrednost rezultata</label>
-         <input-type>onebox</input-type>
-         <hint></hint>
          <required></required>
        </field>
        
@@ -1493,419 +1459,6 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>external</stored-value>
      </pair>
    </value-pairs>
-    
-   <value-pairs value-pairs-name="grupa_rezultata" dc-term="gruparezultata">
-   	 <pair>
-       <displayed-value> </displayed-value>
-       <stored-value></stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M10 - Monografije, monografske studije, tematski zbornici, leksikografske i kartografske publikacije međunarodnog značaja</displayed-value>
-       <stored-value>m10</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M20 - Radovi objavljeni u naučnim časopisima međunarodnog značaja; naučna kritika; uređivanje časopisa</displayed-value>
-       <stored-value>m20</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M30 - Zbornici međunarodnih naučnih skupova</displayed-value>
-       <stored-value>m30</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M40 - Monografije nacionalnog značaja</displayed-value>
-       <stored-value>m40</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M50 - Radovi u časopisima nacionalnog značaja</displayed-value>
-       <stored-value>m50</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M60 - Predavanja po pozivu na skupovima nacionalnog značaja</displayed-value>
-       <stored-value>m60</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M70 - Odbranjena doktorska disertacija</displayed-value>
-       <stored-value>m70</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M80 - Tehnička rešenja</displayed-value>
-       <stored-value>m80</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M90 - Patenti</displayed-value>
-       <stored-value>m90</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M100 - Izvedena dela, nagrade, studije, izložbe, žiriranja i kustoski rad od međunarodnog značaja</displayed-value>
-       <stored-value>m100a</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M100 - Izvedena dela, nagrade, studije, izložbe od nacionalnog značaja</displayed-value>
-       <stored-value>m100b</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M120 - Dokumenti pripremljeni u vezi sa kreiranjem i analizom javnih politika</displayed-value>
-       <stored-value>m120</stored-value>
-     </pair>
-   </value-pairs>
-
-   <value-pairs value-pairs-name="vrsta_rezultata" dc-term="vrstarezultata">
-    <pair>
-       <displayed-value>M11 - Istaknuta monografija međunarodnog značaja</displayed-value>
-       <stored-value>m11</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M12 - Monografija međunarodnog značaja</displayed-value>
-       <stored-value>m12</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M13 - Monografska studija/poglavlje u knjizi M11 ili rad u tematskom zborniku vodećeg međunarodnog značaja</displayed-value>
-       <stored-value>m13</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M14 - Monografska studija/poglavlje u knjizi M12 ili rad u tematskom zborniku međunarodnog značaja</displayed-value>
-       <stored-value>m14</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M15 - Leksikografska jedinica ili karta u naučnoj publikaciji vodećeg međunarodnog značaja</displayed-value>
-       <stored-value>m15</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M16 - Leksikografska jedinica ili karta u publikaciji međunarodnog značaja</displayed-value>
-       <stored-value>m16</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M17 - Uređivanje tematskog zbornika leksikografske ili kartografske publikacije vodećeg međunarodnog značaja</displayed-value>
-       <stored-value>m17</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M18 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije međunarodnog značaja</displayed-value>
-       <stored-value>m18</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M21a - Rad u vrhunskom međunarodnom časopisu</displayed-value>
-       <stored-value>m21a</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M21 - Rad u vrhunskom međunarodnom časopisu</displayed-value>
-       <stored-value>m21</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M22 - Rad u istaknutom međunarodnom časopisu</displayed-value>
-       <stored-value>m22</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M23 - Rad u međunarodnom časopisu</displayed-value>
-       <stored-value>m23</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M24 - Rad u časopisu međunarodnog značaja verifikovanog posebnom odlukom</displayed-value>
-       <stored-value>m24</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M25 - Naučna kritika i polemika u istaknutom međunarodnom časopisu</displayed-value>
-       <stored-value>m25</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M26 - Naučna kritika i polemika u međunarodnom časopisu</displayed-value>
-       <stored-value>m26</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M27 - Naučna kritika i polemika u časopisa ranga M24</displayed-value>
-       <stored-value>m27</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M28a - a) Glavni odgovorni urednik istaknutog međunarodnog naučnog časopisa ili publikacije sa monografskim delima kategorije M13</displayed-value>
-       <stored-value>m28a</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M28b - b) Uređivanje istaknutog međunarodnog naučnog časopisa (gost urednik) ili publikacije sa monografskim delima kategorije M14</displayed-value>
-       <stored-value>m28b</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M29a - a) Uređivanje međunarodnog naučnog časopisa; Uređivanje tematskih monografija</displayed-value>
-       <stored-value>m29a</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M29b - b) Glavni i odgovorni urednik nacionalnog časopisa</displayed-value>
-       <stored-value>m29b</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M29v - v) Uređivanje nacionalnog naučnog časopisa; Uređivanje tematskih monografija</displayed-value>
-       <stored-value>m29v</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M31 - Predavanje po pozivu sa međunarodnog skupa štampano u celini (neophodno pozivno pismo)</displayed-value>
-       <stored-value>m31</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M32 - Predavanje po pozivu sa međunarodnog skupa štampano u izvodu</displayed-value>
-       <stored-value>m32</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M33 - Saopštenje sa međunarodnog skupa štampano u celini</displayed-value>
-       <stored-value>m33</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M34 - Saopštenje sa međunarodnog skupa štampano u izvodu</displayed-value>
-       <stored-value>m34</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M35 - Autorizovana diskusija sa međunarodnog skupa</displayed-value>
-       <stored-value>m35</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M36 - Uređivanje zbornika saopštenja međunarodnog naučnog skupa</displayed-value>
-       <stored-value>m36</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M41 - Istaknuta monografija nacionalnog značaja</displayed-value>
-       <stored-value>m41</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M42 - Monografija nacionalnog značaja</displayed-value>
-       <stored-value>m42</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M43 - Monografska bibliografska publikacija ili monografska studija</displayed-value>
-       <stored-value>m43</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M44 - Poglavlje u knjizi M41 ili rad u istaknutom tematskom zborniku vodećeg nacionalnog značaja</displayed-value>
-       <stored-value>m44</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M45 - Poglavlje u knjizi M42 ili rad u tematskom zborniku nacionalnog značaja</displayed-value>
-       <stored-value>m45</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M46 - Leksikografska jedinica u naučnoj publikaciji vodećeg nacionalnog značaja, karta u naučnoj publikaciji nacionalnog značaja, kritičko izdanje građe u naučnoj publikaciji</displayed-value>
-       <stored-value>m46</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M47 - Leksikografska jedinica u naučnoj publikaciji nacionalnog značaja</displayed-value>
-       <stored-value>m47</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M48 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije vodećeg nacionalnog značaja</displayed-value>
-       <stored-value>m48</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M49 - Uređivanje tematskog zbornika, leksikografske ili kartografske publikacije nacionalnog značaja</displayed-value>
-       <stored-value>m49</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M51 - Rad u vodećem časopisu nacionalnog značaja</displayed-value>
-       <stored-value>m51</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M52 - Rad u časopisu nacionalnog značaja</displayed-value>
-       <stored-value>m52</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M53 - Rad u naučnom časopisu</displayed-value>
-       <stored-value>m53</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M54 - Uređivanje vodećeg naučnog časopisa nacionalnog značaja (na godišnjem nivou)</displayed-value>
-       <stored-value>m54</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M55 - Uređivanje naučnog časopisa nacionalnog značaja (na godišnjem nivou)</displayed-value>
-       <stored-value>m55</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M56 - Naučna kritika u časopisu ranga M51</displayed-value>
-       <stored-value>m56</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M57 - Naučna kritika u časopisu ranga M52</displayed-value>
-       <stored-value>m57</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M61 - Predavanje po pozivu sa skupa nacionalnog značaja štampano u celini</displayed-value>
-       <stored-value>m61</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M62 - Predavanje po pozivu sa skupa nacionalnog značaja štampano u izvodu</displayed-value>
-       <stored-value>m62</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M63 - Saopštenje sa skupa nacionalnog značaja štampano u celini</displayed-value>
-       <stored-value>m63</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M64 - Saopštenje sa skupa nacionalnog značaja štampano u izvodu</displayed-value>
-       <stored-value>m64</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M65 - Autorizovana diskusija sa nacionalnog skupa</displayed-value>
-       <stored-value>m65</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M66 - Uređivanje zbornika saopštenja skupa nacionalnog značaja</displayed-value>
-       <stored-value>m66</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M67 - Monografsko izdanje građe, prevod izvornog teksta u obliku monografije (samo za stare jezike)</displayed-value>
-       <stored-value>m67</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M68 - Prevod izvornog teksta u obliku studije, poglavlja ili članka, prevod ili stručna redakcija prevoda naučne monografske knjige (samo za stare jezike)</displayed-value>
-       <stored-value>m68</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M69 - Kritičko izdanje dela/autora</displayed-value>
-       <stored-value>m69</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M81 - Novo tehničko rešenje primenjeno na međunarodnom nivou</displayed-value>
-       <stored-value>m81</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M82 - Novo tehničko rešenje (metoda) primenjeno na nacionalnom nivou</displayed-value>
-       <stored-value>m82</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M83 - Bitno poboljšano tehničko rešenje na međunarodnom nivou</displayed-value>
-       <stored-value>m83</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M84 - Bitno poboljšano tehničko rešenje na nacionalnom nivou</displayed-value>
-       <stored-value>m84</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M85 - Novo tehničko rešenje (nije komercijalizovano)</displayed-value>
-       <stored-value>m85</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M86 - Prijava međunarodnog patenta</displayed-value>
-       <stored-value>m86</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M87 - Prijava domaćeg patenta</displayed-value>
-       <stored-value>m87</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M91 - Registrovan patent na međunarodnom nivou</displayed-value>
-       <stored-value>m91</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M92 - Registrovan patent na nacionalnom nivou</displayed-value>
-       <stored-value>m92</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M93 - Objavljen patent na međunarodnom nivou</displayed-value>
-       <stored-value>m93</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M94 - Objavljen patent na nacionalnom nivou</displayed-value>
-       <stored-value>m94</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M95 - Realizovana, sorta, rasa ili soj na međunarodnom nivou</displayed-value>
-       <stored-value>m95</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M96 - Realizovana, sorta, rasa ili soj na nacionalnom nivou</displayed-value>
-       <stored-value>m96</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M97 - Priznata sorta, rasa ili soj na međunarodnom nivou</displayed-value>
-       <stored-value>m97</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M98 - Priznata sorta, rasa ili soj na nacionalnom nivou</displayed-value>
-       <stored-value>m98</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M99 - Autorska izložba sa katalogom uz naučnu recenziju</displayed-value>
-       <stored-value>m99</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M101 - Izvedeno (autorsko) delo</displayed-value>
-       <stored-value>m101</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M102 - Nagrada na konkursu</displayed-value>
-       <stored-value>m102</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M103 - Studija, ekspertiza</displayed-value>
-       <stored-value>m103</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M104 - Nagrada na izložbi</displayed-value>
-       <stored-value>m104</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M105 - Učešće na izložbi</displayed-value>
-       <stored-value>m105</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M106 - Žiriranje</displayed-value>
-       <stored-value>m106</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M107 - Kustoski rad</displayed-value>
-       <stored-value>m107</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M108 - Izvedeno (autorsko) delo sa publikacijom u nacionalnom časopisu</displayed-value>
-       <stored-value>m108</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M109 - Nagrada na konkursu u Republici</displayed-value>
-       <stored-value>m109</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M110 - Studija ekspertiza, u Republici, regionima,...</displayed-value>
-       <stored-value>m110</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M111 - Nagrada na nacionalnoj izložbi</displayed-value>
-       <stored-value>m111</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M112 - Učešće na nacionalnoj izložbi</displayed-value>
-       <stored-value>m112</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M121 - Strateški dokument nacionalnog ili supra-nacionalnog nivoa naručen od odgovarajućeg organa javne vlasti koji je prihvaćen na odgovarajućem naučnom/nastavno-naučnom veću</displayed-value>
-       <stored-value>m121</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M122 - Strateški dokument regionalnog nivoa naručen od odgovarajućeg organa javne vlasti ili organa teritorijalne autonomije koji je prihvaćen na odgovarajućem naučnom/nastavno-naučnom veću</displayed-value>
-       <stored-value>m122</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M123 - Studija i analiza javne politike koja je prihvaćena na odgovarajućem naučnom/nastavno-naučnom veću</displayed-value>
-       <stored-value>m123</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>M124 - Analiza uticaja efekata, prihvaćena na naučnom/nastavnonaučnom veću</displayed-value>
-       <stored-value>m124</stored-value>
-     </pair>
-   </value-pairs>
-
-   <value-pairs value-pairs-name="oblasti_nauke" dc-term="oblastnauke">
-     <pair>
-       <displayed-value>1 - prirodno-matematičke i medicinske</displayed-value>
-       <stored-value>1</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>2 - tehničko-tehnološke i biotehničke</displayed-value>
-       <stored-value>2</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>3 - društvene</displayed-value>
-       <stored-value>3</stored-value>
-     </pair>
-     <pair>
-       <displayed-value>4 - humanističke</displayed-value>
-       <stored-value>4</stored-value>
-     </pair>
-   </value-pairs>
    
    <value-pairs value-pairs-name="common_article_identifiers" dc-term="identifier">
      <pair>
@@ -2213,6 +1766,25 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>(Other)</displayed-value>
        <stored-value>other</stored-value>
+     </pair>
+   </value-pairs>
+
+   <value-pairs value-pairs-name="publication_status" dc-term="description">
+     <pair>
+       <displayed-value>Unknown</displayed-value>
+       <stored-value>Unknown</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Author's version</displayed-value>
+       <stored-value>Author's version</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Accepted for publishing</displayed-value>
+       <stored-value>Accepted for publishing</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Published</displayed-value>
+       <stored-value>Published</stored-value>
      </pair>
    </value-pairs>
 

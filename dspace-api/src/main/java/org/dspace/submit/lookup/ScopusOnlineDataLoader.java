@@ -10,6 +10,7 @@ package org.dspace.submit.lookup;
 import gr.ekt.bte.core.Record;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Set;
 import org.apache.http.HttpException;
 
 import org.apache.log4j.Logger;
+import org.dspace.content.Item;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
 
@@ -147,15 +149,29 @@ public class ScopusOnlineDataLoader extends NetworkSubmissionLookupDataLoader
     
     public List<Record> search(String query) throws HttpException, IOException
     {
-        List<Record> results = new ArrayList<Record>();
-        if (query != null) {
-            List<Record> search = scopusService.search(query);
-            if (search != null) {
-                for (Record scopus : search) {
-                    results.add(convertFields(scopus));
+        try {
+            Context context = new Context();
+            context.turnOffAuthorisationSystem();
+
+            List<Record> results = new ArrayList<Record>();
+            if (query != null) {
+                List<Record> search = scopusService.search(query);
+                if (search != null) {
+                    for (Record scopus : search) {
+                        if (!scopus.getValues("eid").isEmpty()) {
+                            if (!Item.existsByScopusIdentifier(context, scopus.getValues("eid").get(0).getAsString())) {
+                                results.add(convertFields(scopus));
+                            }
+                        }
+                    }
                 }
             }
+            context.complete();
+            return results;
+        } catch (SQLException e) {
+            e.getMessage();
         }
-        return results;
+
+        return null;
     }
 }

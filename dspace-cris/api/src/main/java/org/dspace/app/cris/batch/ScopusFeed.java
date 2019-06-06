@@ -305,14 +305,14 @@ public class ScopusFeed
         List<ImpRecordItem> pmeResult = new ArrayList<ImpRecordItem>();
         List<Record> wosResult = new ArrayList<Record>();
         String query = userQuery;
-        /* if (StringUtils.isNotBlank(start))
+        if (StringUtils.isNotBlank(start))
         {
             query += " AND ORIG-LOAD-DATE AFT " + start;
         }
         if (StringUtils.isNotBlank(end))
         {
             query += " AND ORIG-LOAD-DATE BEF " + end;
-        } */
+        }
         wosResult = scopusOnlineDataLoader.search(query);
 
         List<ItemSubmissionLookupDTO> results = new ArrayList<ItemSubmissionLookupDTO>();

@@ -354,6 +354,9 @@ public class HandleServlet extends DSpaceServlet
         {
             // set a variable to create an edit button
             request.setAttribute("admin_button", Boolean.TRUE);
+        } else if (item.isCurrentUserAuthor()) {
+            // set a variable to create an edit button
+            request.setAttribute("isAuthor_button", Boolean.TRUE);
         }
 
         // Get the collections
