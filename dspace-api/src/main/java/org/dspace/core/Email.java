@@ -279,6 +279,7 @@ public class Email
         
         // Get the mail configuration properties
         String from = ConfigurationManager.getProperty("mail.from.address");
+        String name = ConfigurationManager.getProperty("mail.from.name");
         boolean disabled = ConfigurationManager.getBooleanProperty("mail.server.disabled", false);
         String fixedRecipient = ConfigurationManager.getProperty("mail.server.fixedRecipient");
 
@@ -337,7 +338,7 @@ public class Email
         Date date = new Date();
 
         message.setSentDate(date);
-        message.setFrom(new InternetAddress(from));
+        message.setFrom(new InternetAddress(from, name));
 
         // Set the subject of the email (may contain parameters)
         String fullSubject = MessageFormat.format(subject, args);

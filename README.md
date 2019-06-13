@@ -276,8 +276,8 @@ ant fresh_install
 /dspace/bin/dspace database clean
 /dspace/bin/dspace database migrate
 /dspace/bin/dspace create-administrator
-/dspace/bin/dspace load-cris-configuration -f /dspace/etc/configuration-tool-demo.xls
-/dspace/bin/dspace load-cris-configuration -f /dspace/etc/configuration-tool-demo.xls
+/dspace/bin/dspace load-cris-configuration -f /opt/crisinstallation/dspace-parent/install-tools/cris-configuration.xls
+/dspace/bin/dspace load-cris-configuration -f /opt/crisinstallation/dspace-parent/install-tools/cris-configuration.xls
 ```
 
 ### Kopiranje webapp fajlova

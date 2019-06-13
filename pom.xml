@@ -246,6 +246,7 @@
                         <exclude>**/.gitignore</exclude>
                         <exclude>**/build.properties*</exclude>
                         <exclude>**/rebel.xml</exclude>
+                        <exclude>**/install-tools/**</exclude>
                     </excludes>
                     <mapping> 
                         <!-- Custom DSpace file extensions which are not recognized by maven-release-plugin: 
