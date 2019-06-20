@@ -332,16 +332,16 @@ else if( qResults != null && collapsedResults != null)
 				<%
 					for (IGlobalSearchResult obj : collapsedResults.get(otypeSensitive)) {
 				%>
-				
+
 				<dspace:discovery-artifact style="global" hlt="<%= qResults.getHighlightedResults((DSpaceObject) obj) %>" artifact="<%= obj %>" view="<%= mapViewMetadata.get(otypelower) %>" selectorCssView="<%=selectorViewMetadata %>"/>
-				
+			
 				<%	
 				}
 				String messageAllGlobalType = "jsp.search.global.all." + otypeSensitive;
 				%>					
 			</div>
 		<% if (collapsedResults.get(otypeSensitive).size() < numResultsByType.get(otypeSensitive)) { %>
-			<div class="panel-footer text-right">	
+			<div class="panel-footer text-right">
 				<a class="btn btn-link text-primary" role="button" href="<%= request.getContextPath()
                 + "/simple-search?query="
                 + URLEncoder.encode(query,"UTF-8")

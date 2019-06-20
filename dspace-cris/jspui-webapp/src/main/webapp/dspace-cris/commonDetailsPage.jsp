@@ -27,27 +27,20 @@
 	boolean showBadgeCount = ConfigurationManager.getBooleanProperty("cris", "webui.tab.show.count.for.firstcomponent", false);
 %>
 
-<!-- GORNJI PROFIL -->
-
-<div class="container">
-	<div class="profilgore row">
-	<div id="dumimg" class="col-lg-3"></div>
-	<div class="col-lg-9">
-				<jsp:include page="singleTabDetailsPage.jsp"></jsp:include>
-	</div>
-</div>
-</div>
-
-<div id="tabs">
+	<div id="tabs">
 		<ul>
 					<c:forEach items="${tabList}" var="area" varStatus="rowCounter">
-							<c:if test="${rowCounter.index > 0}">
+							
 						<c:set var="tablink"><c:choose>
 							<c:when test="${rowCounter.count == 1}">${root}/cris/${specificPartPath}/${authority}?onlytab=true</c:when>
 							<c:otherwise>${root}/cris/${specificPartPath}/${authority}/${area.shortName}.html?onlytab=true</c:otherwise>
 						</c:choose></c:set>
-						<li data-tabname="${area.shortName}" id="bar-tab-${area.id}">
 						<c:choose>
+							<c:when test="${area.shortName != 'information'}"><li data-tabname="${area.shortName}" id="bar-tab-${area.id}"></c:when>
+							<c:otherwise><li style='display:none;'></c:otherwise>
+						</c:choose>
+						
+								<c:choose>
 							<c:when test="${area.id == tabId}">
 								<a href="#tab-${area.id}">
 								<c:if test="${!empty area.ext}">
@@ -127,15 +120,15 @@
 			    					</a>
 							</c:otherwise>
 						</c:choose></li>
-					</c:if>
+										
 					</c:forEach>
 		</ul>
 	
 
 <c:forEach items="${tabList}" var="areaIter" varStatus="rowCounter">
-	<c:if test="${areaIter.id == tabId && rowCounter.index > 0}">
+	<c:if test="${areaIter.id == tabId}">
 	<c:set var="area" scope="request" value="${areaIter}"></c:set>
-		<jsp:include page="singleTabDetailsPage.jsp"></jsp:include>
+	<jsp:include page="singleTabDetailsPage.jsp"></jsp:include>
 	</c:if>
 	
 </c:forEach>

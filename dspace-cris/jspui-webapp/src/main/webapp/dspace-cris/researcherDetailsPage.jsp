@@ -7,6 +7,7 @@
     https://github.com/CILEA/dspace-cris/wiki/License
 
 --%>
+
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -21,6 +22,7 @@
 
 <%@ taglib uri="jdynatags" prefix="dyna"%>
 <%@ taglib uri="researchertags" prefix="researcher"%>
+
 <c:set var="root" scope="request"><%=request.getContextPath()%></c:set>
 <c:set var="entity" value="${researcher}" scope="request" />
 <c:choose>
@@ -36,7 +38,15 @@
 <c:otherwise>
 <c:forEach items="${tabList}" var="areaIter" varStatus="rowCounter">
 	<c:if test="${areaIter.id == tabId}">
-	<c:set var="currTabIdx" scope="request" value="${rowCounter.count}" />
+			<c:if test="${areaIter.shortName == 'information'}">
+				<script>
+					adresa = window.location.href;
+					var regex   = /htt.+\/rp[0-9]+([^\/]+)/;
+					var putanja = adresa.match(regex);
+					if (putanja.length > 0) window.location.href = putanja[0]+"/publications.html";
+				</script>
+			</c:if>
+		<c:set var="currTabIdx" scope="request" value="${rowCounter.count}" />
 	</c:if>
 </c:forEach>
 <%
@@ -82,7 +92,7 @@
 <c:set var="dspace.cris.navbar" scope="request">
 
 </c:set>
-<c:set var="dspace.layout.head" scope="request">	
+<c:set var="dspace.layout.head" scope="request">		
 	<meta property="title" content="${metaprofilename}" />
 	<meta property="og:title" content="${metaprofilename}" />	
 	<meta property="og:type" content="profile" />
@@ -99,7 +109,7 @@
     }
     </script>
     
-    <script type="text/javascript"><!--
+    <script type="text/javascript">
 
 	    var activeTab = function(){
     		var ajaxurlrelations = "<%=request.getContextPath()%>/cris/${specificPartPath}/viewNested.htm";
@@ -117,7 +127,7 @@
 						"admin": ${admin},
 						"externalJSP": j('#nested_'+id+"_externalJSP").html()
 					},
-					success : function(data) {																										
+					success : function(data) {		
 						j('#viewnested_'+id).html(data);
 						var ajaxFunction = function(page){
 							j.ajax( {
@@ -162,6 +172,7 @@
 				});
 			});
     	};
+
     	
 		j(document).ready(function()
 		{
@@ -183,7 +194,7 @@
 					url: "<%= request.getContextPath() %>/json/claimrp",
 					data: {
 						"rpKey": j('#claimrp-rpkey').val(),
-						"mailUser" : j('#claimrp-validation').val()
+						"mailUser"	: j('#claimrp-validation').val()
 					},
 					success : function(data) {
 						send = data.result;
@@ -259,19 +270,19 @@
 				alert("${txt}");
 			});
 		});
-		-->
+		
 	</script>
     
 </c:set>
 
 <dspace:layout title="${metaprofilename}">
 
-<div id="content" style="padding: 0px;">
+<div id="content" style="padding:0;">
 <div class="row">
 	<div class="col-lg-12">
 		<div class="form-inline">
-	         <div class="form-group" >
-							<div class="profime">
+	         <div class="form-group profime">
+			 	<h1>
 				 	<fmt:message key="jsp.layout.detail.title-first" />
 				 	<c:choose>
 						<c:when test="${!empty entity.preferredName.value}">
@@ -286,7 +297,7 @@
 							<fmt:message key="cris.rp.information.instructions.label"/>
 						</button>
 					</c:if>
-				</div>
+				</h1>
 				<%
 		    	if (isAdmin) {
 				%>
@@ -306,7 +317,9 @@
 				%>
 				
 			 </div>
-			 <div class="form-group pull-right" style="margin-top:1.5em;">
+				 
+
+			 <div class="form-group pull-right" style="margin-top:35px;">
 				<div class="btn-group">
 					<% if(networkModuleEnabled) { %>
 					  <a class="btn btn-default" href="<%= request.getContextPath() %>/cris/network/${researcher.crisID}"><i class="fa fa-globe"></i> <fmt:message key="jsp.cris.detail.link.network" /> </a>
@@ -379,7 +392,12 @@
 				</c:choose>
 				</div>
 				</c:if>
-			 </div>
+			 </div>			 </div>
+
+
+			 			 <div id="divProfil">
+					<div class='container'><div class='profilgore' row><div id='dumimg' class='col-lg-3'></div><i class="fa fa-spinner fa-spin" style='font-size: 30px;margin:90px 0px 0px 30px;'></i><div class='col-lg-9'></div></div></div>
+				</div>
 		</div>
 	</div>
 </div>
@@ -421,7 +439,7 @@
 			</fmt:message>
 		</p>	
 	</c:if>
-	
+
 	<h4 id="selfclaimrp-result"></h4>
 	<input type="hidden" value="${requestScope.authority}" id="self-claimrp-rpkey"/>
 	
@@ -433,6 +451,7 @@
 	</div>
 	<c:remove var="messages" scope="session" />
 	</c:if>
+	
 		<div id="researcher">
 			<jsp:include page="commonDetailsPage.jsp"></jsp:include>
 		</div>
@@ -442,27 +461,57 @@
 
 <script>
 
-$(document).ready(function() {
+	$(document).ready(function() {
 
-    var $myDiv = $('#personalpictureDiv');
+		adresa = window.location.href;
+		var regex   = /htt.+\/rp[0-9]+([^\/]+)/;
+		var putanja = adresa.match(regex);
+		if (putanja.length > 0) {
+			$.ajax({
+				url: putanja[0]+"?onlytab=true", 
+				dataType: ("html"),
+				success:function(data, textStatus, jqXHR) 
+				{
+					$("#divProfil").html("<div class='container'><div class='profilgore' row><div id='dumimg' class='col-lg-3'></div><div class='col-lg-9'>"+data+"</div></div></div>");
+				},
+				error: function(jqXHR, textStatus, errorThrown) 
+				{
+					// greska
+				},
+				complete:function() 
+				{
+					// gotovo
 
-	if ($myDiv.length > 0) {
-		$('#dumimg').css("background-image", "url(" + $("#picture").attr("src") + ")");
-		$myDiv.parent('div').hide();
-	}
+					var slika = $('#personalpictureDiv');
+					var najSir = 0;
+					if (slika.length > 0) {
+						$('#dumimg').css("background-image", "url('" + $("#picture").attr("src") + "')");
+						slika.parent('div').hide();
+					}
+					$(".dynaLabel").each(function(){
+   						aktSir = $(this).html().length
+   						if(aktSir > najSir){
+     						najSir = aktSir * 11;
+					   }
+					});
+					$('.dynaFieldValue').css("min-height", "1em");
+					$('.dynaLabel').css("min-height", "1em");
+					$('.dynaLabel').css("width", najSir+"px");
+					$('.dynaField').css("min-height", "1.7em");
+					$('.panel').css("margin-top", "0px");
+					$('.profilgore').show();
+	
+				},
+			});	
+		}
+	
+	});
+	
+	</script>
+	
+	
+	<!-- ISPOD SU RAZNI MODALNI PROZORI ZA OBAVESTENJA-->
 
-	$('.dynaLabel').css("min-height", "1em");
-	$('.dynaFieldValue').css("min-height", "1em");
-	$('.dynaField').css("min-height", "1.7em");
-	$('.panel').css("margin-top", "10px");
-	$('.profilgore').show();
-
-});
-
-</script>
-
-
-<!-- ISPOD SU RAZNI MODALNI PROZORI ZA OBAVESTENJA-->
 
 
 <div id="claimrp-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">

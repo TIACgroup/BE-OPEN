@@ -10,7 +10,7 @@ package org.dspace.app.cris.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,18 +18,7 @@ import java.util.List;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
 import org.dspace.app.cris.batch.ImportCRISDataModelConfiguration;
-import org.dspace.app.cris.dao.CrisObjectDao;
-import org.dspace.app.cris.dao.CrisSubscriptionDao;
-import org.dspace.app.cris.dao.DynamicObjectDao;
-import org.dspace.app.cris.dao.DynamicObjectTypeDao;
-import org.dspace.app.cris.dao.OrcidHistoryDao;
-import org.dspace.app.cris.dao.OrcidQueueDao;
-import org.dspace.app.cris.dao.OrganizationUnitDao;
-import org.dspace.app.cris.dao.ProjectDao;
-import org.dspace.app.cris.dao.RelationPreferenceDao;
-import org.dspace.app.cris.dao.ResearcherPageDao;
-import org.dspace.app.cris.dao.StatSubscriptionDao;
-import org.dspace.app.cris.dao.UserWSDao;
+import org.dspace.app.cris.dao.*;
 import org.dspace.app.cris.model.ACrisObject;
 import org.dspace.app.cris.model.CrisSubscription;
 import org.dspace.app.cris.model.OrganizationUnit;
@@ -47,8 +36,10 @@ import org.dspace.app.cris.model.ws.User;
 import org.dspace.app.cris.util.ResearcherPageUtils;
 import org.dspace.app.util.Util;
 import org.dspace.core.ConfigurationManager;
+import org.dspace.core.Context;
 import org.dspace.services.ConfigurationService;
 import org.dspace.storage.rdbms.DatabaseUtils;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import it.cilea.osd.common.model.Identifiable;
@@ -604,6 +595,35 @@ public class ApplicationService extends ExtendedTabService
     {
         //return (Project) getEntityBySourceID(code);
         return projectDao.uniqueBySourceID(null, code);
+    }
+
+    public String getResearcherCrisIdForEmail(String email) {
+        String crisId = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "select crisid from cris_rpage where id IN " +
+                    "(select parent_id from cris_rp_prop where value_id IN " +
+                    "(select id from jdyna_values where textvalue = ?)) limit 1";
+
+            Context context = new Context();
+            conn = context.getDBConnection();
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, email);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                crisId = rs.getString("crisid");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return crisId;
     }
 
     @Deprecated

@@ -9,11 +9,14 @@
 hr {
 	margin: 5px 0px 20px 0px;
 }
+b {
+	font-weight: 400;
+}
  .okvir {
 	 border: solid 1px red;
  }
  * {
-	font-family: Alegreya Sans, Arial, sans serif;
+	font-family: 'Fira Sans', sans-serif;
 	font-weight: 300;
  }
  .center {
@@ -36,16 +39,7 @@ hr {
 	opacity: 1;
 	transition-duration: 0.5s;
 }
-.div-logo {
-	padding: 35px 0px 20px 0px;
-}
-.div-logo img {
-	width: 250px;
-}
-.div-logo, .div-poruka {
-	margin: 0 auto;
-	text-align: center;
-}
+
 .panel-title i {
 	font-size: 1em;
 	padding-left: 10px;
@@ -56,16 +50,25 @@ hr {
 #user-top-menu, #userloggedin-top-menu {margin-right: 15px;}
 footer {padding-top: 1em;}
 footer.navbar-inverse {color: white;}
-footer .extra-footer{background-color: #517492; color:white;padding:10px 0px 10px 0px;font-size:0.9em;}
+footer .extra-footer{
+	background-color: #ffffff; 
+	color:#73898f;
+	padding:15px 0px 10px 0px;
+	font-size:0.9em;
+	margin-top: 15px;
+	border-top: solid 1px #d4dddf;
+	width: 600px;
+	margin: auto;
+}
 .extra-footer a, .extra-footer a:hover, .extra-footer a:visited {
-	color: #fff;
+	color: #73898f;
 } 
 #designedby img {margin-right: 5px;}
 #formsearch-top-menu {width: 310px;}
-div.panel.panel-primary ul.list-group li.list-group-item.active {background-color: #eaf0f5;}
-div.panel.panel-primary ul.list-group li.list-group-item.active .badge {background-color: #597b97; color: #eaf0f5;}
-ol.breadcrumb li {color: #fff; font-style: normal;}
-ol.breadcrumb li a {color: #fff; font-weight: 300; font-style: normal;}
+/*div.panel.panel-primary ul.list-group li.list-group-item.active {background-color: #eaf0f5;}
+div.panel.panel-primary ul.list-group li.list-group-item.active .badge {background-color: #597b97; color: #eaf0f5;}*/
+/*ol.breadcrumb li {color: #fff; font-style: normal;}
+ol.breadcrumb li a {color: #fff; font-weight: 300; font-style: normal;}*/
 body.undernavigation {overflow-x: hidden;
 // padding-top: 65px;
 }
@@ -125,9 +128,9 @@ input.ds-authority-lock.is-unlocked
 /* field required in submission */
 
 .tab-content{
-		border: 1px solid #ddd;
-		border-top: 0;
-		background-color: #fff;
+	/*border-top: 1px solid red;
+	background-color: #fff;*/
+	border: none;
 }
 
 .menu-global-processor{
@@ -312,11 +315,11 @@ footer.navbar-bottom {
 	background-color: #fff;
 }
 
-ol.breadcrumb li a {
+/*ol.breadcrumb li a {
     color: #fff;
     font-weight: 300;
     font-style: normal;
-}
+}*/
 		
 #content{
 	padding-bottom: 0px;
@@ -348,4 +351,51 @@ footer .container {
 
 .submit-identifier > .form-control{
 	width:50%;
+}
+
+#repo-info {
+	height: 280px;
+}
+
+.pocDiv .vpora {
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+	display: block;
+}
+
+.pocDiv .vpora img {
+	width: 80%;
+	max-width: 300px;
+	margin-bottom: 20px;
+}
+
+.pocDiv .vpora span {
+	margin: 0 auto;
+	text-align: center;
+	font-size: 1.3em;
+	color: #8dd35f;
+	font-weight: 400;
+}
+
+@media (min-width: 992px) {
+	.pocDiv {
+		height: 280px;
+		display: table;
+	}
+	.pocDiv .vpora {
+		display: table-cell;
+	}
+}
+
+.list-group-item .text-muted {
+	color: #36a6b1;
+}
+
+.list-group-item .label-default {
+	display: none;
+}
+
+.list-group-item small {
+	color: #b6b9b6;
 }

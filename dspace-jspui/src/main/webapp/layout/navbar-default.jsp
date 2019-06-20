@@ -190,18 +190,23 @@
     </li>
     </ul>
 </div>  </div>
+
       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <ul id="top-menu" class="nav navbar-nav navbar-<%= isRtl ? "right":"left"%>">
           <li class="pull-<%= isRtl ? "right":"left"%> hidden-xs hidden-s">
-            <a class="navbar-brand" href="<%= request.getContextPath() %>/"><img src="<%= request.getContextPath() %>/image/uns-logo.png" alt="UNS logo" /></a>
+            <a class="navbar-brand" href="https://www.uns.ac.rs/" target="_blank"><img src="<%= request.getContextPath() %>/image/uns-logo.png" alt="UNS logo" /></a>
           </li>
           <li id="home-top-menu" class="<%= currentPage.endsWith("/home.jsp") ? "active" : "" %>">
             <a href="<%= request.getContextPath() %>/"><fmt:message key="jsp.layout.navbar-default.home"/></a>
           </li>
-          <% if(showCommList){ %>
+          <% 
+          showCommList = false; // ne prikazuje comm & coll
+          if(showCommList){ %>
           <li id="communitylist-top-menu" class="<%= currentPage.endsWith("/community-list")? "active" : "" %>"><a href="<%= request.getContextPath() %>/community-list"><fmt:message key="jsp.layout.navbar-default.communities-collections"/></a></li>
           <% }%> 
-          <% for (String mlink : mlinks) { %>
+          <% for (String mlink : mlinks) { 
+            if (!mlink.trim().contains("fundings")) { // za sada skriva i projekte 
+              %>
           <c:set var="exploremlink">
           <%= mlink.trim() %>
           </c:set>
@@ -209,7 +214,7 @@
           jsp.layout.navbar-default.cris.<%= mlink.trim() %>
           </c:set>
           <li id="<%= mlink.trim() %>-top-menu" class=" <c:if test="${exploremlink == location}">active</c:if>"><a href="<%= request.getContextPath() %>/cris/explore/<%= mlink.trim() %>"><fmt:message key="${fmtkey}"/></a></li>
-          <% } %>
+          <% } } %>
           <li class="dropdown hidden-md hidden-lg hidden-xs hidden-sm">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="jsp.layout.navbar-default.explore"/> <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -300,9 +305,9 @@
               {
               %>
               <li id="userloggedin-top-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle <%= isRtl ? "" : "text-right" %>" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <fmt:message key="jsp.layout.navbar-default.loggedin">
-              <fmt:param><%= StringUtils.abbreviate(navbarEmail, 20) %></fmt:param>
-              </fmt:message> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle <%= isRtl ? "" : "text-right" %>" data-toggle="dropdown">
+              <%= StringUtils.abbreviate(navbarEmail, 20) %>
+              <i class="fa fa-angle-down"></i></a>
               <%
               } else {
               %>

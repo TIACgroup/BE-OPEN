@@ -81,12 +81,12 @@
 							%>
 							<div class="panel-group ${extraCSS}" id="${holder.shortName}">
   									<div class="panel panel-default">
-    										<!--<div class="panel-heading">
-      												<h4 class="panel-title">
-        												<a data-toggle="collapse" data-parent="#${holder.shortName}" href="#collapseOne${holder.shortName}">
-          													<spring:message code="${entity.class.simpleName}.box.${holder.shortName}.label" text="${holder.title}"></spring:message>
-        												</a>
-      												</h4>
+    										<!--<div class="panel-heading">df
+												<h4 class="panel-title">
+													<a data-toggle="collapse" data-parent="#${holder.shortName}" href="#collapseOne${holder.shortName}">
+														<spring:message code="${entity.class.simpleName}.box.${holder.shortName}.label" text="${holder.title}"></spring:message>
+													</a>
+												</h4>
     										</div>-->
 										    <div id="collapseOne${holder.shortName}" class="panel-collapse collapse in">
 												<div class="panel-body">
@@ -101,11 +101,8 @@
 															value="/dspace-cris/jdyna/custom/field/${tipologiaDaVisualizzare.shortName}.jsp" scope="request" />
 															
 														<%
-															
 															String fileFieldPath = (String)pageContext.getRequest().getAttribute("urljspcustomfield");
 															fileFieldURL = pageContext.getServletContext().getResource(fileFieldPath);
-															System.out.println((String)pageContext.getRequest().getAttribute("urljspcustomfield"));
-														
 														%>
 														<%
 															if (fileFieldURL == null) {

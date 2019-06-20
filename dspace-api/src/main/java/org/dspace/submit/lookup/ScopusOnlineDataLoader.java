@@ -158,7 +158,7 @@ public class ScopusOnlineDataLoader extends NetworkSubmissionLookupDataLoader
                 List<Record> search = scopusService.search(query);
                 if (search != null) {
                     for (Record scopus : search) {
-                        if (!scopus.getValues("eid").isEmpty()) {
+                        if (scopus.hasField("eid") && !scopus.getValues("eid").isEmpty()) {
                             if (!Item.existsByScopusIdentifier(context, scopus.getValues("eid").get(0).getAsString())) {
                                 results.add(convertFields(scopus));
                             }

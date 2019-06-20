@@ -30,7 +30,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.log4j.Logger;
+import org.dspace.app.cris.dao.ApplicationDao;
 import org.dspace.app.cris.importexport.ExcelBulkChanges;
 import org.dspace.app.cris.importexport.IBulkChange;
 import org.dspace.app.cris.importexport.IBulkChangeField;
@@ -132,6 +134,7 @@ import jxl.write.Label;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Static class that provides export functionalities from the RPs database to
@@ -343,7 +346,7 @@ public class ImportExportUtils {
 	}
 
 	private static <P extends Property<TP>, TP extends PropertiesDefinition, NP extends ANestedProperty<NTP>, NTP extends ANestedPropertiesDefinition, ACNO extends ACrisNestedObject<NP, NTP, P, TP>, ATNO extends ATypeNestedObject<NTP>, ACO extends ACrisObject<P, TP, NP, NTP, ACNO, ATNO>> ACO getCrisObject(
-			ApplicationService applicationService, Class<ACO> objectTypeClass, ACO template, IBulkChange change, boolean status)
+			ApplicationService applicationService, Class<ACO> objectTypeClass, ACO template, IBulkChange change, boolean status, MutableBoolean update)
 			throws InstantiationException, IllegalAccessException {
 		String action = change.getAction();
 		String crisID = change.getCrisID();
@@ -353,6 +356,16 @@ public class ImportExportUtils {
 		boolean buildAsNew = false;
 
 		ACO crisObject = null;
+
+
+		String email = change.getFieldChanges("email").get(0).getValue();
+		if (StringUtils.isNotBlank(email)) {
+			crisID = applicationService.getResearcherCrisIdForEmail(email);
+			if (StringUtils.isNotBlank(crisID)) {
+				action = IBulkChange.ACTION_UPDATE;
+				update.setValue(true);
+			}
+		}
 
 		// check if entity exist
 		if (StringUtils.isNotBlank(crisID)) {
@@ -599,11 +612,15 @@ public class ImportExportUtils {
 							+ sourceId + " / crisID : " + crisID + " uuid: "
 							+ uuid);
 
+					MutableBoolean updateObject = new MutableBoolean(update);
+
 					// if ACTION_CREATE then build object internally to the
 					// getCrisObject (this need to the widgetfile to build the
 					// correct path)
 					crisObject = getCrisObject(applicationService,
-							crisObjectClazz, template, bulkChange, status);
+							crisObjectClazz, template, bulkChange, status, updateObject);
+
+					update = updateObject.booleanValue();
 
 					if (delete)
 					{
@@ -1073,6 +1090,13 @@ public class ImportExportUtils {
 		}
 	}
 
+	private static boolean isFieldBlank(IBulkChange bulkChange, String shortName) {
+		IBulkChangeField nodeslist = bulkChange.getFieldChanges(shortName);
+		String value = nodeslist.get(0).getValue();
+
+		return StringUtils.isBlank(value);
+	}
+
 	private static <TP extends PropertiesDefinition> boolean importDynA(ApplicationService applicationService,
 																		List<TP> realFillTPS, IBulkChange bulkChange, AnagraficaObjectDTO dto, AnagraficaObjectDTO clonedto,
 																		boolean update, String format) {
@@ -1085,7 +1109,7 @@ public class ImportExportUtils {
 			String shortName = rpPD.getShortName();
 			List<ValoreDTO> values = dto.getAnagraficaProperties().get(shortName);
 			List<ValoreDTO> oldValues = clonedto.getAnagraficaProperties().get(shortName);
-			if (update == true) {
+			if (update == true && !isFieldBlank(bulkChange, shortName)) {
 				dto.getAnagraficaProperties().get(shortName).clear();
 			}
 			if (rpPD.getRendering() instanceof WidgetTesto) {

@@ -35,6 +35,8 @@ jQuery(document).ready(function($){
 		var controllerDiv = $('<div class="pull-right">');
 		var backArrow = $('<i class="fa fa-chevron-left text-muted">');
 		var nextArrow = $('<i class="fa fa-chevron-right">');
+		backArrow.css("cursor", "pointer");
+		nextArrow.css("cursor", "pointer");
 		if (!moreToShow) nextArrow.addClass('text-muted');
 		backArrow.data('vertical-carousel', this);
 		backArrow.data('otherArrow', nextArrow);

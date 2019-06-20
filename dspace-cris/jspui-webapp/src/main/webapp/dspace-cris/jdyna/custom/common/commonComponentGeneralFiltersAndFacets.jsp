@@ -72,7 +72,7 @@
 	<% } %>
 
 </div>
-<button class="btn btn-default pull-right" style="margin-top: -7px;" type="button"
+<button class="btn btn-default pull-right" type="button"
 	data-toggle="collapse" data-target="#collapseFacet_${holder.shortName}"
 	aria-expanded="false" aria-controls="collapseFacet"
 	title="<fmt:message key="jsp.components.button.seealso.button" />">

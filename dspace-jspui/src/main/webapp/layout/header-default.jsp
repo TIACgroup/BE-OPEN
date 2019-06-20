@@ -57,6 +57,7 @@
 
 <!DOCTYPE html>
 <html>
+
     <head>
         <title><%= title %> | <%= siteName %></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -79,7 +80,7 @@
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/responsive.bootstrap.min.css"/>
 		<link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/bootstrap-datetimepicker.min.css" />
-		<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700&amp;subset=cyrillic-ext,latin-ext" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400&display=swap&subset=greek,greek-ext,latin-ext" rel="stylesheet">
 <%
     if (!"NONE".equals(feedRef))
     {
@@ -123,8 +124,34 @@
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/static/js/dataTables.select.min.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/js/jszip.min.js"></script>
-	<script type='text/javascript'>
-		var j = jQuery.noConflict();
+    <script type='text/javascript'>
+        
+        jQuery(document).ready(function($) {  
+            // skracivanje dugih nizova autora
+            $(".list-group-item .text-muted em").each( function (d) {
+                autori = $(this).html();
+                tagovi = autori.match( /<[^>]*>/g);
+                duzTag =  (tagovi !== null ? tagovi.join('').length : 0);
+                if (autori.length - duzTag > 150) {
+                    autori = autori.substr(0, 150 + duzTag);
+                    if (autori.indexOf("</a>") > -1) {
+                        autori = autori.substr(0,autori.lastIndexOf("</a>")+4);
+                    }
+                    else if (autori.indexOf("&nbsp;") > -1) {
+                        autori = autori.substr(0,autori.lastIndexOf("&nbsp;"));
+                    }
+                    else if (autori.indexOf("<a") > -1) {
+                        autori = autori.substr(0,autori.lastIndexOf("<a"));
+                    }
+                    else if (autori.indexOf("; ") > -1) {
+                        autori = autori.substr(0,autori.lastIndexOf("; "));
+                    }
+                    $(this).html(autori+" ...");
+                }
+            });
+        });
+        
+        var j = jQuery.noConflict();
 		var $ = jQuery.noConflict();
 		var JQ = j;
 		dspaceContextPath = "<%=request.getContextPath()%>";
@@ -199,7 +226,7 @@
     <%-- HACK: marginwidth, marginheight: for non-CSS compliant Netscape browser --%>
     <body class="undernavigation" dir="<%= LocaleUIHelper.ifLtr(request, "ltr","rtl") %>">
 <a class="sr-only" href="#content">Skip navigation</a>
-<header class="navbar navbar-inverse navbar-square meniGore"> 
+<header class="navbar navbar-inverse navbar-square meniGore">
     <%
     if (!navbar.equals("off"))
     {
@@ -264,7 +291,10 @@ window.cookieconsent.initialise({
 <br/>-->
                 <%-- Location bar --%>
 <%
-    if (locbar)
+
+locbar = false; // breadcrumb nije narocito koristan
+
+if (locbar)
     {
 %>
 <div class="container">
