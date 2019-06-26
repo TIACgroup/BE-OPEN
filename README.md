@@ -308,5 +308,7 @@ systemctl start tomcat
 
 Proveriti da li je pokrenut DSpace-CRIS: [http://localhost:8080/](https://localhost:8080/)
 
+### [Post instalacioni koraci](post-install.md)
+
 ---
 Uputstvo preuzeto i prilagodjeno sa [https://github.com/mbranko/dspacecris-setup](https://github.com/mbranko/dspacecris-setup)

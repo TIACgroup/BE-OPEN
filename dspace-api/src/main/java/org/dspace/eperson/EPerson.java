@@ -613,7 +613,7 @@ public class EPerson extends DSpaceObject
             eperson.setFirstName(firstName);
             eperson.setLastName(lastName);
             eperson.setLanguage("en");
-            eperson.setPassword("testpass");
+            eperson.setPassword(UUID.randomUUID().toString());
             eperson.setRequireCertificate(false);
 
             try {
