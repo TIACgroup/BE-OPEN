@@ -14,14 +14,14 @@ Nakon toga, potrebno je otvoriti dokument `BEOPEN - Uvoz istrazivaca.xlsm` i pok
 Te dokumente je potrebno importovati na sledeći način: sa administratorskim nalogom se klikne na profil > Upravljati > CRIS modul > Uvoz. Prvo treba selektovati `Organizaciona jedinica` i importovati `dspace-cris-ogranization-import.xls`, a zatim treba selektovati `Istraživač` pa importovati `dspace-cris-researcher-import.xls`.
 
 ### Scopus import
-Za import publikacija sa Scopus-a potrebno je pokrenuti sledeću skriptu:
-`/dspace/bin/dspace dsrun org.dspace.app.cris.batch.ScopusFeed -q "AF-ID(scopus_id_univerziteta)" -p email_administratora -c 1`
-I nakon što prva završi, sledeću:
-`/dspace/bin/dspace dsrun org.dspace.app.cris.batch.ItemImportMainOA -E email_administratora`
+Za import publikacija sa Scopus-a potrebno je pokrenuti sledeću skriptu:  
+`/dspace/bin/dspace dsrun org.dspace.app.cris.batch.ScopusFeed -q "AF-ID(scopus_id_univerziteta)" -p email_administratora -c 1`  
+I nakon što prva završi, sledeću:  
+`/dspace/bin/dspace dsrun org.dspace.app.cris.batch.ItemImportMainOA -E email_administratora`  
 U obe skripte zameniti `scopus_id_univerziteta` i `email_administratora` sa odgovarajućim parametrima.
 
 ### Dnevni taskovi
-Poželjno je kao cron taskove dnevno izvršavati sledeće skripte:
-`/dspace/bin/view-and-download-retrieve`
-`/dspace/bin/scopus-retrieve`
-`/dspace/bin/network-builder`
+Poželjno je kao cron taskove dnevno izvršavati sledeće skripte:  
+`/dspace/bin/view-and-download-retrieve`  
+`/dspace/bin/scopus-retrieve`  
+`/dspace/bin/network-builder`  
