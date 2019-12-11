@@ -330,7 +330,7 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
         String query = "SELECT i.* from item i " +
                 "LEFT JOIN metadatavalue m ON i.item_id=m.resource_id " +
                 "WHERE m.metadata_field_id=77 AND m.resource_type_id=2 " +
-                "AND m.text_value='" + scopusId + "'";
+                "AND m.text_value='" + scopusId + "' AND i.in_archive=true";
 
         TableRowIterator rows = DatabaseManager.queryTable(context, "item", query);
 

@@ -139,8 +139,8 @@
 <%
     }
 
-    if (workflowItem.getState() == WorkflowManager.WFSTATE_STEP2 ||
-        workflowItem.getState() == WorkflowManager.WFSTATE_STEP3)
+    if (workflowItem.getState() == WorkflowManager.WFSTATE_STEP1 ||
+            workflowItem.getState() == WorkflowManager.WFSTATE_STEP2)
     {
 %>
 				<li class="list-group-item">

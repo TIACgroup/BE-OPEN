@@ -66,7 +66,7 @@
         <div class="col-md-3"><input class="form-control" type="text" name="last_name" id="tlast_name" size="40" value="<%= Utils.addEntities(lastName) %>" /></div>
     </div>
 	<div class="form-group">
-		<label class="col-md-offset-3 col-md-2 control-label" for="tphone"><fmt:message key="jsp.register.profile-form.phone.field"/></label>
+		<label class="col-md-offset-3 col-md-2 control-label" for="tphone"><fmt:message key="jsp.dspace-admin.eperson-edit.email"/></label>
         <div class="col-md-3"><input class="form-control" type="text" name="phone" id="tphone" size="40" maxlength="32" value="<%= Utils.addEntities(phone) %>"/></div>
     </div>
     <div class="form-group">

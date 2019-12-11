@@ -348,9 +348,9 @@ public class CitationDocument {
     
     private void generateCoverPage(PDDocument document, PDPage coverPage, Item item) throws IOException {
         try (PDPageContentStream contentStream = new PDPageContentStream(document, coverPage)) {
-            int ypos = 720;
+            int ypos = (int) (coverPage.getMediaBox().getHeight() - 80);
             int xpos = 30;
-            int xwidth = 550;
+            int xwidth = (int) (coverPage.getMediaBox().getWidth() - 60);
             int ygap = 20;
 
             PDFont fontHelvetica = PDType0Font.load(document, CitationDocument.class.getResourceAsStream("/fonts/FreeSans.ttf"));
@@ -364,7 +364,10 @@ public class CitationDocument {
                     pdImage = PDImageXObject.createFromByteArray(document, IOUtils.toByteArray(stream), coverPageLogo);
                 }
                 float scale = 0.5f;
-                contentStream.drawImage(pdImage, 200, 720, pdImage.getWidth() * scale, pdImage.getHeight() * scale);
+                float imgWidth = pdImage.getWidth() * scale;
+                float imgHeight = pdImage.getHeight() * scale;
+                float xImage = xpos + (xwidth - imgWidth) / 2;
+                contentStream.drawImage(pdImage, xImage, (float) ypos, imgWidth, imgHeight);
             }
 
             String[][] content = {header1};
