@@ -92,6 +92,38 @@ function submitForm() {
 }
 
 -->
+var fetchOUTree = function() {
+	$.ajax({
+		url : "<%= request.getContextPath() %>/getOrganizationUnitTree",
+		contentType: "text/html; charset=utf-8",
+		beforeSend: function() {
+			$('#update-indicator').show();
+			$('#update-button').hide();
+		},
+		success: function(data) {
+			$('#organizationunittree').html(data);
+			$('#update-indicator').hide();
+			$('#update-button').show();
+		},
+		error: function(err) {
+			$('#organizationunittree').html("There was an error fetching the organization unit tree. Please contact the administrator.");
+			$('#update-indicator').hide();
+			$('#update-button').show();
+		}
+	});
+}
+
+var updateOUTree = function() {
+		$('#update-indicator').show();
+		$('#update-button').hide();
+		this.submit();
+}
+
+$(document).ready(function() {
+	if($('#location').val() === 'orgunits') {
+		fetchOUTree();
+	}
+})
 </script>
 </c:set>
 <c:set var="fmtkey">
@@ -206,6 +238,33 @@ function submitForm() {
 		</form>
 	</div>
 </div>
+<c:if test="${location=='orgunits'}">
+
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<div id='update-indicator' style="display: none;" class="loader pull-right"></div>
+
+	<%
+			if(((Boolean) request.getAttribute("is.admin")) != null && ((Boolean) request.getAttribute("is.admin")) == true) {
+	%>
+				<form style="padding-bottom: 5px;" method="post" action="<%= request.getContextPath() %>/cris/explore/orgunits">
+					<input type="hidden" name="update-ou-tree" value="true"/>
+					<input id="update-button" class="btn btn-info pull-right btn-sm" onclick="updateOUTree()" type="submit" name="submit" value="Update &#128472"/>
+				</form>
+	<%
+			}
+	%>
+
+			<h3 class="panel-title"><fmt:message key="jsp.browse.orgunits.tree" /></h3>
+		</div>
+
+		<div id="organizationunittree">
+			The server is updating the organization unit tree...please wait.
+		</div>
+
+	</div>
+
+</c:if>
 <div class="clearfix"></div>
 	<div class="row">
 		<div class="col-sm-6">

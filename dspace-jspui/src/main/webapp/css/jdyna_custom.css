@@ -684,3 +684,16 @@ div.nested_actions {margin: 0px; display: inline;}
 .hidecolumn {
 	display: none;
 }
+
+.panel-item .panel-item {
+    margin-left: 20px;
+}
+.panel-item .panel-item .panel-item {
+    margin-left: 20px;
+}
+.panel-item .panel-item .panel-item .panel-item {
+    margin-left: 20px;
+}
+.panel-item .panel-item .panel-item .panel-item .panel-item {
+    margin-left: 20px;
+}

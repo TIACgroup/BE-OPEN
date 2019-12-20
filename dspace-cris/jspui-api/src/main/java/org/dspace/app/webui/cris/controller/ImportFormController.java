@@ -27,6 +27,7 @@ import org.dspace.app.cris.model.jdyna.ACrisNestedObject;
 import org.dspace.app.cris.model.jdyna.DynamicObjectType;
 import org.dspace.app.cris.service.ApplicationService;
 import org.dspace.app.cris.util.ImportExportUtils;
+import org.dspace.app.cris.util.OrganizationUnitTreeMaker;
 import org.dspace.app.cris.util.UtilsXSD;
 import org.dspace.app.webui.cris.dto.ImportDTO;
 import org.dspace.app.webui.util.UIUtil;
@@ -147,6 +148,14 @@ public class ImportFormController  <ACO extends ACrisObject<P, TP, NP, NTP, ACNO
 									request.getLocale()));
 				}
 			}
+
+			/*
+			 * Update organization unit tree after successful import
+			 */
+			if("orgunit".equals(object.getType())) {
+				OrganizationUnitTreeMaker.getInstance().updateOuTree();
+			}
+
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			saveMessage(

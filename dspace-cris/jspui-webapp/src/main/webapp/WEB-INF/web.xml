@@ -1066,6 +1066,16 @@
     <url-pattern>/request-item</url-pattern>
   </servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>get-organization-unit-tree</servlet-name>
+		<url-pattern>/getOrganizationUnitTree</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>get-organization-unit-tree</servlet-name>
+		<servlet-class>org.dspace.app.webui.cris.servlet.OrganizationUnitTreeServlet</servlet-class>
+	</servlet>
+
 	<!-- Icon MIME type -->
 	<mime-mapping>
 		<extension>ico</extension>

@@ -15,10 +15,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.dspace.app.cris.util.OrganizationUnitTreeMaker;
 import org.dspace.app.webui.cris.components.ExploreMapProcessors;
 import org.dspace.app.webui.cris.components.ExploreProcessor;
 import org.dspace.app.webui.discovery.DiscoverUtility;
 import org.dspace.app.webui.util.UIUtil;
+import org.dspace.authorize.AuthorizeManager;
 import org.dspace.browse.BrowsableDSpaceObject;
 import org.dspace.browse.BrowseDSpaceObject;
 import org.dspace.content.Collection;
@@ -50,6 +53,15 @@ public class ExploreController extends BaseAbstractController {
 
 		String configurationName = request.getPathInfo().substring("/explore/".length());
 		Context context = UIUtil.obtainContext(request);
+
+		/*
+		 * Check for administrative POST requests
+		 */
+		if ("POST".equals(request.getMethod()) && AuthorizeManager.isAdmin(context)) {
+			if(StringUtils.isNotEmpty(request.getParameter("update-ou-tree"))) {
+				OrganizationUnitTreeMaker.getInstance().updateOuTree();
+			}
+		}
 
 		DiscoveryConfiguration discoveryConfiguration = SearchUtils.getDiscoveryConfigurationByName(configurationName);
 
