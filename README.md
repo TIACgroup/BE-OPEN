@@ -222,7 +222,7 @@ createdb -U dspace -E UNICODE dspace
 ```
 mkdir /opt/crisinstallation
 cd /opt/crisinstallation
-git clone  https://github.com/TIACgroup/BE-OPEN.git --branch master dspace-parent/
+git clone https://github.com/TIACgroup/BE-OPEN.git --branch master dspace-parent/
 ```
 
 ### Početna konfiguracija
