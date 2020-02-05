@@ -43,7 +43,10 @@
 					adresa = window.location.href;
 					var regex   = /htt.+\/rp[0-9]+([^\/]+)/;
 					var putanja = adresa.match(regex);
-					if (putanja.length > 0) window.location.href = putanja[0]+"/publications.html";
+					if (putanja.length > 0) {
+						putanja[0] = putanja[0].replace(/\?subscribe=.+/, "");
+						window.location.href = putanja[0]+"/publications.html";
+					}
 				</script>
 			</c:if>
 		<c:set var="currTabIdx" scope="request" value="${rowCounter.count}" />
@@ -511,8 +514,6 @@
 	
 	
 	<!-- ISPOD SU RAZNI MODALNI PROZORI ZA OBAVESTENJA-->
-
-
 
 <div id="claimrp-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">

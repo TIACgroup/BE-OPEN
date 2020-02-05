@@ -1170,4 +1170,6 @@ div.subscription-current {
 	   color: gray;
 }
 	
+.zbogSlike img {
+	max-width: 300px;
 }

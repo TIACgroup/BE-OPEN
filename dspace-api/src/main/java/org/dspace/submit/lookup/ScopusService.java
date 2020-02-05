@@ -7,18 +7,21 @@
  */
 package org.dspace.submit.lookup;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import gr.ekt.bte.core.Value;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -82,9 +85,14 @@ public class ScopusService
 		String proxyHost = ConfigurationManager.getProperty("http.proxy.host");
 		String proxyPort = ConfigurationManager.getProperty("http.proxy.port");
 		String apiKey = ConfigurationManager.getProperty("submission.lookup.scopus.apikey");
-		
-		boolean demo = ConfigurationManager.getBooleanProperty(SubmissionLookupService.CFG_MODULE, "remoteservice.demo");
-		
+
+		boolean readFromDirectory = ConfigurationManager.getBooleanProperty("submission.lookup.scopus.readfromdirectory");
+		String directoryPath = ConfigurationManager.getProperty("submission.lookup.scopus.directory");
+		String eid = null;
+		if (query.contains("EID")) {
+			eid =  StringUtils.substringBetween(query, "(", ")");
+		}
+
 		List<Record> results = new ArrayList<>();
 		
 		HttpClient client = new HttpClient();
@@ -108,11 +116,12 @@ public class ScopusService
 		}
 		
 		int start = 0;
-		while (true) {
+		boolean inProgress = true;
+		while (inProgress) {
 			GetMethod method = null;
-			if (!demo) { // open session
+			if (!readFromDirectory) { // open session
 				try {
-					method = new GetMethod(String.format("%s?httpAccept=application/xml&apiKey=%s&view=COMPLETE&start=%s&count=%s&query=%s",
+					method = new GetMethod(String.format("%s?httpAccept=application/xml&apiKey=%s&view=STANDARD&start=%s&count=%s&query=%s",
 							ENDPOINT_SEARCH_SCOPUS, apiKey, start, itemPerPage, URLEncoder.encode(query, StandardCharsets.UTF_8.displayName())));
 
 					// Execute the method.
@@ -130,44 +139,78 @@ public class ScopusService
 				}
 			}
 
-			try (InputStream responseBodyAsStream = demo ? 
-					new FileInputStream(ConfigurationManager.getProperty("dspace.dir") + "/config/crosswalks/demo/scopus_search.xml") : 
-					method.getResponseBodyAsStream()) {
-				
-				Document inDoc = builder.parse(responseBodyAsStream);
+			if (readFromDirectory) {
+				File dir = new File(directoryPath);
+				File[] scopusResponses = dir.listFiles();
+				for (File response : scopusResponses) {
+					try (InputStream responseBodyAsStream = new FileInputStream(response)) {
 
-				Element xmlRoot = inDoc.getDocumentElement();
+						Document inDoc = builder.parse(responseBodyAsStream);
 
-				List<Element> pubArticles = XMLUtils.getElementList(xmlRoot, "entry");
+						Element xmlRoot = inDoc.getDocumentElement();
 
-				for (Element xmlArticle : pubArticles) {
-					try {
-						results.add(ScopusUtils.convertScopusDomToRecord(xmlArticle));
+						List<Element> pubArticles = XMLUtils.getElementList(xmlRoot, "entry");
+
+						for (Element xmlArticle : pubArticles) {
+							try {
+								if (eid != null) {
+									String recordEid = XMLUtils.getElementValue(xmlArticle, "eid");
+									if (eid.equals(recordEid)) {
+										Record record = ScopusUtils.convertScopusDomToRecord(xmlArticle);
+										return Collections.singletonList(record);
+									}
+								} else {
+									results.add(ScopusUtils.convertScopusDomToRecord(xmlArticle));
+								}
+							} catch (Exception e) {
+								throw new RuntimeException("EID is not valid or not exist: " + e.getMessage(), e);
+							}
+						}
 					} catch (Exception e) {
-						throw new RuntimeException("EID is not valid or not exist: " + e.getMessage(), e);
-					}
-				}
-				
-				boolean lastPageReached = true;
-				for (Element page : XMLUtils.getElementList(xmlRoot, "link")) {
-					String refPage = page.getAttribute("ref");
-					if (StringUtils.equalsIgnoreCase(refPage, "next")) {
-						lastPageReached = false;
+						log.error(e.getMessage(), e);
 						break;
 					}
 				}
-				if (lastPageReached) {
-					break;
-				} else {
-					start += itemPerPage;
-				}
+				inProgress = false;
 
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				if (method != null) {
-					method.releaseConnection();
+			} else {
+				try (InputStream responseBodyAsStream = method.getResponseBodyAsStream()) {
+
+					Document inDoc = builder.parse(responseBodyAsStream);
+
+					Element xmlRoot = inDoc.getDocumentElement();
+
+					List<Element> pubArticles = XMLUtils.getElementList(xmlRoot, "entry");
+
+					for (Element xmlArticle : pubArticles) {
+						try {
+							results.add(ScopusUtils.convertScopusDomToRecord(xmlArticle));
+						} catch (Exception e) {
+							throw new RuntimeException("EID is not valid or not exist: " + e.getMessage(), e);
+						}
+					}
+
+					boolean lastPageReached = true;
+					for (Element page : XMLUtils.getElementList(xmlRoot, "link")) {
+						String refPage = page.getAttribute("ref");
+						if (StringUtils.equalsIgnoreCase(refPage, "next")) {
+							lastPageReached = false;
+							break;
+						}
+					}
+					if (lastPageReached) {
+						break;
+					} else {
+						start += itemPerPage;
+					}
+
+				} catch (Exception e) {
+					log.error(e.getMessage(), e);
+					if (method != null) {
+						method.releaseConnection();
+					}
+					break;
 				}
-				break;
 			}
 		}
 		return results;

@@ -194,7 +194,7 @@
       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <ul id="top-menu" class="nav navbar-nav navbar-<%= isRtl ? "right":"left"%>">
           <li class="pull-<%= isRtl ? "right":"left"%> hidden-xs hidden-s">
-            <a class="navbar-brand" href="https://www.uns.ac.rs/" target="_blank"><img src="<%= request.getContextPath() %>/image/uns-logo.png" alt="UNS logo" /></a>
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/"><img src="<%= request.getContextPath() %>/image/uns-logo.png" alt="UNS logo" /></a>
           </li>
           <li id="home-top-menu" class="<%= currentPage.endsWith("/home.jsp") ? "active" : "" %>">
             <a href="<%= request.getContextPath() %>/"><fmt:message key="jsp.layout.navbar-default.home"/></a>

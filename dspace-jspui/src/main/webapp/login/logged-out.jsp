@@ -19,8 +19,8 @@
 <%@ taglib uri="http://www.dspace.org/dspace-tags.tld" prefix="dspace" %>
 
 <dspace:layout locbar="nolink" titlekey="jsp.login.logged-out.title">
-    <%-- <h1>Logged Out</h1> --%>
-    <h1><fmt:message key="jsp.login.logged-out.title"/></h1>
+    <%-- <h3 class="h3pad">Logged Out</h3> --%>
+    <h3 class="h3pad"><fmt:message key="jsp.login.logged-out.title"/></h3>
 
     <%-- <p>Thank you for remembering to log out!</p> --%>
     <p><fmt:message key="jsp.login.logged-out.thank"/></p>

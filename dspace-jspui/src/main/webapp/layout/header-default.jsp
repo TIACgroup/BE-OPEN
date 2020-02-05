@@ -64,23 +64,23 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="Generator" content="<%= generator %>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">		
+        <link href="<%= request.getContextPath() %>/css/jdyna_custom.css" type="text/css" rel="stylesheet" />
+        <link href="<%= request.getContextPath() %>/css/researcher.css" type="text/css" rel="stylesheet" />
+        <link href="<%= request.getContextPath() %>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<%= request.getContextPath() %>/static/css/jstree/themes/default/style.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400&display=swap&subset=greek,greek-ext,latin-ext" rel="stylesheet">
         <link rel="resourcesync sitemap" href="<%= resourceSyncBaseURL %>/resourcesync.xml" type="application/xml"/>
         <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon"/>
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/jquery-ui-1.10.3.custom/redmond/jquery-ui-1.10.3.custom.css" type="text/css" />
-	    <link href="<%= request.getContextPath() %>/css/researcher.css" type="text/css" rel="stylesheet" />
-		<link href="<%= request.getContextPath() %>/css/jdyna_custom.css" type="text/css" rel="stylesheet" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap.css" type="text/css" /> <!-- bio je .min -->
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap-theme.css" type="text/css" /> <!-- bio je .min -->
-	    <link href="<%= request.getContextPath() %>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		<link href="<%= request.getContextPath() %>/static/css/jstree/themes/default/style.min.css" rel="stylesheet"/>
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/orcid.css" type="text/css" />
-	    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/dataTables.bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/buttons.bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/responsive.bootstrap.min.css"/>
-		<link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
-		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/bootstrap-datetimepicker.min.css" />
-        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400&display=swap&subset=greek,greek-ext,latin-ext" rel="stylesheet">
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/css/orcid.css" type="text/css" />
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/jquery-ui-1.10.3.custom/redmond/jquery-ui-1.10.3.custom.css" type="text/css" />
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap.css" type="text/css" /> <!-- bio je .min -->
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap-theme.css" type="text/css" /> <!-- bio je .min -->
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/dataTables.bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/buttons.bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/responsive.bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/bootstrap-datetimepicker.min.css" />
+
 <%
     if (!"NONE".equals(feedRef))
     {
@@ -239,7 +239,7 @@
     else
     {
     	%>
-        <div class="container-fluid">
+        <div class="container-fluid col-sm-12 center meniSir">
             <dspace:include page="/layout/navbar-minimal.jsp" />
         </div>
 <%    	

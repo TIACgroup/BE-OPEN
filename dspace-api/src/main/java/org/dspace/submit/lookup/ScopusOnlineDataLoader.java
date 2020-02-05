@@ -20,6 +20,7 @@ import org.apache.http.HttpException;
 
 import org.apache.log4j.Logger;
 import org.dspace.content.Item;
+import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
 
@@ -146,32 +147,38 @@ public class ScopusOnlineDataLoader extends NetworkSubmissionLookupDataLoader
         }
         return results;
     }
-    
+
     public List<Record> search(String query) throws HttpException, IOException
     {
-        try {
-            Context context = new Context();
-            context.turnOffAuthorisationSystem();
+        List<Record> results = new ArrayList<Record>();
 
-            List<Record> results = new ArrayList<Record>();
-            if (query != null) {
-                List<Record> search = scopusService.search(query);
-                if (search != null) {
-                    for (Record scopus : search) {
-                        if (scopus.hasField("eid") && !scopus.getValues("eid").isEmpty()) {
-                            if (!Item.existsByScopusIdentifier(context, scopus.getValues("eid").get(0).getAsString())) {
-                                results.add(convertFields(scopus));
-                            }
+        boolean readFromDirectory = ConfigurationManager.getBooleanProperty("submission.lookup.scopus.readfromdirectory");
+
+        if (query != null) {
+            List<Record> search = scopusService.search(query);
+            if (search != null) {
+                for (Record scopus : search) {
+                    if (scopus.hasField("eid") && !scopus.getValues("eid").isEmpty()) {
+                        if (readFromDirectory || existsByScopusId(scopus.getValues("eid").get(0).toString())) {
+                            results.add(convertFields(scopus));
                         }
                     }
                 }
             }
-            context.complete();
-            return results;
-        } catch (SQLException e) {
-            e.getMessage();
         }
+        return results;
+    }
 
-        return null;
+    private boolean existsByScopusId(String eid) {
+        boolean exists = false;
+        try {
+            Context context = new Context();
+            context.turnOffAuthorisationSystem();
+            exists = Item.existsByScopusIdentifier(context, eid);
+            context.complete();
+        } catch (SQLException e) {
+            log.error(e);
+        }
+        return exists;
     }
 }

@@ -152,6 +152,17 @@ it, please enter the types and the actual numbers or codes.</hint>
 
        <field>
          <dc-schema>dc</dc-schema>
+         <dc-element>identifier</dc-element>
+         <dc-qualifier>isbn</dc-qualifier>
+         <repeatable>false</repeatable>
+         <label>ISBN</label>
+         <input-type>onebox</input-type>
+         <hint>Enter the ISBN.</hint>
+         <required></required>
+       </field>
+
+       <field>
+         <dc-schema>dc</dc-schema>
          <dc-element>data</dc-element>
          <dc-qualifier>url</dc-qualifier>
          <repeatable>true</repeatable>
@@ -1411,6 +1422,10 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>issn</stored-value>
      </pair>
      <pair>
+       <displayed-value>ISBN</displayed-value>
+       <stored-value>isbn</stored-value>
+     </pair>
+     <pair>
        <displayed-value>Other</displayed-value>
        <stored-value>other</stored-value>
      </pair>
@@ -1606,6 +1621,10 @@ it, please enter the types and the actual numbers or codes.</hint>
        <stored-value>Book chapter</stored-value>
      </pair>
      <pair>
+       <displayed-value>Conference Paper</displayed-value>
+       <stored-value>Conference Paper</stored-value>
+     </pair>
+     <pair>
        <displayed-value>Dataset</displayed-value>
        <stored-value>Dataset</stored-value>
      </pair>
@@ -1762,6 +1781,26 @@ it, please enter the types and the actual numbers or codes.</hint>
      <pair>
        <displayed-value>Turkish</displayed-value>
        <stored-value>tr</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Serbian</displayed-value>
+       <stored-value>sr</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Russian</displayed-value>
+       <stored-value>ru</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Hungarian</displayed-value>
+       <stored-value>hu</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Romanian</displayed-value>
+       <stored-value>ro</stored-value>
+     </pair>
+     <pair>
+       <displayed-value>Ruthenian</displayed-value>
+       <stored-value>ru</stored-value>
      </pair>
      <pair>
        <displayed-value>(Other)</displayed-value>

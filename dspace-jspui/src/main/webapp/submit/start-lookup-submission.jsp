@@ -113,7 +113,7 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
                titlekey="jsp.submit.start-lookup-submission.title"
                nocache="true">
 
-    <h1><fmt:message key="jsp.submit.start-lookup-submission.heading"/></h1>
+    <h3 class="h3pad"><fmt:message key="jsp.submit.start-lookup-submission.heading"/></h3>
     <div id="jserrormessage" style="display: none"><fmt:message key="jsp.submit.start-lookup-submission.js.errormessage"/></div>
     <div id="jsseedetailsbuttonmessage" style="display: none"><fmt:message key="jsp.submit.start-lookup-submission.js.detailsbuttonmessage"/></div>
     <div id="jsfilldatabuttonmessage" style="display: none"><fmt:message key="jsp.submit.start-lookup-submission.js.filldataandstartbuttonmessage"/></div>
@@ -160,21 +160,21 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
 	</ul>
 	<div id="tabs-search">
 	<!-- da qui -->
-	<div class="panel-group" id="accordion">
+	<div class="panel-group depozit" id="accordion">
 	  <div class="panel panel-default">
 	    <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 	      <h4 class="panel-title">
 	        <a>
-	          <i span class="fa fa-chevron-down"></i> <fmt:message key="jsp.submit.start-lookup-submission.manual-submission"/>
-	        </a>
+	          <i span class="fa fa-chevron-right"></i> <fmt:message key="jsp.submit.start-lookup-submission.manual-submission"/>
+			</a>
 	      </h4>
 	    </div>
-	    <div id="collapseOne" class="panel-collapse collapse in">
+	    <div id="collapseOne" class="panel-collapse collapse">
 	      <div class="panel-body">
 	      	<div id="manual-submission">
 				<form class="form-horizontal" id="form-submission" action="" method="post">
 					<div class="form-group">
-						<label for="select-collection-manual" class="col-sm-2 control-label"><fmt:message key="jsp.submit.start-lookup-submission.select.collection.label"/></label>
+						<label for="select-collection-manual" class="col-sm-2"><fmt:message key="jsp.submit.start-lookup-submission.select.collection.label"/></label>
 						<div class="col-sm-7">
 								<dspace:selectcollection klass="form-control" id="select-collection-manual" collection="<%= collection_id %>"/>
 						</div>
@@ -207,10 +207,10 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
 	    <div id="collapseTwo" class="panel-collapse collapse">
 	      <div class="panel-body">
 	      	<form id="form-submission-search" action="" method="post">
-		<input type="hidden" id="suuid-search" name="suuid" value="<%= uuid %>"/>
-		<input type="hidden" id="iuuid-search" name="iuuid" value=""/>
-		<input type="hidden" id="fuuid-search" name="fuuid" value=""/>
-		<input type="hidden" id="collectionid-search" name="collectionid" value=""/>
+			<input type="hidden" id="suuid-search" name="suuid" value="<%= uuid %>"/>
+			<input type="hidden" id="iuuid-search" name="iuuid" value=""/>
+			<input type="hidden" id="fuuid-search" name="fuuid" value=""/>
+			<input type="hidden" id="collectionid-search" name="collectionid" value=""/>
 <%	
 		for (String provider : searchProviders)
 		{			
@@ -266,11 +266,13 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
 %>
 <c:set var="identifier"><%= identifier %></c:set>
 	<div class="form-group">
-		<span class="col-md-3">
-			<label for="identifier_<%= identifier%>"><span class="submission-lookup-label"><fmt:message key="jsp.submit.start-lookup-submission.identifier-${identifier}"/>:</span>
+		<span class="col-md-12">
+			<label for="identifier_<%= identifier%>">
+				<span class="submission-lookup-label"><b><fmt:message key="jsp.submit.start-lookup-submission.identifier-${identifier}"/></b> (<fmt:message key="jsp.submit.start-lookup-submission.identifier-${identifier}.hint"/>):</span>
 			</label>
 		</span>
-		<span class="col-md-9">		
+		<span class="clearfix"></span>
+		<input type="text" class="form-control submission-lookup-identifier" name="identifier_<%= identifier%>" id="identifier_<%= identifier%>" />
 <%	
 			for (String provider : identifiers2providers.get(identifier))
 			{			
@@ -279,13 +281,7 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
 <% 
 			}
 %>
-		</span>	 
-		<span class="clearfix"></span>
-		<span class="col-md-3 help-block submission-lookup-hint"><fmt:message key="jsp.submit.start-lookup-submission.identifier-${identifier}.hint"/></span></label>
-		<div class="col-md-9">
-		<input type="text" class="form-control  submission-lookup-identifier" name="identifier_<%= identifier%>" id="identifier_<%= identifier%>" />
-	</div>
-		</div><%
+	</div><%
 		} %>				
 		<button class="btn btn-primary col-md-2 pull-right" type="button" id="lookup_idenfifiers"><fmt:message key="jsp.submit.start-lookup-submission.identifier.lookup"/></button>
 	</form>
@@ -333,7 +329,7 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
 	</div>
 	<div class="form-group">
 			<label class="col-md-3" for="file_upload"><fmt:message key="jsp.submit.start-lookup-submission.byfile.file"/>:</label>
-				<div class="col-md-6"> 
+				<div class="col-md-6">
 					<input class="submission-file-loader" type="file" name="file_upload" id="file_upload" />
 				</div>
 		</div>
@@ -509,7 +505,7 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
 <%  } else { %>
 	<p class="submitFormWarn"><fmt:message key="jsp.submit.select-collection.none-authorized"/></p>
 <%  } %>
-	<script type="text/javascript"><!--
+	<script type="text/javascript">
     	j("#tabs").tabs({
     		beforeActivate: function( event, ui ) {
     			 j("li.active").toggleClass("active");
@@ -592,13 +588,16 @@ void generateCollectionTree(javax.servlet.jsp.JspWriter out, CollectionsTree tre
     			j("#select-collection-file-div").show();
     		}
     	});
-    	
     	j('#accordion').on('show.bs.collapse', function(a) {
     		j('i.fa-chevron-down').toggleClass('fa-chevron-down').toggleClass('fa-chevron-right');
     		j(a.target).prev().find('a>i').toggleClass('fa-chevron-down').toggleClass('fa-chevron-right');
     		//j('#accordion div.panel div.panel-heading h4.panel-title a i').toggleClass('fa-chevron-down');
     	});
+
+		j('#accordion').on('hide.bs.collapse', function(a) {
+    		j('i.fa-chevron-down').toggleClass('fa-chevron-down').toggleClass('fa-chevron-right');
+    	});
     	
-    --></script>
+  </script>
 	   
 </dspace:layout>

@@ -49,14 +49,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="Generator" content="<%= generator %>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="<%= request.getContextPath() %>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<%= request.getContextPath() %>/static/css/jstree/themes/default/style.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400&display=swap&subset=greek,greek-ext,latin-ext" rel="stylesheet">
         <link rel="shortcut icon" href="<%= request.getContextPath() %>/favicon.ico" type="image/x-icon"/>
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/jquery-ui-1.10.3.custom/redmond/jquery-ui-1.10.3.custom.css" type="text/css" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/bootstrap.min.css" type="text/css" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/bootstrap-theme.min.css" type="text/css" />
-   	    <link href="<%= request.getContextPath() %>/static/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-		<link href="<%= request.getContextPath() %>/static/css/jstree/themes/default/style.min.css" rel="stylesheet"/>
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/dspace-theme.css" type="text/css" />
-	    <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/number-polyfill.css" type="text/css" />
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/jquery-ui-1.10.3.custom/redmond/jquery-ui-1.10.3.custom.css" type="text/css" />
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/number-polyfill.css" type="text/css" />
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap.css" type="text/css" /> <!-- bio je .min -->
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-bootstrap-theme.css" type="text/css" /> <!-- bio je .min -->
+        <link rel="stylesheet" href="<%= request.getContextPath() %>/static/css/bootstrap/uns-dspace-theme.css" type="text/css" />
+
 <%
     if (!"NONE".equals(feedRef))
     {
@@ -146,12 +148,12 @@
     <%-- HACK: marginwidth, marginheight: for non-CSS compliant Netscape browser --%>
     <body class="undernavigation">
 <a class="sr-only" href="#content">Skip navigation</a>
-<header class="navbar navbar-inverse navbar-square">    
+<header class="navbar navbar-inverse navbar-square meniGore">
     <%
     if (!navbar.equals("off"))
     {
 %>
-            <div class="container-fluid">
+            <div class="container-fluid col-sm-12 center meniSir">
                 <dspace:include page="<%= navbar %>" />
             </div>
 <%
@@ -159,7 +161,7 @@
     else
     {
     	%>
-        <div class="container-fluid">
+        <div class="container-fluid col-sm-12 center meniSir">
             <dspace:include page="/layout/navbar-minimal.jsp" />
         </div>
 <%    	

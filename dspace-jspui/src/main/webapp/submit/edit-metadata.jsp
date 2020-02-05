@@ -1326,7 +1326,9 @@
       StringBuffer sb = new StringBuffer();
       Iterator vals;
       String display, value;
-      int j;
+      int j, max;
+      int k = 0;
+      max = valueList.size() - 2;
 
       sb.append("<div class=\"row\"><label class=\"col-md-2"+ (required?" label-required":"") +"\">")
         .append(label)
@@ -1352,8 +1354,21 @@
          value = (String)valueList.get(i+1);
          for (j = 0; j < defaults.length; j++)
          {
-             if (value.equals(defaults[j].value))
+             if((value.equals(defaults[j].value)) && (defaults[j].element.equals("type"))) {
+                k = k + 1;
+             }
+             if (value.equals(defaults[j].value)) {
                  break;
+             }
+             if ((defaults[j].element.equals("type")) && (i == max) && (k != 1)) {
+                 sb.append("<option ")
+                    .append(" selected=\"selected\" ")
+                    .append("value=\"")
+                    .append(defaults[j].value.replaceAll("\"", "&quot;"))
+                    .append("\">")
+                    .append(defaults[j].value)
+                    .append("</option>");
+             }
          }
          sb.append("<option ")
            .append(j < defaults.length ? " selected=\"selected\" " : "")
@@ -1362,7 +1377,7 @@
            .append("\">")
            .append(display)
            .append("</option>");
-         
+
       }
 	  
       sb.append("</select></div></div></div></div><br/>");
@@ -1849,6 +1864,20 @@ window.onload = function() {};
                 error_div.innerText = "When item type 'Article' is selected ISSN is requred.";
 
                 issn.parentNode.insertBefore(error_div, issn.nextSibling);
+
+                return false;
+            }
+
+        }
+
+        if (document.getElementById('dc_identifier_isbn') !== null ) {
+            var isbn = document.getElementById('dc_identifier_isbn');
+            if (isbn.value !== '' && !/^[0-9]{10,13}$/.test(isbn.value)) {
+                var error_div = document.createElement("div");
+                error_div.className = "alert alert-warning";
+                error_div.innerText = "ISBN must have 10-13 digits";
+
+                isbn.parentNode.insertBefore(error_div, isbn.nextSibling);
 
                 return false;
             }
