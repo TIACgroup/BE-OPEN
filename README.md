@@ -139,9 +139,14 @@ Ako je sve u redu, registrovati servis za Apache Tomcat:
 ```
 systemctl enable tomcat
 ```
-Otvaranje porta 80:
+Otvaranje porta 80, 443 i 22:
 ```
+systemctl unmask firewalld
+systemctl enable firewalld
+systemctl start firewalld
 firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=22/tcp --permanent
 ```
 Ponovno pokretanje firewall servisa:
 ```
@@ -198,7 +203,7 @@ host   all   all     127.0.0.1/32            md5
 ```
 čime se uključuje autentifikacija pomoću lozinke. Restartovati server:
 ```
-systemctl restart postresql-9.6
+systemctl restart postgresql-9.6
 ```
 
 [info](https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge)
@@ -255,6 +260,16 @@ scopus.query.param.default=affilorg("University of Novi Sad")
 key.googleapi.maps = ****
 cookies.policy.enabled = false
 ```
+
+Zavisno od konfiguracije email servera, možda je potrebno u fajlu 
+`/opt/crisinstallation/dspace-parent/dspace/config/dspace.cfg`
+dodati:
+```
+mail.extraproperties = mail.smtp.auth=true, \
+                      mail.smtp.starttls.enable=true, \
+                      mail.smtp.EnableSSL.enable=true
+```
+
 
 ### Pokretanje mavena
 
