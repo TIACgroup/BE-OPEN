@@ -236,11 +236,11 @@ Potrebno je podesiti parametre u fajlu `/opt/crisinstallation/dspace-parent/buil
 
 ```
 dspace.install.dir=/dspace
-dspace.hostname = localhost
-dspace.baseUrl = http://localhost:8080
+dspace.hostname = localhost  # puno ime servera u produkciji
+dspace.baseUrl = http://localhost:8080  # puno ime sajta u produkciji, verovatno sa https://
 dspace.ui = jspui
 dspace.url = ${dspace.baseUrl}
-solr.server = http://localhost:8080/solr
+solr.server = http://localhost:8080/solr  # ostavi bas localhost
 ```
 Ostali parametri:
 ```
