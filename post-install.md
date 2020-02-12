@@ -3,7 +3,9 @@
 ### Kreiranje zajednice i kolekcije
 
 Nakon podizanja aplikacije, potrebno je sa administratorskim nalogom kreirati zajednicu i kolekciju. To se postiže tako što se nakon logovanja klikne na profil > Upravljati > Sadržina > Zajednice & kolekcije.
-Potrebno je kreirati zajednicu i za tu zajednicu bar jednu kolekciju.
+Potrebno je kreirati zajednicu i za tu zajednicu bar jednu kolekciju. Pravo dodavanja publikacija dodeliti grupi Anonymous koja predstavlja sve prijavljene korisnike.
+
+Ukoliko se radi Scopus import, ne treba odmah uključiti i review/approve/edit metadata step, jer će onda sve importovane publikacije morati da prođu kroz to. To se može uključiti za kolekciju nakon Scopus importa.
 
 ### Uvoz departmana i istraživača
 Alat za import se nalazi u instalacionom direktorijumu na putanji: `install-tools/import`.
