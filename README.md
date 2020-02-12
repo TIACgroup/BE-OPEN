@@ -329,6 +329,60 @@ systemctl start tomcat
 
 Proveriti da li je pokrenut DSpace-CRIS: [http://localhost:8080/](https://localhost:8080/)
 
+### Nginx i Certbot
+
+```
+yum install nginx
+systemctl start nginx
+systemctl stop nginx
+systemctl enable nginx
+mkdir /etc/nginx/sites-available
+mkdir /etc/nginx/sites-enabled
+setsebool -P httpd_can_network_connect 1
+```
+
+U `http` sekciji fajla `/etc/nginx/nginx.conf`, a neposredno pre `server` sekcije, dodati:
+```
+    include /etc/nginx/sites-enabled/*;
+    server_names_hash_bucket_size 64;
+```
+
+```
+cd /etc/nginx/sites-available/
+```
+Sadržaj novog fajla `test.open.ni.ac.rs`:
+```
+server {
+    listen  80;
+    listen [::]:80;
+    server_name test.open.ni.ac.rs;
+
+    proxy_set_header         X-Real-IP $remote_addr;
+    proxy_set_header         X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header         Host $http_host;
+
+    client_max_body_size 120M;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+    }
+}
+```
+
+Instaliramo certbot:
+```
+yum install certbot-nginx
+certbot --nginx -d test.open.ni.ac.rs
+```
+I dodajemo ga u crontab:
+```
+crontab -e
+```
+dodati red:
+```
+15 3 * * * /usr/bin/certbot renew --quiet
+```
+
 ### [Post instalacioni koraci](post-install.md)
 
 ---
