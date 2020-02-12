@@ -260,6 +260,12 @@ scopus.query.param.default=affilorg("University of Novi Sad")
 key.googleapi.maps = ****
 cookies.policy.enabled = false
 ```
+U istom fajlu, ako će se raditi import iz Scopusa, potrebno je definisati proxy:
+```
+http.proxy.host = proxy.rcub.bg.ac.rs
+http.proxy.port = 8080
+```
+U suprotnom, vrednost ovih polja treba ostaviti prazna, ali polja moraju biti definisana, tj. ne smeju biti zakomentarisana.
 
 Zavisno od konfiguracije email servera, možda je potrebno u fajlu 
 `/opt/crisinstallation/dspace-parent/dspace/config/dspace.cfg`
