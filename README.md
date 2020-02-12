@@ -244,7 +244,7 @@ solr.server = http://localhost:8080/solr
 ```
 Ostali parametri:
 ```
-dspace.name = DSpace-CRIS at University of Novi Sad
+dspace.name = Univerzitet u ****
 mail.server = smtp.uns.ac.rs
 mail.server.username=dspace
 mail.server.password=*****
