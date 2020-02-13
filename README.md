@@ -245,7 +245,7 @@ solr.server = http://localhost:8080/solr  # ostavi bas localhost
 Ostali parametri:
 ```
 dspace.name = Univerzitet u ****
-mail.server = smtp.uns.ac.rs
+mail.server = smtp.uns.ac.rs  # iza imena servera ne sme biti nikakvih znakova cak ni razmaka!!!
 mail.server.username=dspace
 mail.server.password=*****
 handle.canonical.prefix = ${dspace.url}/handle/
