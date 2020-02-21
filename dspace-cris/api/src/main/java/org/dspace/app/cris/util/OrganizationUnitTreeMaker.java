@@ -124,7 +124,11 @@ public class OrganizationUnitTreeMaker {
 
         if (children.size() > 0) {
             builder.append("<div class=\"panel-item\">");
-            builder.append("<div class=\"panel-heading collapsed accordion-toggle\" role=\"tab\" id=\"heading");
+            if(ouCounter == 0) {
+                builder.append("<div class=\"panel-heading accordion-toggle\" role=\"tab\" id=\"heading");
+            } else {
+                builder.append("<div class=\"panel-heading collapsed accordion-toggle\" role=\"tab\" id=\"heading");
+            }
             builder.append("outreemaker" + ouCounter);
             builder.append("\" data-toggle =\"collapse\" href=\"#collapse");
             builder.append("outreemaker" + ouCounter);
@@ -141,18 +145,23 @@ public class OrganizationUnitTreeMaker {
             builder.append("</div>");
             builder.append("<div id=\"collapse");
             builder.append("outreemaker" + ouCounter);
-            builder.append("\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"heading");
+            if(ouCounter == 0) {
+                builder.append("\" class=\"panel-collapse in\" role=\"tabpanel\" aria-labelledby=\"heading");
+            } else {
+                builder.append("\" class=\"panel-collapse collapse\" role=\"tabpanel\" aria-labelledby=\"heading");
+            }
             builder.append("outreemaker" + ouCounter);
             builder.append("\"> <div class=\"panel-body list-child\">");
 
             for (OrganizationUnit child : children) {
 
-                ouCounter++;
-
-                OrganizationUnitWrapper childOU = createOuHierarchy(searchService, child, ous);
-                currentOU.pubCount += childOU.pubCount;
-                currentOU.rpCount += childOU.rpCount;
-                builder.append(childOU.asHTML);
+                if (child.getName() != null) {
+                    ouCounter++;
+                    OrganizationUnitWrapper childOU = createOuHierarchy(searchService, child, ous);
+//                    currentOU.pubCount += childOU.pubCount;
+//                    currentOU.rpCount += childOU.rpCount;
+                    builder.append(childOU.asHTML);
+                }
             }
 
             builder.append("</div></div></div>");

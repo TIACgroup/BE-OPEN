@@ -633,6 +633,36 @@ public class ApplicationService extends ExtendedTabService
         return organizationUnitDao.uniqueBySourceID(null, code);
     }
 
+    public Integer getOrganizationUnitCitations(Integer id) {
+        Integer sum = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            String query = "select sum(cm.metriccount) from cris_metrics cm " +
+                    "where cm.metrictype = 'scopus_aggregate' and cm.last = true and cm.resourceid in " +
+                    "(select crp.id from cris_rpage crp left join cris_rp_prop cpr on cpr.parent_id = crp.id left join jdyna_values jdv on cpr.id = jdv.id " +
+                    "where jdv.ouvalue = ? and cpr.typo_id = 33)";
+
+            Context context = new Context();
+            conn = context.getDBConnection();
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                sum = rs.getInt("sum");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try { if (rs != null) rs.close(); } catch (Exception e) {};
+            try { if (stmt != null) stmt.close(); } catch (Exception e) {};
+            try { if (conn != null) conn.close(); } catch (Exception e) {};
+        }
+        return sum;
+    }
+
     public <T extends ACrisObject> T getEntityByCrisId(String crisID,
             Class<T> className)
     {        

@@ -9,7 +9,7 @@ package org.dspace.app.webui.cris.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,14 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.dspace.app.cris.model.OrganizationUnit;
-import org.dspace.app.cris.model.Project;
 import org.dspace.app.cris.model.jdyna.BoxOrganizationUnit;
 import org.dspace.app.cris.model.jdyna.EditTabOrganizationUnit;
 import org.dspace.app.cris.model.jdyna.OUPropertiesDefinition;
 import org.dspace.app.cris.model.jdyna.OUProperty;
 import org.dspace.app.cris.model.jdyna.TabOrganizationUnit;
-import org.dspace.app.cris.model.jdyna.TabProject;
-import org.dspace.app.cris.model.jdyna.VisibilityTabConstant;
 import org.dspace.app.cris.service.ApplicationService;
 import org.dspace.app.cris.service.CrisSubscribeService;
 import org.dspace.app.cris.statistics.util.StatsConfig;
@@ -41,11 +38,9 @@ import org.dspace.app.webui.util.Authenticate;
 import org.dspace.app.webui.util.JSPManager;
 import org.dspace.app.webui.util.UIUtil;
 import org.dspace.authorize.AuthorizeException;
-import org.dspace.authorize.AuthorizeManager;
 import org.dspace.core.Context;
 import org.dspace.core.LogManager;
 import org.dspace.eperson.EPerson;
-import org.dspace.eperson.Group;
 import org.dspace.usage.UsageEvent;
 import org.dspace.utils.DSpace;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,7 +60,8 @@ public class OUDetailsController
         SimpleDynaController<OUProperty, OUPropertiesDefinition, BoxOrganizationUnit, TabOrganizationUnit>
 {
     private CrisSubscribeService subscribeService;
-    
+//    private ApplicationService applicationService1;
+
     private List<ICrisHomeProcessor<OrganizationUnit>> processors;
 
     public OUDetailsController(Class<OrganizationUnit> anagraficaObjectClass,
@@ -155,37 +151,49 @@ public class OUDetailsController
         {
             boolean subscribed = subscribeService.isSubscribed(currUser,
                     ou);
-            model.put("subscribed", subscribed);            
+            model.put("subscribed", subscribed);
         }
-        
-        List<ICrisHomeProcessor<OrganizationUnit>> resultProcessors = new ArrayList<ICrisHomeProcessor<OrganizationUnit>>();
         Map<String, Object> extraTotal = new HashMap<String, Object>();
-        Map<String, ItemMetricsDTO> metricsTotal = new HashMap<String, ItemMetricsDTO>();
-        List<String> metricsTypeTotal = new ArrayList<String>();
-        for (ICrisHomeProcessor processor : processors)
+        Integer citation = null;
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+//        List<ICrisHomeProcessor<OrganizationUnit>> resultProcessors = new ArrayList<ICrisHomeProcessor<OrganizationUnit>>();
+//        Map<String, ItemMetricsDTO> metricsTotal = new HashMap<String, ItemMetricsDTO>();
+//        List<String> metricsTypeTotal = new ArrayList<String>();
+
+//        for (ICrisHomeProcessor processor : processors)
+//        {
+//            if (OrganizationUnit.class.isAssignableFrom(processor.getClazz()))
+//            {
+//                processor.process(context, request, response, ou);
+//                Map<String, Object> extra = (Map<String, Object>)request.getAttribute("extra");
+//                if(extra!=null && !extra.isEmpty()) {
+//                    Object metricsObject = extra.get("metrics");
+//                    if(metricsObject!=null) {
+//                        Map<String, ItemMetricsDTO> metrics = (Map<String, ItemMetricsDTO>)metricsObject;
+//                        List<String> metricTypes = (List<String>)extra.get("metricTypes");
+//                        if(metrics!=null && !metrics.isEmpty()) {
+//                            metricsTotal.putAll(metrics);
+//                        }
+//                        if(metricTypes!=null && !metricTypes.isEmpty()) {
+//                            metricsTypeTotal.addAll(metricTypes);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        extraTotal.put("metricTypes", metricsTypeTotal);
+//        extraTotal.put("metrics", metricsTotal);
+
+        if (subscribeService != null)
         {
-            if (OrganizationUnit.class.isAssignableFrom(processor.getClazz()))
-            {
-                processor.process(context, request, response, ou);
-                Map<String, Object> extra = (Map<String, Object>)request.getAttribute("extra");
-                if(extra!=null && !extra.isEmpty()) {
-                    Object metricsObject = extra.get("metrics");
-                    if(metricsObject!=null) {
-                        Map<String, ItemMetricsDTO> metrics = (Map<String, ItemMetricsDTO>)metricsObject;
-                        List<String> metricTypes = (List<String>)extra.get("metricTypes");
-                        if(metrics!=null && !metrics.isEmpty()) {
-                            metricsTotal.putAll(metrics);
-                        }
-                        if(metricTypes!=null && !metricTypes.isEmpty()) {
-                            metricsTypeTotal.addAll(metricTypes);
-                        }
-                    }
-                }
-            }
+            citation = this.subscribeService.getCitations(ou.getId());
         }
-        extraTotal.put("metricTypes", metricsTypeTotal);
-        extraTotal.put("metrics", metricsTotal);
-        request.setAttribute("extra", extraTotal);        
+
+        Date sevenDaysBefore = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
+
+        extraTotal.put("citation", citation);
+        extraTotal.put("sevenDaysBefore", sevenDaysBefore);
+        request.setAttribute("extra", extraTotal);
         request.setAttribute("sectionid", StatsConfig.DETAILS_SECTION);
         new DSpace().getEventService().fireEvent(
                 new UsageEvent(
@@ -305,6 +313,11 @@ public class OUDetailsController
     {
         this.subscribeService = rpSubscribeService;
     }
+
+//    public void setApplicationService1(ApplicationService ouApplicationService)
+//    {
+//        this.applicationService1 = ouApplicationService;
+//    }
 
 	public void setProcessors(List<ICrisHomeProcessor<OrganizationUnit>> processors) {
 		this.processors = processors;

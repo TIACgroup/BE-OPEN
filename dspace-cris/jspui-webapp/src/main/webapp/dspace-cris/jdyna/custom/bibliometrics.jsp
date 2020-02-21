@@ -34,6 +34,8 @@ jQuery(document).ready(function() {
 												<div class="panel-body">
 <c:set var="root"><%=request.getContextPath()%></c:set>
 <c:set var="metrics" value="${extra['metrics']}" />
+<c:set var="views" value="${extraTotal['views']}" />
+<c:set var="downloads" value="${extraTotal['downloads']}" />
 <div class="row">
 <c:forEach var="metricType" items="${extra['metricTypes']}">
 <c:set var="metricNameKey">
@@ -167,6 +169,51 @@ jQuery(document).ready(function() {
 </div>
 </c:if>
 </c:forEach>
+<br/>
+<c:if test="${not empty views and views gt 0}">
+<div class="col-sm-6 col-xs-12 box-view">
+<div class="media view">
+    <div class="media-body text-center">
+        <h4 class="media-heading"><fmt:message key="jsp.display-item.citation.view"/>
+    </div>
+    <div class="media-body text-center">
+        <span id="metric-counter-view" class="metric-counter">
+            ${views}
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center small">
+           <fmt:message
+                key="jsp.display-cris.citation.time">
+                <fmt:param value="${metrics['scopus_aggregate'].time}" />
+            </fmt:message>
+        </div>
+    </div>
+</div>
+</div>
+</c:if>
+<c:if test="${not empty downloads and downloads gt 0}">
+<div class="col-sm-6 col-xs-12 box-download">
+<div class="media download">
+    <div class="media-body text-center">
+        <h4 class="media-heading"><fmt:message key="jsp.display-item.citation.download"/>
+    </div>
+    <div class="media-body text-center">
+        <span id="metric-counter-download" class="metric-counter">
+             ${downloads}
+        </span>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center small">
+           <fmt:message
+               key="jsp.display-cris.citation.time">
+                <fmt:param value="${metrics['scopus_aggregate'].time}" />
+           </fmt:message>
+        </div>
+    </div>
+</div>
+</div>
+</c:if>
 </div>
 										        </div>
 										  </div>

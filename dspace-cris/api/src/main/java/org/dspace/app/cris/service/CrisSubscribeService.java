@@ -67,4 +67,9 @@ public class CrisSubscribeService
         return applicationService.getCrisSubscriptionsByEPersonID(e.getID());
     }
 
+    public Integer getCitations(Integer id)
+    {
+        return applicationService.getOrganizationUnitCitations(id);
+    }
+
 }

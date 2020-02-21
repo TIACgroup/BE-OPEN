@@ -78,6 +78,15 @@ public class ExploreController extends BaseAbstractController {
 
         List<DiscoverySearchFilterFacet> availableFacet = discoveryConfiguration
                 .getSidebarFacets();
+
+		List<DiscoverySearchFilterFacet> removedList = new ArrayList<>();
+		for(DiscoverySearchFilterFacet facet : availableFacet) {
+			if(facet.getIndexFieldName().equals("objectname")) {
+				removedList.add(facet);
+			}
+		}
+		availableFacet.removeAll(removedList);
+
         request.setAttribute("location",configurationName);
         request.setAttribute("facetsConfig",
                 availableFacet != null ? availableFacet
