@@ -2651,8 +2651,8 @@ public class ImportExportUtils {
 			String lastName = "";
 
 			if (nameParts.length > 1) {
-				firstName = nameParts[0];
-				lastName = nameParts[1];
+				firstName = nameParts[1];
+				lastName = nameParts[0];
 			}
 
 			if (!email.trim().isEmpty()) {
