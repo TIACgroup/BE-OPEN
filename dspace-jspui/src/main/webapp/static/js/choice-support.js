@@ -405,10 +405,16 @@ function DSpaceChoicesAcceptOnClick ()
             // window.alert('Setting fields auth="'+authorityInput+'", conf="'+confInput+'"');
 
             var authValue = null;
-            if (select.selectedIndex >= 0 && select.options[select.selectedIndex].authority != null)
+            var optionsSize = null;
+            if (select.selectedIndex >= 0)
             {
-                authValue = select.options[select.selectedIndex].authority;
-                of.elements[authorityInput].value = authValue;
+                optionsSize = select.options.length
+                if(select.selectedIndex == optionsSize - 1) {
+                    of.elements[authorityInput].value = "";
+                } else {
+                    authValue = select.options[select.selectedIndex].authority;
+                    of.elements[authorityInput].value = authValue;
+                }
             }
             if (of.elements[confInput] != null)
                 of.elements[confInput].value = 'accepted';
