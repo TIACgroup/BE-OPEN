@@ -60,6 +60,8 @@
     Boolean isAuthor_b = (Boolean)request.getAttribute("isAuthor_button");
     boolean admin_button = (admin_b == null ? false : admin_b.booleanValue());
     boolean isAuthor_button = (isAuthor_b == null ? false : isAuthor_b.booleanValue());
+    Boolean librarian = (Boolean)request.getAttribute("is.librarian");
+    boolean isLibrarian = (librarian == null ? false : librarian.booleanValue());
     
     // get the workspace id if one has been passed
     Integer workspace_id = (Integer) request.getAttribute("workspace_id");
@@ -151,7 +153,8 @@ j(document).ready(function() {
 	});
 	<% } %>
 	
-	<% if (dedupEnabled && admin_button) { %>
+	<% if (dedupEnabled) {
+	 if(isLibrarian || admin_button) {%>
 	j.ajax({
 		url : "<%=request.getContextPath()%>/json/duplicate",
 		data : {																			
@@ -179,7 +182,7 @@ j(document).ready(function() {
 		error : function(data) {
 		}
 	});
-	<% } %>
+	<% }} %>
 });
 --></script>
 	<% if(coreRecommender) { %>
@@ -216,7 +219,7 @@ j(document).ready(function() {
     {
 %>
 	<div class="row">
-		<div class="col-sm-<%= admin_button?"7":"12" %> col-md-<%= admin_button?"8":"12" %> col-lg-<%= admin_button?"9":"12" %>">
+		<div class="col-sm-<%= admin_button||isLibrarian?"7":"12" %> col-md-<%= admin_button||isLibrarian?"8":"12" %> col-lg-<%= admin_button||isLibrarian?"9":"12" %>">
 		<%		
 		if (newVersionAvailable)
 		   {
@@ -293,7 +296,27 @@ j(document).ready(function() {
              </div>
           </div>
         </div>
-<%      } %>
+<% }    else if (isLibrarian)  // librarian edit button
+        { %>
+        <div class="col-sm-5 col-md-4 col-lg-3">
+            <div class="panel panel-warning">
+                <div class="panel-heading"><fmt:message key="jsp.admintools"/></div>
+                <div class="panel-body">
+                <form method="get" action="<%= request.getContextPath() %>/submit">
+                    <input type="hidden" name="edit_item" value="<%= item.getID() %>" />
+                    <input type="hidden" name="pageCallerID" value="0" />
+                    <%--<input type="submit" name="submit" value="Edit...">--%>
+                    <input class="btn btn-default col-md-12" type="submit" name="submit" value="<fmt:message key="jsp.general.editsubmission.button"/>" />
+                </form>
+                <form method="get" action="<%= request.getContextPath() %>/tools/edit-item">
+                    <input type="hidden" name="item_id" value="<%= item.getID() %>" />
+                    <%--<input type="submit" name="submit" value="Edit...">--%>
+                    <input class="btn btn-default col-md-12" type="submit" name="submit" value="<fmt:message key="jsp.general.editnormal.button"/>" />
+                </form>
+                </div>
+             </div>
+        </div>
+<% } %>
 
 </div>
 <%
@@ -429,7 +452,8 @@ j(document).ready(function() {
 <div class="col-lg-3">
 <div class="row">
 <%
-if (dedupEnabled && admin_button) { %>	
+if (dedupEnabled) {
+ if(isLibrarian || admin_button) {%>
 <div class="col-lg-12 col-md-4 col-sm-6">
 <div class="media dedup">
 	<div class="media-left">
@@ -442,7 +466,7 @@ if (dedupEnabled && admin_button) { %>
 </div>	
 </div>
 <br class="visible-lg" />
-<% } %>
+<% }} %>
 <c:forEach var="metricType" items="${metricTypes}">
 <c:set var="metricNameKey">
 	jsp.display-item.citation.${metricType}
@@ -664,7 +688,7 @@ if (dedupEnabled && admin_button) { %>
     {
         boolean item_history_view_admin = ConfigurationManager
                 .getBooleanProperty("versioning", "item.history.view.admin");
-        if(!item_history_view_admin || admin_button) {         
+        if(!item_history_view_admin || admin_button || isLibrarian) {
 %>
 	<div id="versionHistory" class="panel panel-info">
 	<div class="panel-heading"><fmt:message key="jsp.version.history.head2" /></div>
@@ -691,7 +715,7 @@ if (dedupEnabled && admin_button) { %>
 		<tr>			
 			<td headers="tt1" class="oddRowEvenCol"><%= versRow.getVersionNumber() %></td>
 			<td headers="tt2" class="oddRowOddCol"><a href="<%= request.getContextPath() + identifierPath[0] %>"><%= identifierPath[1] %></a><%= item.getID()==versRow.getItemID()?"<span class=\"glyphicon glyphicon-asterisk\"></span>":""%></td>
-			<td headers="tt3" class="oddRowEvenCol"><% if(admin_button) { %><a
+			<td headers="tt3" class="oddRowEvenCol"><% if(admin_button || isLibrarian) { %><a
 				href="mailto:<%= versRowPerson.getEmail() %>"><%=versRowPerson.getFullName() %></a><% } else { %><%=versRowPerson.getFullName() %><% } %></td>
 			<td headers="tt4" class="oddRowOddCol"><%= versRow.getVersionDate() %></td>
 			<td headers="tt5" class="oddRowEvenCol"><%= versRow.getSummary() %></td>

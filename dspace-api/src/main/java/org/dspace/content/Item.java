@@ -895,8 +895,9 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
             IOException
     {
         // Check authorisation
-        AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
-
+        if(!AuthorizeManager.isLibrarian(ourContext)) {
+            AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
+        }
         log.info(LogManager.getHeader(ourContext, "remove_bundle", "item_id="
                 + getID() + ",bundle_id=" + b.getID()));
 
@@ -1346,7 +1347,9 @@ public class Item extends DSpaceObject implements BrowsableDSpaceObject
         // Check authorisation here. If we don't, it may happen that we remove the
         // metadata but when getting to the point of removing the bundles we get an exception
         // leaving the database in an inconsistent state
-        AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
+        if(!AuthorizeManager.isLibrarian(ourContext)) {
+            AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
+        }
 
         ourContext.addEvent(new Event(Event.DELETE, Constants.ITEM, getID(), 
                 getHandle(), getIdentifiers(ourContext)));

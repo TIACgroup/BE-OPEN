@@ -58,6 +58,9 @@ public class EPerson extends DSpaceObject
 
     /** The e-mail field (for sorting) */
     public static final int LANGUAGE = 5;
+
+    /** The first name field (for sorting) */
+    public static final int FIRSTNAME = 6;
     
     /** log4j logger */
     private static final Logger log = Logger.getLogger(EPerson.class);
@@ -508,10 +511,14 @@ public class EPerson extends DSpaceObject
         case NETID:
             s = "e.netid";
             break;
+        case LASTNAME:
+            s = "m.text_value";
+            t = "lastname";
+            break;
 
         default:
             s = "m.text_value";
-            t = "lastname";
+            t = "firstname";
         }
 
         // NOTE: The use of 's' in the order by clause can not cause an SQL

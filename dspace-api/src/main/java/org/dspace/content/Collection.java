@@ -1159,7 +1159,9 @@ public class Collection extends DSpaceObject implements IGlobalSearchResult
             IOException
     {
         // Check authorisation
-        AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
+        if(!AuthorizeManager.isLibrarian(ourContext)) {
+            AuthorizeManager.authorizeAction(ourContext, this, Constants.REMOVE);
+        }
 
         // will the item be an orphan? is it in other collections?
         TableRow row = DatabaseManager.querySingle(ourContext,

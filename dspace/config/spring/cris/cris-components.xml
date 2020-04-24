@@ -19,7 +19,7 @@
 	<bean id="rpStatComponentsService" class="org.dspace.app.cris.integration.CrisComponentsService">
 		<property name="components">
 			<map>
-				<entry key="dspaceitems" value-ref="publicationlist" />			
+				<entry key="dspaceitems" value-ref="publicationlist" />
 			</map>
 		</property>
 	</bean>
@@ -43,6 +43,7 @@
 		<property name="types">
 			<map>
 				<entry key="selected" value-ref="selectedComponent" />
+				<entry key="all" value-ref="allComponent" />
 				<entry key="journal" value-ref="journalComponent" />
 				<entry key="conference" value-ref="conferenceComponent" />
 				<entry key="book" value-ref="bookComponent" />
@@ -70,6 +71,15 @@
 		<property name="order"><value>asc</value></property>
 		<property name="rpp"><value>20</value></property>
 		<property name="sortby"><value>1</value></property>	
+	</bean>
+
+	<bean id="allComponent"
+		  class="org.dspace.app.webui.cris.components.BeanFacetComponent">
+		<property name="componentIdentifier" value="all" />
+		<property name="facetQuery"><value>-relationpreferences.crisrp.publications.selected:{1}</value></property>
+		<property name="order"><value>asc</value></property>
+		<property name="rpp"><value>20</value></property>
+		<property name="sortby"><value>1</value></property>
 	</bean>
 	
 	<bean id="conferenceComponent"

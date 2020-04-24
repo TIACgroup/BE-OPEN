@@ -438,7 +438,7 @@ public class EditItemServlet extends DSpaceServlet
     private void checkEditAuthorization(Context c, Item item)
             throws AuthorizeException, java.sql.SQLException
     {
-        if (!item.canEdit() && !item.isCurrentUserAuthor())
+        if (!item.canEdit() && !item.isCurrentUserAuthor() && !AuthorizeManager.isLibrarian(c))
         {
             int userID = 0;
 
@@ -511,7 +511,7 @@ public class EditItemServlet extends DSpaceServlet
         }
         
         if (AuthorizeManager.authorizeActionBoolean(context, item
-                .getParentObject(), Constants.REMOVE))
+                .getParentObject(), Constants.REMOVE) || AuthorizeManager.isLibrarian(context))
         {
             request.setAttribute("delete_button", Boolean.TRUE);
         }

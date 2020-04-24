@@ -44,11 +44,15 @@ public class EPersonListServlet extends DSpaceServlet
         boolean multiple = UIUtil.getBoolParameter(request, "multiple");
 
         // What are we sorting by. Lastname is default
-        int sortBy = EPerson.LASTNAME;
+        int sortBy = EPerson.FIRSTNAME;
 
         String sbParam = request.getParameter("sortby");
 
-        if ((sbParam != null) && sbParam.equals("lastname"))
+        if ((sbParam != null) && sbParam.equals("firstname"))
+        {
+            sortBy = EPerson.FIRSTNAME;
+        }
+        else if ((sbParam != null) && sbParam.equals("lastname"))
         {
             sortBy = EPerson.LASTNAME;
         }

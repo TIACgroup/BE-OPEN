@@ -104,7 +104,8 @@
 
         <div class="row">
             <%-- <td>Last Name:</td> --%>
-            <label class="col-md-2" for="tlastname"><fmt:message key="jsp.dspace-admin.eperson.general.lastname"/></label>
+            <label class="col-md-2" for="tfirstname"><fmt:message key="jsp.dspace-admin.eperson.general.firstname"/></label>
+            <%-- <label class="col-md-2" for="tlastname"><fmt:message key="jsp.dspace-admin.eperson.general.lastname"/></label> --%>
             <div class="col-md-6">
 				<input class="form-control" name="lastname" id="tlastname" size="24" value="<%=lastName == null ? "" : Utils.addEntities(lastName) %>"/>
 			</div>
@@ -112,7 +113,8 @@
 
         <div class="row">           
             <%-- <td>First Name:</td> --%>
-            <label class="col-md-2" for="tfirstname"><fmt:message key="jsp.dspace-admin.eperson.general.firstname"/></label>
+            <%-- <label class="col-md-2" for="tfirstname"><fmt:message key="jsp.dspace-admin.eperson.general.firstname"/></label> --%>
+            <label class="col-md-2" for="tlastname"><fmt:message key="jsp.dspace-admin.eperson.general.lastname"/></label>
             <div class="col-md-6">
                 <input class="form-control" name="firstname" id="tfirstname" size="24" value="<%=firstName == null ? "" : Utils.addEntities(firstName) %>"/>
             </div>

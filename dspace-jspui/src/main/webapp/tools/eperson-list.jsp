@@ -247,16 +247,23 @@ function clearEPeople()
             <th id="t4"><%
                 if (sortBy == EPerson.LASTNAME)
                 {
+                    %><fmt:message key="jsp.tools.eperson-list.th.firstname"/><span class="glyphicon glyphicon-arrow-down"><%
+                }
+                else
+                {
+                    %><a href="<%= sortLink %>lastname"><fmt:message key="jsp.tools.eperson-list.th.firstname" /></a><%
+                }
+            %></th>
+            <th id="t5"><%
+                if (sortBy == EPerson.FIRSTNAME)
+                {
                     %><fmt:message key="jsp.tools.eperson-list.th.lastname"/><span class="glyphicon glyphicon-arrow-down"><%
                 }
                 else
                 {
-                    %><a href="<%= sortLink %>lastname"><fmt:message key="jsp.tools.eperson-list.th.lastname" /></a><%
+                    %><a href="<%= sortLink %>firstname"><fmt:message key="jsp.tools.eperson-list.th.lastname" /></a><%
                 }
             %></th>
-
-            <th id="t5"><fmt:message key="jsp.tools.eperson-list.th.firstname"/></th>
- 
              <th id="t6"><%
                 if (sortBy == EPerson.LANGUAGE)
                 {
