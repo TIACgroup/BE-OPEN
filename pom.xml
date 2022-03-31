@@ -1208,7 +1208,7 @@
         <dependency>
             <artifactId>spring-webmvc</artifactId>
             <groupId>org.springframework</groupId>
-            <version>3.2.16.RELEASE</version>
+            <version>5.3.18</version>
         </dependency>
 
          <dependency>
