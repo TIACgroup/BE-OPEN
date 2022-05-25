@@ -1166,7 +1166,7 @@
         <dependency>
             <artifactId>spring-core</artifactId>
             <groupId>org.springframework</groupId>
-            <version>3.2.16.RELEASE</version>
+            <version>5.2.22.RELEASE</version>
         </dependency>
 
         <dependency>
