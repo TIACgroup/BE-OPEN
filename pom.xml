@@ -1202,7 +1202,7 @@
         <dependency>
             <artifactId>spring-web</artifactId>
             <groupId>org.springframework</groupId>
-            <version>3.2.16.RELEASE</version>
+            <version>6.0.0</version>
         </dependency>
 
         <dependency>
